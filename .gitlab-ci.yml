@@ -1,0 +1,23 @@
+image: "ubuntu:18.04"
+
+stages:
+  - lint
+  - tests
+
+ts-lint:
+  image: node:12.14.1-alpine
+  stage: lint
+  before_script:
+    - apk add -U make bash
+  script:
+    - make install-dependencies
+    - make lint
+
+ts-tests:
+  image: node:12.14.1-alpine
+  stage: tests
+  before_script:
+    - apk add -U make bash
+  script:
+    - make install-dependencies
+    - make unittests
