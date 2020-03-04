@@ -6,17 +6,15 @@ import {PackagerState} from "../../store/packagers/types";
 import {ModelPackaging} from "../../models/odahuflow/ModelPackaging";
 import {SaveButtonClick} from "../../components/actions";
 import {PackagingView} from "./PackagingView";
-import {createPackagingRequest, fetchAllPackagingRequest} from "../../store/packaging/actions";
+import {createPackagingRequest, fetchAllPackagingRequest, fetchPackagingRequest} from "../../store/packaging/actions";
 import {PackagingMetaSchema, PackagingSchema} from "./editable/schemas";
 import {Argument, SpecElements} from "./editable/SpecElements";
 import {MetadataElements} from "./editable/MetadataElements";
-import {ModelTraining} from "../../models/odahuflow/ModelTraining";
 import {PackagingURLs} from "./urls";
 import {ModelPackagingSpec} from "../../models/odahuflow/ModelPackagingSpec";
 import {extractLastElement} from "../../utils";
-import {useParams} from "react-router-dom";
-import {ModelPackagingState} from "../../store/packaging/types";
-import {deepCopy} from "../../utils/enities";
+import {addSuffixToID, deepCopy} from "../../utils/enities";
+import {FetchingEntity} from "../../components/EntitiyFetching";
 
 function defaultPackagingSpec(integrationName = ''): ModelPackagingSpec {
     return {
@@ -91,7 +89,7 @@ const defaultFields = {
         spec: () => <SpecElements/>,
         review: (packaging: ModelPackaging) => <PackagingView packaging={packaging} status={false}/>,
     },
-    saveButtonClick: new SaveButtonClick<ModelTraining>(
+    saveButtonClick: new SaveButtonClick<ModelPackaging>(
         createPackagingRequest,
         fetchAllPackagingRequest,
         "Model Packaging was created",
@@ -103,6 +101,11 @@ export const EditablePackagingPage: React.FC<EditablePackagingPageProps> = ({pac
     return (
         <EditablePage
             {...defaultFields}
+            fields={{
+                metadata: () => <MetadataElements readonlyID/>,
+                spec: () => <SpecElements/>,
+                review: (packaging: ModelPackaging) => <PackagingView packaging={packaging} status={false}/>,
+            }}
             title="Edit Packaging"
             entity={processArguments(packaging)}
             saveButtonClick={saveButtonClick}
@@ -129,22 +132,25 @@ export const NewPackagingPage: React.FC = () => {
 
 
 export const ClonePackagingPage: React.FC = () => {
-    const {id} = useParams();
-
-    const packagingState = useSelector<ApplicationState, ModelPackagingState>(state => state.packagings);
-    const packaging = packagingState.data[String(id)];
-
     return (
-        <EditablePage
-            {...defaultFields}
-            title="Clone Packaging"
-            entity={{
-                id: '',
-                spec: Object.assign(
-                    defaultPackagingSpec(),
-                    processArguments(packaging).spec
-                ),
-            }}
-        />
+        <FetchingEntity
+            fetchAction={fetchPackagingRequest}
+        >
+            {
+                (packaging: ModelPackaging) => (
+                    <EditablePage
+                        {...defaultFields}
+                        title="Clone Packaging"
+                        entity={{
+                            id: addSuffixToID(packaging.id as string, '-clone'),
+                            spec: Object.assign(
+                                defaultPackagingSpec(),
+                                processArguments(packaging).spec
+                            ),
+                        }}
+                    />
+                )
+            }
+        </FetchingEntity>
     );
 };

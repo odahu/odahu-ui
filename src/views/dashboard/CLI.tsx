@@ -3,6 +3,13 @@ import {Avatar, Button, Card, CardActions, CardContent, CardHeader, Divider, Lin
 import CallToActionIcon from '@material-ui/icons/CallToAction';
 import {useDispatch} from "react-redux";
 import {showInfoAlert} from "../../store/alert/actions";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles(() => ({
+    header: {
+        fontSize: '16px',
+    },
+}));
 
 interface LoginCommandProps {
     innerRef: MutableRefObject<any>;
@@ -44,6 +51,8 @@ function copyToClipboard(value: string): void {
 }
 
 export const CLI: React.FC = () => {
+    const classes = useStyles();
+
     const dispatch = useDispatch();
     const commandLineTextElem = useRef<HTMLTextAreaElement>(null);
 
@@ -63,7 +72,7 @@ export const CLI: React.FC = () => {
                         <CallToActionIcon/>
                     </Avatar>
                 }
-                title="Odahuflowctl"
+                title={<span className={classes.header}>Getting Started</span>}
             />
             <Divider/>
             <CardContent>

@@ -1,6 +1,12 @@
 import {PackagerState} from "./types";
 import {Reducer} from "redux";
-import {fetchAllPackagers, fetchAllPackagerSuccess, fetchPackagerError, PackagerActionTypes} from "./actions";
+import {
+    fetchAllPackagers,
+    fetchAllPackagerSuccess,
+    fetchPackagerError,
+    fetchPackagerSuccess,
+    PackagerActionTypes
+} from "./actions";
 
 const initialState: PackagerState = {
     data: {},
@@ -10,7 +16,8 @@ const initialState: PackagerState = {
 
 type actionType = ReturnType<typeof fetchAllPackagerSuccess> |
     ReturnType<typeof fetchPackagerError> |
-    ReturnType<typeof fetchAllPackagers>
+    ReturnType<typeof fetchAllPackagers> |
+    ReturnType<typeof fetchPackagerSuccess>
 
 export const packagerReducer: Reducer<PackagerState, actionType> = (state = initialState, action) => {
     switch (action.type) {
@@ -22,6 +29,15 @@ export const packagerReducer: Reducer<PackagerState, actionType> = (state = init
         }
         case PackagerActionTypes.FETCH_ERROR: {
             return {...state, error: action.error, loading: false}
+        }
+        case PackagerActionTypes.FETCH_SUCCESS: {
+            return {
+                data: {
+                    [action.payload.packager.id as string]: action.payload.packager,
+                    ...state.data,
+                },
+                ...state,
+            }
         }
         default:
             return state

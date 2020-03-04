@@ -25,8 +25,7 @@ export function fetchAllPackagingRequest(): AsyncAction {
         dispatch(fetchAllPackagings());
 
         return packagingService.getAll()
-            .then(mts => dispatch(fetchAllPackagingsSuccess(mts)))
-            .catch(err => dispatch(fetchPackagingError(String(err))));
+            .then(mts => dispatch(fetchAllPackagingsSuccess(mts)));
     };
 }
 

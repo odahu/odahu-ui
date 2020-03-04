@@ -7,7 +7,11 @@ import {ConnectionTypes} from "../../connections/types";
 import {OdahuTextField} from "../../../components/CustomTextField";
 import {FormikOdahuSelect} from "../../../components/OdahuSelect";
 
-export const MetadataElements: React.FC = () => {
+export interface MetadataElementsProps {
+    readonlyID?: boolean;
+}
+
+export const MetadataElements: React.FC<MetadataElementsProps> = ({readonlyID = false}) => {
     const packagerState = useSelector<ApplicationState, PackagerState>(state => state.packagers);
     const packagerIDs = Object.values(packagerState.data).map(packager => packager.id);
 
@@ -21,6 +25,7 @@ export const MetadataElements: React.FC = () => {
     return (
         <>
             <OdahuTextField
+                disabled={readonlyID}
                 name="id"
                 label='ID'
                 description='Unique value among all packagings'
