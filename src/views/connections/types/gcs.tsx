@@ -25,8 +25,8 @@ export const EditableFields: React.FC = () => {
         <>
             <OdahuTextField
                 name="spec.region"
-                label="Region"
-                description='GCP Region, where a bucket was created'
+                label="Project"
+                description='GCP Project, where a bucket was created'
             />
             <OdahuTextField
                 name="spec.uri"

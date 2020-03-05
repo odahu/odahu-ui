@@ -1,6 +1,7 @@
 import {FormikComputedProps, FormikHandlers, FormikState} from "formik";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import * as Yup from "yup";
+import {isValidID} from "../utils/enities";
 
 export type FormikHelper<T = any> = FormikState<T> & FormikHandlers & FormikComputedProps<T>
 
@@ -37,5 +38,6 @@ export const useFieldsStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const IDSchema = Yup.string().required('ID is a required value');
+export const IDSchema = Yup.string().required('ID is a required value')
+    .test("id", "ID is not valid", isValidID);
 

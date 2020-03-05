@@ -1,6 +1,12 @@
 import {ConnectionState} from "./types";
 import {Reducer} from "redux";
-import {ConnectionActionTypes, fetchAllConnections, fetchAllConnectionsSuccess, fetchConnectionsError} from "./actions";
+import {
+    ConnectionActionTypes,
+    fetchAllConnections,
+    fetchAllConnectionsSuccess,
+    fetchConnectionsError,
+    fetchConnectionSuccess
+} from "./actions";
 
 const initialState: ConnectionState = {
     data: {},
@@ -8,7 +14,10 @@ const initialState: ConnectionState = {
     loading: false
 };
 
-type actionType = ReturnType<typeof fetchAllConnections> | ReturnType<typeof fetchAllConnectionsSuccess> | ReturnType<typeof fetchConnectionsError>
+type actionType = ReturnType<typeof fetchAllConnections> |
+    ReturnType<typeof fetchAllConnectionsSuccess> |
+    ReturnType<typeof fetchConnectionsError> |
+    ReturnType<typeof fetchConnectionSuccess>
 
 export const connectionReducer: Reducer<ConnectionState, actionType> = (state = initialState, action) => {
     switch (action.type) {
@@ -20,6 +29,15 @@ export const connectionReducer: Reducer<ConnectionState, actionType> = (state = 
         }
         case ConnectionActionTypes.FETCH_ERROR: {
             return {...state, error: action.error, loading: false}
+        }
+        case ConnectionActionTypes.FETCH_SUCCESS: {
+            return {
+                data: {
+                    [action.payload.connection.id as string]: action.payload.connection,
+                    ...state.data,
+                },
+                ...state,
+            }
         }
         default:
             return state

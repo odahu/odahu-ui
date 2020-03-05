@@ -24,7 +24,7 @@ export const EnhancedTableHead: React.FC<EnhancedReadonlyTableProps | EnhancedTa
         <TableHead>
             <TableRow>
                 {
-                    !props.readonly && (
+                    (!props.readonly && props.rowCount > 0) && (
                         <TableCell key="select" padding="checkbox">
                             <Checkbox
                                 indeterminate={props.numSelected > 0 && props.numSelected < props.rowCount}
@@ -35,7 +35,12 @@ export const EnhancedTableHead: React.FC<EnhancedReadonlyTableProps | EnhancedTa
                         </TableCell>
                     )
                 }
-                <TableCell align="right" key="ID">ID</TableCell>
+                <TableCell
+                    align="right"
+                    key="ID"
+                >
+                    ID
+                </TableCell>
                 {
                     props.headers.map(header => (
                         <TableCell

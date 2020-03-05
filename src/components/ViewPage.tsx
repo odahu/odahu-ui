@@ -1,6 +1,7 @@
 import React from 'react';
 import {AppBar, Box, makeStyles, Tab, Tabs, Theme, Typography} from "@material-ui/core";
-import {Skeleton} from "@material-ui/lab";
+import {NotFoundPage} from "./NotFoundView";
+import {LoadingPage} from "./LoadingPage";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -48,13 +49,11 @@ export const ViewPage: React.FC<ViewPageProps> = (props) => {
     };
 
     if (props.loading) {
-        return (
-            <Skeleton variant="rect" width={"100%"} height={400}/>
-        )
+        return <LoadingPage/>
     }
 
     if (props.notFound) {
-        return <p>404 Not Found</p>
+        return <NotFoundPage/>
     }
 
     return (

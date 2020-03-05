@@ -1,35 +1,31 @@
 import React from 'react';
 import {useParams} from "react-router-dom";
-
-import {useSelector} from "react-redux";
-import {ApplicationState} from "../../store";
 import {ViewPage} from "../../components/ViewPage";
-import {ToolchainState} from "../../store/toolchains/types";
 import {ToolchainView} from "./ToolchainView";
 import {Editor} from "../../components/Editor";
+import {useFetchingEntity} from "../../components/EntitiyFetching";
+import {fetchToolchainRequest} from "../../store/toolchains/actions";
 
 const tabHeaders = ["View", "YAML"];
 
 export const ToolchainPage: React.FC = () => {
     const {id} = useParams();
-
-    const toolchainState = useSelector<ApplicationState, ToolchainState>(state => state.toolchains);
-    const toolchain = toolchainState.data[String(id)];
+    const {entity, loading, notFound} = useFetchingEntity(id as string, fetchToolchainRequest);
 
     return (
         <ViewPage
-            loading={toolchainState.loading}
-            notFound={!toolchain}
+            loading={loading}
+            notFound={notFound}
             tabHeaders={tabHeaders}
             tabValues={[
                 <ToolchainView
                     key="view"
-                    toolchain={toolchain}
+                    toolchain={entity}
                 />,
                 <Editor
                     key="yaml"
                     readonly={true}
-                    entity={toolchain}
+                    entity={entity}
                     fileName={`${id}.toolchain.odahuflow.yaml`}
                 />
             ]}

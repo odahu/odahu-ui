@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import {FormikSecretTextField} from "../../../components/SecretTextField";
 import {ConnectionSpecPlugin, ConnectionTypes} from "./index";
 import {OdahuTextField} from "../../../components/CustomTextField";
+import {FormikOdahuAutocomplete} from "../../../components/OdahuAutocomplete";
 
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
@@ -22,6 +23,28 @@ export const Schema = {
     region: Yup.string().required('Region is a required field'),
 };
 
+const ALL_AWS_REGIONS = [
+    "us-east-1",
+    "us-east-2",
+    "us-west-1",
+    "us-west-2",
+    "ca-central-1",
+    "eu-central-1",
+    "eu-west-1",
+    "eu-west-2",
+    "eu-west-3",
+    "eu-north-1",
+    "me-south-1",
+    "sa-east-1",
+    "ap-east-1",
+    "ap-south-1",
+    "ap-southeast-1",
+    "ap-southeast-2",
+    "ap-northeast-1",
+    "ap-northeast-2",
+    "ap-northeast-3",
+];
+
 export const EditableFields: React.FC = () => {
     return (
         <>
@@ -30,9 +53,10 @@ export const EditableFields: React.FC = () => {
                 label="URI"
                 description='S3 compatible URI, for example s3://<bucket-name>/dir1/dir2/'
             />
-            <OdahuTextField
+            <FormikOdahuAutocomplete
                 name="spec.region"
                 label="Region"
+                options={ALL_AWS_REGIONS}
             />
             <FormikSecretTextField
                 name="spec.keyID"

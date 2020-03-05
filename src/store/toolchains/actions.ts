@@ -5,6 +5,7 @@ import {ToolchainIntegration} from "../../models/odahuflow/ToolchainIntegration"
 
 export enum ToolchainActionTypes {
     FETCH_ALL = '@@toolchain/FETCH_ALL',
+    FETCH_SUCCESS = '@@toolchain/FETCH_SUCCESS',
     FETCH_ALL_SUCCESS = '@@toolchain/FETCH_ALL_SUCCESS',
     FETCH_ERROR = '@@toolchain/FETCH_ERROR',
 }
@@ -23,9 +24,23 @@ export function fetchAllToolchainRequest(): AsyncAction {
         dispatch(fetchAllToolchains());
 
         return toolchainService.getAll()
-            .then(mds => dispatch(fetchAllToolchainSuccess(mds)))
-            .catch(err => dispatch(fetchToolchainError(String(err))));
+            .then(mds => dispatch(fetchAllToolchainSuccess(mds)));
     };
+}
+
+// FETCH actions
+export const fetchToolchainSuccess = (toolchain: ToolchainIntegration) => action(
+    ToolchainActionTypes.FETCH_SUCCESS, {toolchain}
+);
+
+export function fetchToolchainRequest(id: string): AsyncAction<Promise<ToolchainIntegration>> {
+    return ((dispatch, getState, {toolchainService}) => {
+        return toolchainService.get(id).then(toolchain => {
+            dispatch(fetchToolchainSuccess(toolchain));
+
+            return toolchain;
+        });
+    })
 }
 
 // EDIT actions

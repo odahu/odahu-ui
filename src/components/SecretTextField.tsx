@@ -39,7 +39,7 @@ export type SecretTextFieldProps = {
 export const SecretTextField: React.FC<SecretTextFieldProps> = ({error, helperText, label, ...otherProps}) => {
     const classes = useFieldsStyles();
 
-    const [showPassword, setShowPassword] = React.useState(true);
+    const [showPassword, setShowPassword] = React.useState(false);
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);

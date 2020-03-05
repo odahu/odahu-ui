@@ -1,6 +1,12 @@
 import {ToolchainState} from "./types";
 import {Reducer} from "redux";
-import {fetchAllToolchains, fetchAllToolchainSuccess, fetchToolchainError, ToolchainActionTypes} from "./actions";
+import {
+    fetchAllToolchains,
+    fetchAllToolchainSuccess,
+    fetchToolchainError,
+    fetchToolchainSuccess,
+    ToolchainActionTypes
+} from "./actions";
 
 const initialState: ToolchainState = {
     data: {},
@@ -10,7 +16,8 @@ const initialState: ToolchainState = {
 
 type actionType = ReturnType<typeof fetchAllToolchains> |
     ReturnType<typeof fetchAllToolchainSuccess> |
-    ReturnType<typeof fetchToolchainError>
+    ReturnType<typeof fetchToolchainError> |
+    ReturnType<typeof fetchToolchainSuccess>
 
 export const toolchainReducer: Reducer<ToolchainState, actionType> = (state = initialState, action) => {
     switch (action.type) {
@@ -22,6 +29,15 @@ export const toolchainReducer: Reducer<ToolchainState, actionType> = (state = in
         }
         case ToolchainActionTypes.FETCH_ERROR: {
             return {...state, error: action.error, loading: false}
+        }
+        case ToolchainActionTypes.FETCH_SUCCESS: {
+            return {
+                data: {
+                    [action.payload.toolchain.id as string]: action.payload.toolchain,
+                    ...state.data,
+                },
+                ...state,
+            }
         }
         default:
             return state

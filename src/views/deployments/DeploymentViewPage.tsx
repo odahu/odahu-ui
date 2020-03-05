@@ -1,51 +1,48 @@
 import React from 'react';
 import {useParams} from "react-router-dom";
-
-import {useSelector} from "react-redux";
-import {ApplicationState} from "../../store";
 import {Editor} from "../../components/Editor";
 import {ViewPage} from "../../components/ViewPage";
 import {SaveButtonClick} from "../../components/actions";
-import {ModelDeploymentState} from "../../store/deployments/types";
 import {ModelDeployment} from "../../models/odahuflow/ModelDeployment";
-import {editDeploymentRequest, fetchAllDeploymentRequest} from "../../store/deployments/actions";
+import {
+    editDeploymentRequest,
+    fetchAllDeploymentRequest,
+    fetchDeploymentRequest
+} from "../../store/deployments/actions";
 import {DeploymentView} from "./DeploymentView";
 import {EditableDeploymentPage} from "./DeploymentPages";
+import {useFetchingEntity} from "../../components/EntitiyFetching";
+
+const saveButtonClick = new SaveButtonClick<ModelDeployment>(
+    editDeploymentRequest,
+    fetchAllDeploymentRequest,
+    "Model Deployment submitted",
+);
 
 export const DeploymentViewPage: React.FC = () => {
-    // Parameter from URL
     const {id} = useParams();
 
-    // Global state
-    const deploymentState = useSelector<ApplicationState, ModelDeploymentState>(state => state.deployments);
-    // We keep all entities in global state. In the future, we should make http request if entity missed
-    const deployment = deploymentState.data[String(id)];
-
-    const saveButtonClick = new SaveButtonClick<ModelDeployment>(
-        editDeploymentRequest,
-        fetchAllDeploymentRequest,
-        "Model Deployment was saved",
-    );
+    const {entity, loading, notFound} = useFetchingEntity(id as string, fetchDeploymentRequest);
 
     return (
         <ViewPage
-            loading={deploymentState.loading}
-            notFound={!deployment}
+            loading={loading}
+            notFound={notFound}
             tabHeaders={["View", "Edit", "YAML"]}
             tabValues={[
                 <DeploymentView
                     key="view"
-                    deployment={deployment}
+                    deployment={entity}
                 />,
                 <EditableDeploymentPage
                     key="page"
-                    deployment={deployment}
+                    deployment={entity}
                     saveButtonClick={saveButtonClick}
                 />,
                 <Editor
                     key="yaml"
                     readonly={false}
-                    entity={deployment}
+                    entity={entity}
                     fileName={`${id}.deployment.odahuflow.yaml`}
                     saveButtonClick={saveButtonClick}
                 />

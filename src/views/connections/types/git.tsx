@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import {FormikSecretTextField} from "../../../components/SecretTextField";
 import {ConnectionSpecPlugin, ConnectionTypes} from "./index";
 import {OdahuTextField} from "../../../components/CustomTextField";
+import {FormikOdahuAutocomplete} from "../../../components/OdahuAutocomplete";
 
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
@@ -20,6 +21,7 @@ export const Schema = {
     reference: Yup.string(),
 };
 
+const MOST_POPULAR_GIT_BRANCHES = ["master", "develop"];
 export const EditableFields: React.FC = () => {
     return (
         <>
@@ -28,9 +30,10 @@ export const EditableFields: React.FC = () => {
                 label="Git SSH URL"
                 description='GIT SSH URL, for example git@github.com:odahu/odahu-examples.git'
             />
-            <OdahuTextField
+            <FormikOdahuAutocomplete
                 name="spec.reference"
                 label="Reference"
+                options={MOST_POPULAR_GIT_BRANCHES}
                 description='a branch, tag, or commit'
             />
             <FormikSecretTextField

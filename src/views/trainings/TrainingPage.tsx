@@ -1,8 +1,5 @@
 import React from 'react';
 import {useParams} from "react-router-dom";
-
-import {useSelector} from "react-redux";
-import {ApplicationState} from "../../store";
 import {Editor} from "../../components/Editor";
 import {ViewPage} from "../../components/ViewPage";
 import {SaveButtonClick} from "../../components/actions";
@@ -13,52 +10,50 @@ import {
     fetchTrainingLogsRequest,
     fetchTrainingRequest
 } from "../../store/trainings/actions";
-import {ModelTrainingState} from "../../store/trainings/types";
 import {EditableTrainingPage} from "./TrainingEditablePage";
 import {ModelTraining} from "../../models/odahuflow/ModelTraining";
 import {LogsView} from "../../components/LogsView";
+import {useFetchingEntity} from "../../components/EntitiyFetching";
+
 
 const tabHeaders = ["View", "Edit", "YAML", "Logs"];
+const editableSaveButtonClick = new SaveButtonClick<ModelTraining>(
+    editTrainingRequest,
+    fetchAllTrainingRequest,
+    "Model Training submitted",
+);
 
 export const TrainingPage: React.FC = () => {
     const {id} = useParams();
 
-    const trainingState = useSelector<ApplicationState, ModelTrainingState>(state => state.trainings);
-    // TODO: fetch from server if missing
-    const training = trainingState.data[String(id)];
-
-    const saveButtonClick = new SaveButtonClick<ModelTraining>(
-        editTrainingRequest,
-        fetchAllTrainingRequest,
-        "Model Training was saved",
-    );
+    const {entity, loading, notFound} = useFetchingEntity(id as string, fetchTrainingRequest);
 
     return (
         <ViewPage
-            loading={trainingState.loading}
-            notFound={!training}
+            loading={loading}
+            notFound={notFound}
             tabHeaders={tabHeaders}
             tabValues={[
                 <TrainingView
                     key="view"
-                    training={training}
+                    training={entity}
                     status
                 />,
                 <EditableTrainingPage
                     key="edit"
-                    training={training}
-                    saveButtonClick={saveButtonClick}
+                    training={entity}
+                    saveButtonClick={editableSaveButtonClick}
                 />,
                 <Editor
                     key="yaml"
                     readonly={false}
-                    entity={training}
+                    entity={entity}
                     fileName={`${id}.training.odahuflow.yaml`}
-                    saveButtonClick={saveButtonClick}
+                    saveButtonClick={editableSaveButtonClick}
                 />,
                 <LogsView
                     key="logs"
-                    entity={training}
+                    entity={entity}
                     fileName={`${id}.logs.training.odahuflow.txt`}
                     fetchLogsRequest={fetchTrainingLogsRequest}
                     fetchEntityRequest={fetchTrainingRequest}

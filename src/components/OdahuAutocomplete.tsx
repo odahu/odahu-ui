@@ -70,7 +70,6 @@ export const OdahuAutocomplete: React.FC<OdahuAutocompleteProps> = (
                            helperText={helperText}
                            label={label}
                            margin="normal"
-                           variant="outlined"
                            fullWidth
                 />
             )}

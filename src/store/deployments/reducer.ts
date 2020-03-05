@@ -4,7 +4,8 @@ import {
     DeploymentsActionTypes,
     fetchAllDeployments,
     fetchAllDeploymentsSuccess,
-    fetchDeploymentsError
+    fetchDeploymentsError,
+    fetchDeploymentSuccess
 } from "./actions";
 
 const initialState: ModelDeploymentState = {
@@ -15,7 +16,8 @@ const initialState: ModelDeploymentState = {
 
 type actionType = ReturnType<typeof fetchAllDeployments> |
     ReturnType<typeof fetchAllDeploymentsSuccess> |
-    ReturnType<typeof fetchDeploymentsError>
+    ReturnType<typeof fetchDeploymentsError> |
+    ReturnType<typeof fetchDeploymentSuccess>
 
 export const deploymentReducer: Reducer<ModelDeploymentState, actionType> = (state = initialState, action) => {
     switch (action.type) {
@@ -27,6 +29,15 @@ export const deploymentReducer: Reducer<ModelDeploymentState, actionType> = (sta
         }
         case DeploymentsActionTypes.FETCH_ERROR: {
             return {...state, error: action.error, loading: false}
+        }
+        case DeploymentsActionTypes.FETCH_SUCCESS: {
+            return {
+                data: {
+                    [action.payload.deployment.id as string]: action.payload.deployment,
+                    ...state.data,
+                },
+                ...state,
+            }
         }
         default:
             return state
