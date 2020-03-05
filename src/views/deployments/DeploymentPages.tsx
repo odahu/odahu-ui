@@ -22,7 +22,7 @@ const defaultFields = {
     fields: {
         metadata: () => <MetadataElements/>,
         spec: () => <SpecElements/>,
-        review: (deployment: ModelDeployment) => <DeploymentView deployment={deployment}/>,
+        review: (deployment: ModelDeployment) => <DeploymentView deployment={deployment} status={false}/>,
     },
     saveButtonClick: new SaveButtonClick<ModelDeployment>(
         createDeploymentRequest,
@@ -64,7 +64,7 @@ export const EditableDeploymentPage: React.FC<EditableDeploymentPageProps> = ({d
             fields={{
                 metadata: () => <MetadataElements readonlyID/>,
                 spec: () => <SpecElements/>,
-                review: (deployment: ModelDeployment) => <DeploymentView deployment={deployment}/>,
+                review: (deployment: ModelDeployment) => <DeploymentView deployment={deployment} status={false}/>,
             }}
             title="Edit Deployment"
             entity={deployment}

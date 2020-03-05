@@ -6,13 +6,16 @@ import {PackagingIntegration} from "../../models/odahuflow/PackagingIntegration"
 import {PackagerState} from "../../store/packagers/types";
 import {fetchAllPackagerRequest} from "../../store/packagers/actions";
 import {PackagerURLs} from "./urls";
+import {humanDate} from "../../utils/date";
 
 const PackagerEnhancedTable = (props: EnhancedReadonlyTableProps<PackagingIntegration>) => <EnhancedTable {...props}/>;
 
-const headers = ['Default Docker Image', 'Entrypoint'];
+const headers = ['Default Docker Image', 'Entrypoint', 'Created at', 'Updated at'];
 const extractRow = (packager: PackagingIntegration) => [
     packager.spec?.defaultImage,
     packager.spec?.entrypoint,
+    humanDate(packager.status?.createdAt),
+    humanDate(packager.status?.updatedAt),
 ];
 
 export const PackagerTable: React.FC = () => {

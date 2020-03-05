@@ -21,6 +21,7 @@ export const ToolchainPage: React.FC = () => {
                 <ToolchainView
                     key="view"
                     toolchain={entity}
+                    status={true}
                 />,
                 <Editor
                     key="yaml"

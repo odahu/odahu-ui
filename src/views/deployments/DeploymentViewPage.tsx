@@ -33,6 +33,7 @@ export const DeploymentViewPage: React.FC = () => {
                 <DeploymentView
                     key="view"
                     deployment={entity}
+                    status={true}
                 />,
                 <EditableDeploymentPage
                     key="page"

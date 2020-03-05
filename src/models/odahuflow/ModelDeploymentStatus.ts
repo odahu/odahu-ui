@@ -18,6 +18,8 @@ export interface ModelDeploymentStatus {
      */
     availableReplicas?: number;
 
+    createdAt?: string;
+
     /**
      * The model k8s deployment name
      */
@@ -52,5 +54,7 @@ export interface ModelDeploymentStatus {
      * The state of a model    \"Processing\" - A model was not deployed. Because some parameters of the                  custom resource are wrong. For example, there is not a model                  image in a Docker registry.   \"Ready\" - A model was deployed successfully.
      */
     state?: string;
+
+    updatedAt?: string;
 
 }

@@ -3,6 +3,7 @@ import {ParametersView} from "../../components/ParametersView";
 import {checkValuePresent, TableParameterView} from "../../components/TablePrameterView";
 import {ModelPackaging} from "../../models/odahuflow/ModelPackaging";
 import {isArgument} from "./PackagingEditablePage";
+import {humanDate} from "../../utils/date";
 
 export interface PackagingViewProps {
     packaging: ModelPackaging;
@@ -58,7 +59,9 @@ export const PackagingView: React.FC<PackagingViewProps> = ({packaging, status})
                         ])}
                     />
                 )
-            }
+            },
+            {name: "Created at", elem: humanDate(packaging.status?.createdAt)},
+            {name: "Updated at", elem: humanDate(packaging.status?.updatedAt)},
         )
     }
 
