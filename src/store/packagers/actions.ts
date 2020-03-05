@@ -5,6 +5,7 @@ import {PackagingIntegration} from "../../models/odahuflow/PackagingIntegration"
 
 export enum PackagerActionTypes {
     FETCH_ALL = '@@packager/FETCH_ALL',
+    FETCH_SUCCESS = '@@packager/FETCH_SUCCESS',
     FETCH_ALL_SUCCESS = '@@packager/FETCH_ALL_SUCCESS',
     FETCH_ERROR = '@@packager/FETCH_ERROR',
 }
@@ -18,14 +19,29 @@ export const fetchAllPackagerSuccess = (mds: PackagingIntegration[]) => action(
 export const fetchPackagerError = (error: string) => action(
     PackagerActionTypes.FETCH_ERROR, undefined, undefined, error,
 );
+
 export function fetchAllPackagerRequest(): AsyncAction {
     return (dispatch, getState, {packagerService}) => {
         dispatch(fetchAllPackagers());
 
         return packagerService.getAll()
-            .then(mds => dispatch(fetchAllPackagerSuccess(mds)))
-            .catch(err => dispatch(fetchPackagerError(String(err))));
+            .then(mds => dispatch(fetchAllPackagerSuccess(mds)));
     };
+}
+
+// FETCH actions
+export const fetchPackagerSuccess = (packager: PackagingIntegration) => action(
+    PackagerActionTypes.FETCH_SUCCESS, {packager}
+);
+
+export function fetchPackagerRequest(id: string): AsyncAction<Promise<PackagingIntegration>> {
+    return ((dispatch, getState, {packagerService}) => {
+        return packagerService.get(id).then(packager => {
+            dispatch(fetchPackagerSuccess(packager));
+
+            return packager;
+        });
+    })
 }
 
 // EDIT actions

@@ -1,49 +1,49 @@
 import React from 'react';
 import {useParams} from "react-router-dom";
-
-import {useSelector} from "react-redux";
-import {ApplicationState} from "../../store";
-import {ConnectionState} from "../../store/connections/types";
 import {Editor} from "../../components/Editor";
 import {EditableConnectionPage} from "./ConnectionEditablePage";
 import {ViewPage} from "../../components/ViewPage";
 import {SaveButtonClick} from "../../components/actions";
 import {Connection} from "../../models/odahuflow/Connection";
-import {editConnectionRequest, fetchAllConnectionRequest} from "../../store/connections/actions";
+import {
+    editConnectionRequest,
+    fetchAllConnectionRequest,
+    fetchConnectionRequest
+} from "../../store/connections/actions";
 import {ConnectionView} from "./ConnectionView";
+import {useFetchingEntity} from "../../components/EntitiyFetching";
 
 const tabHeaders = ["View", "Edit", "YAML"];
 const editButtonClick = new SaveButtonClick<Connection>(
     editConnectionRequest,
     fetchAllConnectionRequest,
-    "Connection was saved",
+    "Connection submitted",
 );
 
 export const ConnectionViewPage: React.FC = () => {
     const {id} = useParams();
 
-    const connectionsState = useSelector<ApplicationState, ConnectionState>(state => state.connections);
-    const connection = connectionsState.data[String(id)];
+    const {entity, loading, notFound} = useFetchingEntity(id as string, fetchConnectionRequest);
 
     return (
         <ViewPage
-            loading={connectionsState.loading}
-            notFound={!connection}
+            loading={loading}
+            notFound={notFound}
             tabHeaders={tabHeaders}
             tabValues={[
                 <ConnectionView
                     key="view"
-                    connection={connection}
+                    connection={entity}
                 />,
                 <EditableConnectionPage
                     key="page"
-                    connection={connection}
+                    connection={entity}
                     saveButtonClick={editButtonClick}
                 />,
                 <Editor
                     key="yaml"
                     readonly={false}
-                    entity={connection}
+                    entity={entity}
                     fileName={`${id}.connection.odahuflow.yaml`}
                     saveButtonClick={editButtonClick}
                 />

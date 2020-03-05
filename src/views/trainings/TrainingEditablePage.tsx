@@ -7,17 +7,16 @@ import {ApplicationState} from "../../store";
 import {ConnectionState} from "../../store/connections/types";
 import {TrainingView} from "./TrainingView";
 import {ModelTraining} from "../../models/odahuflow/ModelTraining";
-import {createTrainingRequest, fetchAllTrainingRequest} from "../../store/trainings/actions";
+import {createTrainingRequest, fetchAllTrainingRequest, fetchTrainingRequest} from "../../store/trainings/actions";
 import {ToolchainState} from "../../store/toolchains/types";
-import {useParams} from "react-router-dom";
-import {ModelTrainingState} from "../../store/trainings/types";
 import {TrainingMetaSchema, TrainingSchema} from "./editable/schemas";
 import {MetadataElements} from "./editable/MetadataElements";
 import {HyperParameter, SpecElements} from "./editable/SpecElements";
 import {TrainingURLs} from "./urls";
 import {ModelTrainingSpec} from "../../models/odahuflow/ModelTrainingSpec";
 import {extractZeroElement} from "../../utils";
-import {deepCopy} from "../../utils/enities";
+import {addSuffixToID, deepCopy} from "../../utils/enities";
+import {FetchingEntity} from "../../components/EntitiyFetching";
 
 
 function defaultTrainingSpec(toolchain = '', vcsName = ''): ModelTrainingSpec {
@@ -108,6 +107,11 @@ export const EditableTrainingPage: React.FC<EditableTrainingPageProps> = ({train
             title="Edit Training"
             entity={processHyperParams(training)}
             saveButtonClick={saveButtonClick}
+            fields={{
+                metadata: () => <MetadataElements readonlyID/>,
+                spec: () => <SpecElements/>,
+                review: (training: ModelTraining) => <TrainingView training={training} status={false}/>,
+            }}
         />
     );
 };
@@ -138,28 +142,31 @@ export const NewTrainingPage: React.FC = () => {
     );
 };
 
-
-export interface CloneTrainingPageProps {
-    training?: ModelTraining;
-}
-
-export const NewCloneTrainingPage: React.FC<CloneTrainingPageProps> = () => {
-    const {id} = useParams();
-
-    const trainingState = useSelector<ApplicationState, ModelTrainingState>(state => state.trainings);
-    const training = trainingState.data[String(id)];
-
+export const NewCloneTrainingPage: React.FC = () => {
     return (
-        <EditablePage
-            {...defaultFields}
-            title="Clone Training"
-            entity={{
-                id: '',
-                spec: Object.assign(
-                    defaultTrainingSpec(),
-                    processHyperParams(training).spec
+        <FetchingEntity
+            fetchAction={fetchTrainingRequest}
+        >
+            {
+                (training: ModelTraining) => (
+                    <EditablePage
+                        {...defaultFields}
+                        title="Clone Training"
+                        saveButtonClick={new SaveButtonClick<ModelTraining>(
+                            createTrainingRequest,
+                            fetchAllTrainingRequest,
+                            "Model Training was submitted",
+                        )}
+                        entity={{
+                            id: addSuffixToID(training.id as string, '-clone'),
+                            spec: Object.assign(
+                                defaultTrainingSpec(),
+                                processHyperParams(training).spec
+                            )
+                        }}
+                    />
                 )
-            }}
-        />
+            }
+        </FetchingEntity>
     );
 };

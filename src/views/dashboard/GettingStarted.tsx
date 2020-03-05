@@ -12,11 +12,18 @@ import {
     ListItemText,
 } from "@material-ui/core";
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
+import SchoolIcon from '@material-ui/icons/School';
 import SettingsInputComponentIcon from '@material-ui/icons/SettingsInputComponent';
 import WorkIcon from '@material-ui/icons/Work';
 import CloudIcon from '@material-ui/icons/Cloud';
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles(() => ({
+    header: {
+        fontSize: '16px',
+    },
+}));
 
 interface Link {
     name: string;
@@ -26,9 +33,9 @@ interface Link {
 
 const links: Link[] = [
     {
-        name: 'QuickStart',
+        name: 'Quickstart',
         url: 'https://docs.odahu.org/tutorials_wine.html',
-        img: <AddPhotoAlternateIcon/>,
+        img: <SchoolIcon/>,
     },
     {
         name: 'Connections',
@@ -52,33 +59,37 @@ const links: Link[] = [
     },
 ];
 
-export const GettingStarted: React.FC = () => (
-    <Card>
-        <CardHeader
-            avatar={
-                <Avatar variant="square" style={{color: 'black', backgroundColor: 'white'}}>
-                    <AssignmentIcon/>
-                </Avatar>
-            }
-            title="Getting Started"
-        />
-        <Divider/>
-        <CardContent>
-            <List>
-                {links.map(({img, name, url}) => (
-                    <Link href={url}
-                          key={name}
-                          style={{color: 'inherit', textDecoration: 'none'}}
-                          target="_blank">
-                        <ListItem button>
-                            <ListItemIcon>
-                                {img}
-                            </ListItemIcon>
-                            <ListItemText primary={name}/>
-                        </ListItem>
-                    </Link>
-                ))}
-            </List>
-        </CardContent>
-    </Card>
-);
+export const GettingStarted: React.FC = () => {
+    const classes = useStyles();
+
+    return (
+        <Card>
+            <CardHeader
+                avatar={
+                    <Avatar variant="square" style={{color: 'black', backgroundColor: 'white'}}>
+                        <AssignmentIcon/>
+                    </Avatar>
+                }
+                title={<span className={classes.header}>Getting Started</span>}
+            />
+            <Divider/>
+            <CardContent>
+                <List>
+                    {links.map(({img, name, url}) => (
+                        <Link href={url}
+                              key={name}
+                              style={{color: 'inherit', textDecoration: 'none'}}
+                              target="_blank">
+                            <ListItem button>
+                                <ListItemIcon>
+                                    {img}
+                                </ListItemIcon>
+                                <ListItemText primary={name}/>
+                            </ListItem>
+                        </Link>
+                    ))}
+                </List>
+            </CardContent>
+        </Card>
+    );
+}

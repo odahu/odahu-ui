@@ -5,6 +5,7 @@ import {AsyncAction} from "../index";
 
 export enum ConnectionActionTypes {
     FETCH_ALL = '@@connections/FETCH_ALL',
+    FETCH_SUCCESS = '@@connections/FETCH_SUCCESS',
     FETCH_ALL_SUCCESS = '@@connections/FETCH_ALL_SUCCESS',
     FETCH_ERROR = '@@connections/FETCH_ERROR',
 }
@@ -23,9 +24,23 @@ export function fetchAllConnectionRequest(): AsyncAction {
         dispatch(fetchAllConnections());
 
         return connectionService.getAll()
-            .then(connections => dispatch(fetchAllConnectionsSuccess(connections)))
-            .catch(err => dispatch(fetchConnectionsError(String(err))));
+            .then(connections => dispatch(fetchAllConnectionsSuccess(connections)));
     };
+}
+
+// FETCH actions
+export const fetchConnectionSuccess = (connection: Connection) => action(
+    ConnectionActionTypes.FETCH_SUCCESS, {connection}
+);
+
+export function fetchConnectionRequest(id: string): AsyncAction<Promise<Connection>> {
+    return ((dispatch, getState, {connectionService}) => {
+        return connectionService.get(id).then(connection => {
+            dispatch(fetchConnectionSuccess(connection));
+
+            return connection;
+        });
+    })
 }
 
 // EDIT actions

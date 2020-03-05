@@ -48,19 +48,24 @@ export const LogsView: React.FC<LogsViewProps> = (
     {entity, fileName, fetchLogsRequest, fetchEntityRequest}
 ) => {
     const classes = useLogsViewStyles();
-    // TODO: add a proper type for ace editor
-    const editor = useRef<any>(null);
+    const editor = useRef<AceEditor | null>(null);
     const [logs, setLogs] = useState<string>('');
     const [timerID, setTimerID] = useState<null | number>(null);
     const [isProgressBarVisible, setProgressBarVisible] = useState<boolean>(true);
     const dispatch: any = useDispatch();
 
-    function cleanupTimer() {
+    function cleanupTimer(timerID: number | null) {
         if (timerID !== null) {
             window.clearInterval(timerID);
         }
 
         setTimerID(null);
+    }
+
+    function fetchLogs() {
+        return dispatch(fetchLogsRequest(entity.id ?? '')).then((res: string) => {
+            setLogs(res);
+        });
     }
 
     function refreshLogs() {
@@ -70,34 +75,36 @@ export const LogsView: React.FC<LogsViewProps> = (
                 setLogs('The container is scheduling...');
 
                 return;
+            } else if (isEntityCompleted(entity)) {
+                cleanupTimer(timerID);
+
+                return fetchLogs();
             } else {
-                return dispatch(fetchLogsRequest(entity.id ?? '')).then((res: string) => {
-                    setLogs(res);
-                });
+                return fetchLogs();
             }
-        })
-            .catch((err: string) => {
-                // TODO: consider proper logging
-                console.log(err);
-            }).finally(() => {
+        }).catch((err: string) => {
+            // TODO: consider proper logging
+            console.log(err);
+        }).finally(() => {
             if (isEntityCompleted(entity)) {
                 setProgressBarVisible(false);
-                cleanupTimer();
+                cleanupTimer(timerID);
             }
         });
     }
 
     // Get editor content and save as a file
     function onClickDownloadButton() {
-        saveAsFile(editor.current.editor.getValue(), fileName);
+        saveAsFile(editor.current?.editor.getValue(), fileName);
     }
 
     useEffect(() => {
+        cleanupTimer(timerID);
         setTimerID(window.setInterval(refreshLogs, defaultUpdateTimeout));
         refreshLogs();
 
         return () => {
-            cleanupTimer();
+            cleanupTimer(timerID);
         }
     }, []);
 

@@ -50,19 +50,20 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
+// 1 minute
+const defaultUpdatePeriod = 60000;
+
 export const MainLayout: React.FC = () => {
     const classes = useStyles();
     const [isSideBarOpened, setSideBarOpened] = React.useState(false);
     const [loading, setLoading] = React.useState<boolean>(true);
-    const dispatch = useDispatch();
+    const dispatch: any = useDispatch();
 
     const onTopBarButtonClick = () => {
         setSideBarOpened(!isSideBarOpened);
     };
 
-    useEffect(() => {
-        dispatch(showBackdrop());
-
+    function refreshState() {
         Promise.all([
             dispatch(fetchAllConnectionsRequest()),
             dispatch(fetchConfigurationRequest()),
@@ -77,6 +78,13 @@ export const MainLayout: React.FC = () => {
             setLoading(false);
             dispatch(hideBackdrop());
         })
+    }
+
+    useEffect(() => {
+        dispatch(showBackdrop());
+
+        setInterval(refreshState, defaultUpdatePeriod);
+        refreshState();
     }, []);
 
     if (loading) {

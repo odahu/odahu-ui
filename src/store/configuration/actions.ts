@@ -23,7 +23,6 @@ export function fetchRequest(): AsyncAction {
         dispatch(fetch());
 
         return configurationService.get()
-            .then(conf => dispatch(fetchSuccess(conf)))
-            .catch(err => dispatch(fetchError(String(err))));
+            .then(conf => dispatch(fetchSuccess(conf)));
     };
 }

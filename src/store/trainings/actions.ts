@@ -25,8 +25,7 @@ export function fetchAllTrainingRequest(): AsyncAction {
         dispatch(fetchAllTrainings());
 
         return trainingService.getAll()
-            .then(mts => dispatch(fetchAllTrainingsSuccess(mts)))
-            .catch(err => dispatch(fetchTrainingError(String(err))));
+            .then(mts => dispatch(fetchAllTrainingsSuccess(mts)));
     };
 }
 

@@ -1,4 +1,5 @@
 import {Configuration} from "../../models/odahuflow/Configuration";
+import {extractEntity} from "../index";
 
 export class ConfigurationService {
 
@@ -9,11 +10,7 @@ export class ConfigurationService {
     }
 
     get(): Promise<Configuration> {
-        return fetch(`${this.baseURL}/api/v1/configuration`).then(
-            res => {
-                return res.json();
-            }
-        );
+        return fetch(`${this.baseURL}/api/v1/configuration`).then(extractEntity);
     }
 
 }

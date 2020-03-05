@@ -17,6 +17,12 @@ function isErrorMessage<T>(resp: Response, entity: T | ErrorMessage): entity is 
 
 // TODO: fix type
 export function extractEntity(resp: Response): Promise<any> {
+    if (resp.status >= 500) {
+        return resp.text().then(errorMessage => {
+            throw new Error(errorMessage);
+        })
+    }
+
     return resp.json().then(entity => {
         if (isErrorMessage(resp, entity)) {
             throw new Error(entity.message);

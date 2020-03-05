@@ -5,6 +5,7 @@ import {ModelDeployment} from "../../models/odahuflow/ModelDeployment";
 
 export enum DeploymentsActionTypes {
     FETCH_ALL = '@@deployments/FETCH_ALL',
+    FETCH_SUCCESS = '@@deployments/FETCH_SUCCESS',
     FETCH_ALL_SUCCESS = '@@deployments/FETCH_ALL_SUCCESS',
     FETCH_ERROR = '@@deployments/FETCH_ERROR',
 }
@@ -23,9 +24,23 @@ export function fetchAllDeploymentRequest(): AsyncAction {
         dispatch(fetchAllDeployments());
 
         return deploymentService.getAll()
-            .then(mds => dispatch(fetchAllDeploymentsSuccess(mds)))
-            .catch(err => dispatch(fetchDeploymentsError(String(err))));
+            .then(mds => dispatch(fetchAllDeploymentsSuccess(mds)));
     };
+}
+
+// FETCH actions
+export const fetchDeploymentSuccess = (deployment: ModelDeployment) => action(
+    DeploymentsActionTypes.FETCH_SUCCESS, {deployment}
+);
+
+export function fetchDeploymentRequest(id: string): AsyncAction<Promise<ModelDeployment>> {
+    return ((dispatch, getState, {deploymentService}) => {
+        return deploymentService.get(id).then(deployment => {
+            dispatch(fetchDeploymentSuccess(deployment));
+
+            return deployment;
+        });
+    })
 }
 
 // EDIT actions

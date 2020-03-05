@@ -1,6 +1,10 @@
 import React from 'react';
 import {Connection} from "../../models/odahuflow/Connection";
-import {createConnectionRequest, fetchAllConnectionRequest} from "../../store/connections/actions";
+import {
+    createConnectionRequest,
+    fetchAllConnectionRequest,
+    fetchConnectionRequest
+} from "../../store/connections/actions";
 import {ConnectionTypes} from "./types";
 import {EditablePage} from "../../components/EditablePage";
 import {SaveButtonClick} from "../../components/actions";
@@ -12,11 +16,9 @@ import {IDSchema} from "../../components/fields";
 import {ConnectionSpec} from "../../models/odahuflow/ConnectionSpec";
 import {ConnectionView} from "./ConnectionView";
 import {connectionPluginsMapping} from "./plugins";
-import {useParams} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {ApplicationState} from "../../store";
-import {ConnectionState} from "../../store/connections/types";
 import {ConnectionURLs} from "./urls";
+import {FetchingEntity} from "../../components/EntitiyFetching";
+import {addSuffixToID} from "../../utils/enities";
 
 const allConnectionTypes = Object.values(ConnectionTypes);
 
@@ -64,10 +66,15 @@ const SpecElements: React.FC = () => {
     return fields !== undefined ? fields : <p>Unexpected connection type</p>;
 };
 
-const MetadataElements: React.FC = () => {
+interface MetadataElementsPros {
+    readonlyID?: boolean;
+}
+
+const MetadataElements: React.FC<MetadataElementsPros> = ({readonlyID}) => {
     return (
         <>
             <OdahuTextField
+                disabled={readonlyID}
                 name="id"
                 label='ID'
                 description="Unique value among all connections"
@@ -107,6 +114,11 @@ export const EditableConnectionPage: React.FC<EditableConnectionPageProps> = ({c
     return (
         <EditablePage
             {...defaultFields}
+            fields={{
+                metadata: () => <MetadataElements readonlyID/>,
+                spec: () => <SpecElements/>,
+                review: (connection: Connection) => <ConnectionView connection={connection}/>,
+            }}
             title="Edit Connection"
             entity={connection}
             saveButtonClick={saveButtonClick}
@@ -125,21 +137,24 @@ export const NewConnectionPage: React.FC = () => {
 };
 
 export const NewCloneConnectionPage: React.FC = () => {
-    const {id} = useParams();
-
-    const connectionState = useSelector<ApplicationState, ConnectionState>(state => state.connections);
-    const connection = connectionState.data[String(id)];
-
     return (
-        <EditablePage
-            {...defaultFields}
-            title="Clone Connection"
-            entity={{
-                id: '',
-                spec: Object.assign({
-                    type: ConnectionTypes.GIT
-                }, connection.spec)
-            }}
-        />
+        <FetchingEntity
+            fetchAction={fetchConnectionRequest}
+        >
+            {
+                (connection: Connection) => (
+                    <EditablePage
+                        {...defaultFields}
+                        title="Clone Connection"
+                        entity={{
+                            id: addSuffixToID(connection.id as string, '-clone'),
+                            spec: Object.assign({
+                                type: ConnectionTypes.GIT
+                            }, connection.spec)
+                        }}
+                    />
+                )
+            }
+        </FetchingEntity>
     );
 };

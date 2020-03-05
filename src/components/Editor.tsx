@@ -94,7 +94,7 @@ export const Editor: React.FC<EditorProps | ReadonlyEditorProps> = (props) => {
                         className={classes.button}
                         onClick={onClickSaveButton}
                     >
-                        Save Changes
+                        Submit
                     </Button>
                 )}
             </div>

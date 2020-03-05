@@ -6,7 +6,11 @@ import {ConnectionTypes} from "../../connections/types";
 import {OdahuTextField} from "../../../components/CustomTextField";
 import {FormikOdahuSelect} from "../../../components/OdahuSelect";
 
-export const MetadataElements: React.FC = () => {
+export interface MetadataElementsProps {
+    readonlyID?: boolean;
+}
+
+export const MetadataElements: React.FC<MetadataElementsProps> = ({readonlyID = false}) => {
     const connectionsState = useSelector<ApplicationState, ConnectionState>(state => state.connections);
     const dockerConnectionIDs = Object.values(connectionsState.data)
         .filter(conn => conn.spec?.type === ConnectionTypes.DOCKER || conn.spec?.type === ConnectionTypes.ECR)
@@ -15,6 +19,7 @@ export const MetadataElements: React.FC = () => {
     return (
         <>
             <OdahuTextField
+                disabled={readonlyID}
                 name="id"
                 label='ID'
                 description="Unique value among all deployments"
