@@ -13,6 +13,8 @@
 import * as models from './models';
 
 export interface ConnectionStatus {
+    createdAt?: string;
+
     /**
      * Kubernetes secret name
      */
@@ -22,5 +24,7 @@ export interface ConnectionStatus {
      * Kubernetes service account
      */
     serviceAccount?: string;
+
+    updatedAt?: string;
 
 }

@@ -9,10 +9,11 @@ import {Link as RouterLink} from "react-router-dom";
 import {join} from "path";
 import {PackagerURLs} from "../packagers/urls";
 import {PackagingURLs} from "./urls";
+import {humanDate} from "../../utils/date";
 
 const PackagingEnhancedTable = (props: EnhancedTableProps<ModelPackaging>) => <EnhancedTable {...props}/>;
 
-const headers = ['Integration', 'Artifact name', 'State'];
+const headers = ['Integration', 'Artifact name', 'State', 'Created at', 'Updated at'];
 const extractRow = (packaging: ModelPackaging) => [
     (
         <RouterLink
@@ -23,7 +24,9 @@ const extractRow = (packaging: ModelPackaging) => [
         </RouterLink>
     ),
     packaging.spec?.artifactName,
-    packaging.status?.state
+    packaging.status?.state,
+    humanDate(packaging.status?.createdAt),
+    humanDate(packaging.status?.updatedAt)
 ];
 
 export const PackagingTable: React.FC = () => {

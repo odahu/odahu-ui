@@ -21,6 +21,7 @@ export const PackagerPage: React.FC = () => {
                 <PackagerView
                     key="view"
                     packager={entity}
+                    status={true}
                 />,
                 <Editor
                     key="yaml"

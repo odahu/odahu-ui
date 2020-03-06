@@ -10,10 +10,11 @@ import {TrainingURLs} from "./urls";
 import {join} from "path";
 import {ConnectionURLs} from "../connections/urls";
 import {ToolchainURLs} from "../toolchains/urls";
+import {humanDate} from "../../utils/date";
 
 const TrainingEnhancedTable = (props: EnhancedTableProps<ModelTraining>) => <EnhancedTable {...props}/>;
 
-const headers = ['Toolchain', 'Model Name', 'Model Version', 'VCS ID', 'State'];
+const headers = ['Toolchain', 'Model Name', 'Model Version', 'VCS ID', 'State', 'Created at', 'Updated at'];
 const extractRow = (mt: ModelTraining) => [
     (
         <RouterLink
@@ -33,7 +34,9 @@ const extractRow = (mt: ModelTraining) => [
             {mt.spec?.vcsName}
         </RouterLink>
     ),
-    mt.status?.state
+    mt.status?.state,
+    humanDate(mt.status?.createdAt),
+    humanDate(mt.status?.updatedAt)
 ];
 
 export const TrainingTable: React.FC = () => {

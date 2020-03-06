@@ -4,8 +4,9 @@ import {ParametersView, ViewParam} from "../../components/ParametersView";
 import {ConnectionViewProps} from "./ConnectionEditablePage";
 import {connectionPluginsMapping} from "./plugins";
 import {ExternalLink} from "../../components/ExternalLink";
+import {humanDate} from "../../utils/date";
 
-export const ConnectionView: React.FC<ConnectionViewProps> = (({connection}) => {
+export const ConnectionView: React.FC<ConnectionViewProps> = (({connection, status}) => {
     const specTypeParameters = connectionPluginsMapping
         .get(connection.spec?.type as ConnectionTypes)?.readonlyViewParameters(connection) ?? [];
     const parameters: Array<ViewParam> = [
@@ -20,6 +21,13 @@ export const ConnectionView: React.FC<ConnectionViewProps> = (({connection}) => 
         {name: "URI", elem: connection.spec?.uri},
         ...specTypeParameters
     ];
+
+    if (status){
+        parameters.push(
+            {name: "Created at", elem: humanDate(connection.status?.createdAt)},
+            {name: "Updated at", elem: humanDate(connection.status?.updatedAt)},
+        )
+    }
 
     return (
         <ParametersView params={parameters}/>

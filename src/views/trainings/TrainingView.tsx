@@ -3,6 +3,7 @@ import {ParametersView} from "../../components/ParametersView";
 import {ModelTraining} from "../../models/odahuflow/ModelTraining";
 import {checkValuePresent, TableParameterView} from "../../components/TablePrameterView";
 import {isHyperParameter} from "./TrainingEditablePage";
+import {humanDate} from "../../utils/date";
 
 export interface TrainingViewProps {
     training: ModelTraining;
@@ -64,7 +65,9 @@ export const TrainingView: React.FC<TrainingViewProps> = ({training, status}) =>
                             run.artifactName, run.commitID, run.runId,
                         ])}
                     />
-                )}
+                )},
+             {name: 'Created at', elem: humanDate(training.status?.createdAt)},
+             {name: 'Updated at', elem: humanDate(training.status?.updatedAt)},
         )
     }
 

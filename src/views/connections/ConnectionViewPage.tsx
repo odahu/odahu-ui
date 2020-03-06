@@ -34,6 +34,7 @@ export const ConnectionViewPage: React.FC = () => {
                 <ConnectionView
                     key="view"
                     connection={entity}
+                    status={true}
                 />,
                 <EditableConnectionPage
                     key="page"

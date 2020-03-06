@@ -13,4 +13,8 @@
 import * as models from './models';
 
 export interface PackagingIntegrationStatus {
+    createdAt?: string;
+
+    updatedAt?: string;
+
 }

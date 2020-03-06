@@ -13,6 +13,8 @@
 import * as models from './models';
 
 export interface ModelRouteStatus {
+    createdAt?: string;
+
     /**
      * Full url with prefix to a model deployment service
      */
@@ -22,5 +24,7 @@ export interface ModelRouteStatus {
      * State of Model Route
      */
     state?: string;
+
+    updatedAt?: string;
 
 }

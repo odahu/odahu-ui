@@ -50,7 +50,7 @@ const defaultFields = {
     fields: {
         metadata: () => <MetadataElements/>,
         spec: () => <SpecElements/>,
-        review: (connection: Connection) => <ConnectionView connection={connection}/>,
+        review: (connection: Connection) => <ConnectionView connection={connection} status={false}/>,
     },
     saveButtonClick: new SaveButtonClick<Connection>(
         createConnectionRequest,
@@ -103,6 +103,7 @@ const MetadataElements: React.FC<MetadataElementsPros> = ({readonlyID}) => {
 
 export interface ConnectionViewProps {
     connection: Connection;
+    status: boolean;
 }
 
 export interface EditableConnectionPageProps {
@@ -117,7 +118,7 @@ export const EditableConnectionPage: React.FC<EditableConnectionPageProps> = ({c
             fields={{
                 metadata: () => <MetadataElements readonlyID/>,
                 spec: () => <SpecElements/>,
-                review: (connection: Connection) => <ConnectionView connection={connection}/>,
+                review: (connection: Connection) => <ConnectionView connection={connection} status={false}/>,
             }}
             title="Edit Connection"
             entity={connection}

@@ -7,15 +7,18 @@ import {EnhancedTable, EnhancedTableProps} from "../../components/table/Enhanced
 import {Connection} from "../../models/odahuflow/Connection";
 import {ExternalLink} from "../../components/ExternalLink";
 import {ConnectionURLs} from "./urls";
+import {humanDate} from "../../utils/date";
 
 const ConnectionEnhancedTable = (props: EnhancedTableProps<Connection>) => <EnhancedTable {...props}/>;
 
-const connectionHeaders = ['Type', 'URI', 'Description', 'WEB UI'];
+const connectionHeaders = ['Type', 'URI', 'Description', 'WEB UI', 'Created at', 'Updated at'];
 const extractRow = (conn: Connection) => [
     conn.spec?.type,
     conn.spec?.uri,
     conn.spec?.description,
-    <ExternalLink key="webUILink" url={conn.spec?.webUILink}/>
+    <ExternalLink key="webUILink" url={conn.spec?.webUILink}/>,
+    humanDate(conn.status?.createdAt),
+    humanDate(conn.status?.updatedAt),
 ];
 
 export const ConnectionTable: React.FC = () => {
