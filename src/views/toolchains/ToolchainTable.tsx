@@ -6,10 +6,11 @@ import {ToolchainIntegration} from "../../models/odahuflow/ToolchainIntegration"
 import {ToolchainState} from "../../store/toolchains/types";
 import {fetchAllToolchainRequest} from "../../store/toolchains/actions";
 import {ToolchainURLs} from "./urls";
+import {humanDate} from "../../utils/date";
 
 const ToolchainEnhancedTable = (props: EnhancedReadonlyTableProps<ToolchainIntegration>) => <EnhancedTable {...props}/>;
 
-const headers = ['Default Docker Image', 'Entrypoint'];
+const headers = ['Default Docker Image', 'Entrypoint', 'Created at', 'Updated at'];
 
 export const ToolchainTable: React.FC = () => {
     const toolchainState = useSelector<ApplicationState, ToolchainState>(state => state.toolchains);
@@ -21,6 +22,8 @@ export const ToolchainTable: React.FC = () => {
     const extractRow = (toolchain: ToolchainIntegration) => [
         toolchain.spec?.defaultImage,
         toolchain.spec?.entrypoint,
+        humanDate(toolchain.status?.createdAt),
+        humanDate(toolchain.status?.updatedAt)
     ];
 
     return (

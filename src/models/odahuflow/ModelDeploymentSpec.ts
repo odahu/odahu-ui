@@ -16,7 +16,7 @@ export interface ModelDeploymentSpec {
     /**
      * Annotations for model pods.
      */
-    annotations?: { [key: string]: string; };
+    annotations?: any;
 
     /**
      * Model Docker image

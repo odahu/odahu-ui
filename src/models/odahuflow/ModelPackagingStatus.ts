@@ -13,6 +13,8 @@
 import * as models from './models';
 
 export interface ModelPackagingStatus {
+    createdAt?: string;
+
     /**
      * Pod exit code
      */
@@ -42,5 +44,7 @@ export interface ModelPackagingStatus {
      * Model Packaging State
      */
     state?: string;
+
+    updatedAt?: string;
 
 }

@@ -9,10 +9,11 @@ import {Link as RouterLink} from "react-router-dom";
 import {DeploymentURLs} from "./urls";
 import {join} from "path";
 import {ConnectionURLs} from "../connections/urls";
+import {humanDate} from "../../utils/date";
 
 const DeploymentEnhancedTable = (props: EnhancedTableProps<ModelDeployment>) => <EnhancedTable {...props}/>;
 
-const headers = ['Image pull connection ID', 'Image', 'Replicas', 'State'];
+const headers = ['Image pull connection ID', 'Image', 'Replicas', 'State', 'Created at', 'Updated at'];
 const extractRow = (md: ModelDeployment) => [
     (
         <RouterLink
@@ -24,7 +25,9 @@ const extractRow = (md: ModelDeployment) => [
     ),
     md.spec?.image,
     `${md.spec?.minReplicas}/${md.status?.availableReplicas}/${md.spec?.maxReplicas}`,
-    md.status?.state
+    md.status?.state,
+    humanDate(md.status?.createdAt),
+    humanDate(md.status?.updatedAt)
 ];
 
 export const DeploymentTable: React.FC = () => {
