@@ -3,22 +3,13 @@ import {TextFieldProps} from "@material-ui/core/TextField/TextField";
 import React, {useContext} from "react";
 import {useFormikContext} from "formik";
 import {FieldsOptions, FieldsOptionsContext} from "./EditablePage";
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {createStyles, makeStyles} from "@material-ui/core/styles";
 import {calculateFormikFieldProperties, FormikProperties} from "./FormikProperties";
 
-export const useFieldsStyles = makeStyles((theme: Theme) =>
+const useFieldsStyles = makeStyles(() =>
     createStyles({
         fields: {
-            margin: "20px",
-            maxWidth: "30%",
-        },
-        button: {
-            marginTop: theme.spacing(1),
-            marginRight: theme.spacing(1),
-        },
-        cleanupLink: {
-            color: 'inherit',
-            textDecoration: 'none'
+            margin: '20px'
         }
     }),
 );

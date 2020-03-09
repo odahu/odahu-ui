@@ -24,6 +24,11 @@ export const useItemInputStyles = makeStyles(() =>
         listItem: {
             paddingLeft: '0px',
         },
+        itemContent: {
+            display: "grid",
+            gridTemplateColumns: "50% 50%",
+            width: '100%'
+        },
         listAction: {
             marginTop: '10px',
         },
@@ -57,7 +62,9 @@ export const ItemInputParametersView: React.FC<ItemInputParametersViewProps> = (
     return (
         <ListItem className={classes.listItem}>
             <ListItem className={classes.listItem}>
-                {children}
+                <div className={classes.itemContent}>
+                    {children}
+                </div>
             </ListItem>
             <ListItemSecondaryAction
                 className={classes.listAction}
@@ -81,10 +88,12 @@ export interface InputParametersViewProps {
     header: string;
     style?: CSSProperties;
     description?: string;
+    className?: string;
 }
 
 export const InputParametersView: React.FC<InputParametersViewProps> = (
     {
+        className,
         arrayHelpers, header, style,
         description, createNewElem, children
 
@@ -104,7 +113,7 @@ export const InputParametersView: React.FC<InputParametersViewProps> = (
     return (
         <Paper
             style={style}
-            className={classes.root}
+            className={className}
         >
             <div className={classes.topBar}>
                 <Typography

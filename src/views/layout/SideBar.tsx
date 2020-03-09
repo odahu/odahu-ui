@@ -137,37 +137,35 @@ export const SideBar: React.FC<SidebarProps> = ({isOpened}) => {
                 />
                 <Divider/>
                 <SideBarElement
-                    icon={<SettingsInputComponentIcon/>}
-                    heading='Connections'
-                    url={ConnectionURLs.Table}
-                />
-                <Divider/>
-                <SideBarElement
                     icon={<FitnessCenterIcon/>}
                     heading='Trainings'
                     url={TrainingURLs.Table}
                 />
-                <SideBarElement
-                    icon={<BuildIcon/>}
-                    heading='Toolchains'
-                    url={ToolchainURLs.Table}
-                />
-                <Divider/>
                 <SideBarElement
                     icon={<WorkIcon/>}
                     heading='Packagings'
                     url={PackagingURLs.Table}
                 />
                 <SideBarElement
-                    icon={<AccountTreeIcon/>}
-                    heading='Packagers'
-                    url={PackagerURLs.Table}
-                />
-                <Divider/>
-                <SideBarElement
                     icon={<CloudIcon/>}
                     heading='Deployments'
                     url={DeploymentURLs.Table}
+                />
+                <Divider/>
+                <SideBarElement
+                    icon={<SettingsInputComponentIcon/>}
+                    heading='Connections'
+                    url={ConnectionURLs.Table}
+                />
+                <SideBarElement
+                    icon={<BuildIcon/>}
+                    heading='Toolchains'
+                    url={ToolchainURLs.Table}
+                />
+                <SideBarElement
+                    icon={<AccountTreeIcon/>}
+                    heading='Packagers'
+                    url={PackagerURLs.Table}
                 />
             </List>
             <Divider/>

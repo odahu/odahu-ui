@@ -1,5 +1,5 @@
 import React from 'react';
-import {ParametersView} from "../../components/ParametersView";
+import {ParametersView, ViewParam} from "../../components/ParametersView";
 import {TableParameterView} from "../../components/TablePrameterView";
 import {PackagingIntegration} from "../../models/odahuflow/PackagingIntegration";
 import {extractParameters} from "./utils";
@@ -11,8 +11,18 @@ export interface PackagerViewProps {
 }
 
 export const PackagerView: React.FC<PackagerViewProps> = ({packager, status}) => {
-    const params = [
+    const params: Array<ViewParam> = [
         {name: "ID", elem: packager.id},
+    ];
+
+    if (status) {
+        params.push(
+            {name: "Created at", elem: humanDate(packager.status?.createdAt)},
+            {name: "Updated at", elem: humanDate(packager.status?.updatedAt)},
+        )
+    }
+
+    params.push(
         {name: "Default image", elem: packager.spec?.defaultImage},
         {name: "Entrypoint", elem: packager.spec?.entrypoint},
         {
@@ -48,14 +58,7 @@ export const PackagerView: React.FC<PackagerViewProps> = ({packager, status}) =>
                 />
             )
         },
-    ];
-
-    if (status){
-        params.push(
-            {name: "Created at", elem: humanDate(packager.status?.createdAt)},
-            {name: "Updated at", elem: humanDate(packager.status?.updatedAt)},
-        )
-    }
+    );
 
     return (
         <ParametersView params={params}/>

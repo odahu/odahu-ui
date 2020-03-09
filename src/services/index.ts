@@ -5,6 +5,7 @@ import {ModelPackaging} from "../models/odahuflow/ModelPackaging";
 import {PackagingIntegration} from "../models/odahuflow/PackagingIntegration";
 import {ModelTraining} from "../models/odahuflow/ModelTraining";
 import {ToolchainIntegration} from "../models/odahuflow/ToolchainIntegration";
+import {UserService} from "./user";
 
 interface ErrorMessage {
     message: string;
@@ -17,6 +18,12 @@ function isErrorMessage<T>(resp: Response, entity: T | ErrorMessage): entity is 
 
 // TODO: fix type
 export function extractEntity(resp: Response): Promise<any> {
+    if (resp.status === 403) {
+        return resp.text().then(() => {
+            throw new Error("Access forbidden");
+        })
+    }
+
     if (resp.status >= 500) {
         return resp.text().then(errorMessage => {
             throw new Error(errorMessage);
@@ -111,4 +118,5 @@ export interface Services {
     packagerService: Service<PackagingIntegration>;
     trainingService: LoggingService<ModelTraining>;
     toolchainService: Service<ToolchainIntegration>;
+    userService: UserService;
 }

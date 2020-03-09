@@ -19,6 +19,8 @@ import {PackagerState} from "./packagers/types";
 import {packagerReducer} from "./packagers/reducer";
 import {ModelPackagingState} from "./packaging/types";
 import {packagingReducer} from "./packaging/reducer";
+import {UserState} from "./user/types";
+import {userReducer} from "./user/reducer";
 
 // Top level state
 export interface ApplicationState {
@@ -31,6 +33,7 @@ export interface ApplicationState {
     toolchains: ToolchainState;
     packagers: PackagerState;
     packagings: ModelPackagingState;
+    user: UserState;
 }
 
 // Helper thunk types
@@ -47,4 +50,5 @@ export const createRootReducer = combineReducers({
     toolchains: toolchainReducer,
     packagers: packagerReducer,
     packagings: packagingReducer,
+    user: userReducer,
 });

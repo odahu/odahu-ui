@@ -1,7 +1,17 @@
 import React from "react";
-import {Paper, Typography} from "@material-ui/core";
-import {OdahuTextField} from "./CustomTextField";
+import {Divider, Paper, Typography} from "@material-ui/core";
+import {OdahuTextField} from "./OdahuTextField";
 import {useFieldsStyles} from "./fields";
+import {createStyles, makeStyles} from "@material-ui/core/styles";
+
+const useResourcesStyles = makeStyles(() =>
+    createStyles({
+        content: {
+            display: "grid",
+            gridTemplateColumns: "50% 50%"
+        }
+    }),
+);
 
 export interface ResourcesSpecElementsProps {
     // Is GPU resources fields enabled
@@ -10,40 +20,37 @@ export interface ResourcesSpecElementsProps {
 
 export const ResourcesSpecElements: React.FC<ResourcesSpecElementsProps> = ({gpu}) => {
     const classes = useFieldsStyles();
+    const resClasses = useResourcesStyles();
 
     return (
-        <Paper className={classes.fields} style={{maxWidth: '40%'}}>
+        <Paper className={classes.editorField}>
             <Typography className={classes.paperHeader}>Resources</Typography>
             <p className={classes.helperText}>Compute resources for the training job</p>
-            <OdahuTextField
-                name="spec.resources.requests.memory"
-                label='Memory Request'
-                style={{maxWidth: '40%', minWidth: '40%'}}
-            />
-            <OdahuTextField
-                name="spec.resources.limits.memory"
-                label='Memory Limit'
-                style={{maxWidth: '40%', minWidth: '40%'}}
-            />
-            <OdahuTextField
-                label='CPU Request'
-                name="spec.resources.requests.cpu"
-                style={{maxWidth: '40%', minWidth: '40%'}}
-            />
-            <OdahuTextField
-                name="spec.resources.limits.cpu"
-                label='CPU Limit'
-                style={{maxWidth: '40%', minWidth: '40%'}}
-            />
-            {gpu && (
-                <>
+            <Divider/>
+            <div className={resClasses.content}>
+                <OdahuTextField
+                    name="spec.resources.requests.memory"
+                    label='Memory Request'
+                />
+                <OdahuTextField
+                    name="spec.resources.limits.memory"
+                    label='Memory Limit'
+                />
+                <OdahuTextField
+                    label='CPU Request'
+                    name="spec.resources.requests.cpu"
+                />
+                <OdahuTextField
+                    name="spec.resources.limits.cpu"
+                    label='CPU Limit'
+                />
+                {gpu && (
                     <OdahuTextField
                         name="spec.resources.limits.gpu"
                         label='GPU Limit'
-                        style={{maxWidth: '40%', minWidth: '40%'}}
                     />
-                </>
-            )}
+                )}
+            </div>
         </Paper>
     )
 };

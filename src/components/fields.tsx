@@ -1,9 +1,9 @@
-import {FormikComputedProps, FormikHandlers, FormikState} from "formik";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import * as Yup from "yup";
 import {isValidID} from "../utils/enities";
 
-export type FormikHelper<T = any> = FormikState<T> & FormikHandlers & FormikComputedProps<T>
+export const maxFieldWidth = '500px';
+export const fieldMargin = '20px';
 
 export const useFieldsStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -11,8 +11,12 @@ export const useFieldsStyles = makeStyles((theme: Theme) =>
             width: '100%',
         },
         fields: {
-            margin: "20px",
-            maxWidth: "30%",
+            margin: `${fieldMargin} !important`,
+        },
+        editorField: {
+            margin: `${fieldMargin} !important`,
+            maxWidth: maxFieldWidth,
+            width: maxFieldWidth
         },
         button: {
             marginTop: theme.spacing(1),

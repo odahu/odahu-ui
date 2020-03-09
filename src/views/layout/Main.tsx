@@ -30,6 +30,7 @@ import {ConnectionURLs} from "../connections/urls";
 import {PackagerURLs} from "../packagers/urls";
 import {ToolchainURLs} from "../toolchains/urls";
 import {PackagingURLs} from "../packagings/urls";
+import {fetchUserInfoRequest} from "../../store/user/actions";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -67,6 +68,7 @@ export const MainLayout: React.FC = () => {
         Promise.all([
             dispatch(fetchAllConnectionsRequest()),
             dispatch(fetchConfigurationRequest()),
+            dispatch(fetchUserInfoRequest()),
             dispatch(fetchAllDeploymentRequest()),
             dispatch(fetchAllToolchainRequest()),
             dispatch(fetchAllTrainingRequest()),

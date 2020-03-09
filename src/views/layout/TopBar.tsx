@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {AppPopup} from "./AppPopup";
+import {UserPopup} from "./UserPopup";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -75,6 +76,7 @@ export const TopBar: React.FC<TopBarProps> = (
                 </Typography>
                 <div className={classes.content}/>
                 <AppPopup/>
+                <UserPopup/>
             </Toolbar>
         </AppBar>
     )

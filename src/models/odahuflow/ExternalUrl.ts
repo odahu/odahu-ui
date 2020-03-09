@@ -14,7 +14,7 @@ import * as models from './models';
 
 export interface ExternalUrl {
     /**
-     * Optional link to an image which represents a type of the resource, for example the logo of grafana
+     * Optional link to an image which represents a type of the resource, for example the logo of Grafana
      */
     imageUrl?: string;
 
