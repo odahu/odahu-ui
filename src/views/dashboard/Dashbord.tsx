@@ -1,7 +1,10 @@
 import React from "react";
 import {createStyles, Grid, makeStyles, Theme} from "@material-ui/core";
-import {GettingStarted} from "./GettingStarted";
-import {CLI} from "./CLI";
+import {Documentation} from "./Documentation";
+import {ConnectionDashboardPanel} from "../connections/ConnectionDashboardPanel";
+import {TrainingDashboardPanel} from "../trainings/TrainingDashboardPanel";
+import {PackagingDashboardPanel} from "../packagings/PackagingDashboardPanel";
+import {DeploymentDashboardPanel} from "../deployments/DeploymentDashboardPanel";
 
 export const DashboardURLPrefix = "/dashboard";
 
@@ -25,10 +28,19 @@ export const DashboardView: React.FC = () => {
         <div className={classes.root}>
             <Grid container spacing={3}>
                 <Grid item xs={3}>
-                    <GettingStarted/>
+                    <Documentation/>
                 </Grid>
-                <Grid item xs={6}>
-                    <CLI/>
+                <Grid item xs={3}>
+                    <ConnectionDashboardPanel/>
+                </Grid>
+                <Grid item xs={3}>
+                    <TrainingDashboardPanel/>
+                </Grid>
+                <Grid item xs={3}>
+                    <PackagingDashboardPanel/>
+                </Grid>
+                <Grid item xs={3}>
+                    <DeploymentDashboardPanel/>
                 </Grid>
             </Grid>
         </div>

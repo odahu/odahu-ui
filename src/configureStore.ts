@@ -10,6 +10,7 @@ import {PackagingService} from "./services/packaging";
 import {PackagerIntegrationService} from "./services/packager";
 import {TrainingService} from "./services/trainings";
 import {TrainingToolchainService} from "./services/toolchain";
+import {UserService} from "./services/user";
 
 
 export function configureStore(): Store<ApplicationState> {
@@ -18,6 +19,7 @@ export function configureStore(): Store<ApplicationState> {
         composeWithDevTools(applyMiddleware(thunk.withExtraArgument<Services>({
             connectionService: new ConnectionService(),
             configurationService: new ConfigurationService(),
+            userService: new UserService(),
             deploymentService: new DeploymentService(),
             packagingService: new PackagingService(),
             packagerService: new PackagerIntegrationService(),

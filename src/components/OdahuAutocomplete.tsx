@@ -42,13 +42,14 @@ export interface OdahuAutocompleteProps {
     error?: boolean;
     // Error or description text
     helperText?: string;
+    className?: string;
 }
 
 /**
  * The proxy component for material UI Autocomplete
  */
 export const OdahuAutocomplete: React.FC<OdahuAutocompleteProps> = (
-    {options, name, value, label,error, helperText}
+    {className, options, name, value, label,error, helperText}
 ) => {
     const classes = editPageStyles();
     const formik = useFormikContext();
@@ -56,7 +57,7 @@ export const OdahuAutocomplete: React.FC<OdahuAutocompleteProps> = (
     return (
         <Autocomplete
             freeSolo
-            className={classes.fields}
+            className={className ?? classes.fields}
             onChange={(event, newValue) => {
                 formik.setFieldValue(name, newValue);
             }}

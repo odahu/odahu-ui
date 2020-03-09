@@ -12,6 +12,7 @@ import {
 import {DeploymentView} from "./DeploymentView";
 import {EditableDeploymentPage} from "./DeploymentPages";
 import {useFetchingEntity} from "../../components/EntitiyFetching";
+import {GrafanaDashboard} from "../../components/Dashboard";
 
 const saveButtonClick = new SaveButtonClick<ModelDeployment>(
     editDeploymentRequest,
@@ -28,7 +29,7 @@ export const DeploymentViewPage: React.FC = () => {
         <ViewPage
             loading={loading}
             notFound={notFound}
-            tabHeaders={["View", "Edit", "YAML"]}
+            tabHeaders={["View", "Edit", "YAML", "Dashboard"]}
             tabValues={[
                 <DeploymentView
                     key="view"
@@ -46,6 +47,10 @@ export const DeploymentViewPage: React.FC = () => {
                     entity={entity}
                     fileName={`${id}.deployment.odahuflow.yaml`}
                     saveButtonClick={saveButtonClick}
+                />,
+                <GrafanaDashboard
+                    key="grafana"
+                    deployment
                 />
             ]}
         />

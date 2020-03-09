@@ -14,6 +14,7 @@ import {PackagingView} from "./PackagingView";
 import {EditablePackagingPage} from "./PackagingEditablePage";
 import {LogsView} from "../../components/LogsView";
 import {useFetchingEntity} from "../../components/EntitiyFetching";
+import {GrafanaDashboard} from "../../components/Dashboard";
 
 const saveButtonClick = new SaveButtonClick<ModelPackaging>(
     editPackagingRequest,
@@ -30,7 +31,7 @@ export const PackagingViewPage: React.FC = () => {
         <ViewPage
             loading={loading}
             notFound={notFound}
-            tabHeaders={["View", "Edit", "YAML", "Logs"]}
+            tabHeaders={["View", "Edit", "YAML", "Logs", "Dashobard"]}
             tabValues={[
                 <PackagingView
                     key="view"
@@ -55,6 +56,10 @@ export const PackagingViewPage: React.FC = () => {
                     fileName={`${id}.logs.packaging.odahuflow.txt`}
                     fetchLogsRequest={fetchPackagingLogsRequest}
                     fetchEntityRequest={fetchPackagingRequest}
+                />,
+                <GrafanaDashboard
+                    key="grafana"
+                    deployment={false}
                 />
             ]}
         />

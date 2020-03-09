@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme: Theme) =>
             flexWrap: 'wrap',
             justifyContent: 'space-around',
             alignItems: 'center',
-            // alignContent: 'stretch',
             width: '380px',
             padding: 0,
             margin: '20px',
