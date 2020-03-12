@@ -1,5 +1,5 @@
 import React from 'react';
-import {ParametersView} from "../../components/ParametersView";
+import {ParametersView, ViewParam} from "../../components/ParametersView";
 import {checkValuePresent, TableParameterView} from "../../components/TablePrameterView";
 import {ModelPackaging} from "../../models/odahuflow/ModelPackaging";
 import {isArgument} from "./PackagingEditablePage";
@@ -11,12 +11,22 @@ export interface PackagingViewProps {
 }
 
 export const PackagingView: React.FC<PackagingViewProps> = ({packaging, status}) => {
-    // Parameters from spec field are always present
-    const params = [
+    const params: Array<ViewParam> = [
         {name: "ID", elem: packaging.id},
+        {name: "Integration", elem: packaging.spec?.integrationName},
+    ];
+
+    if (status) {
+        params.push(
+            {name: 'State', elem: packaging.status?.state},
+            {name: "Created at", elem: humanDate(packaging.status?.createdAt)},
+            {name: "Updated at", elem: humanDate(packaging.status?.updatedAt)},
+        )
+    }
+
+    params.push(
         {name: "Artifact name", elem: packaging.spec?.artifactName},
         {name: "Image", elem: packaging.spec?.image},
-        {name: "Integration", elem: packaging.spec?.integrationName},
         {name: "Output Connection", elem: packaging.spec?.outputConnection},
         {name: "Memory requests", elem: packaging.spec?.resources?.requests?.memory},
         {name: "Memory limits", elem: packaging.spec?.resources?.limits?.memory},
@@ -44,11 +54,11 @@ export const PackagingView: React.FC<PackagingViewProps> = ({packaging, status})
                 />
             )
         },
-    ];
+    );
+
 
     if (status) {
         params.push(
-            {name: 'State', elem: packaging.status?.state},
             {
                 name: 'Results', elem: checkValuePresent(packaging.status?.results) && (
                     <TableParameterView
@@ -60,8 +70,6 @@ export const PackagingView: React.FC<PackagingViewProps> = ({packaging, status})
                     />
                 )
             },
-            {name: "Created at", elem: humanDate(packaging.status?.createdAt)},
-            {name: "Updated at", elem: humanDate(packaging.status?.updatedAt)},
         )
     }
 

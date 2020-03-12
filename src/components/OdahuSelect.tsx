@@ -1,9 +1,9 @@
 import {FormControl, FormHelperText, InputLabel, MenuItem, Select, SelectProps} from "@material-ui/core";
-import clsx from "clsx";
 import React, {useContext} from "react";
-import {editPageStyles, FieldsOptions, FieldsOptionsContext} from "./EditablePage";
+import {FieldsOptions, FieldsOptionsContext} from "./EditablePage";
 import {useFormikContext} from "formik";
 import {calculateFormikFieldProperties, FormikProperties} from "./FormikProperties";
+import {useFieldsStyles} from "./fields";
 
 export type FormikOdahuSelectProps = FormikProperties & OdahuSelectProps;
 
@@ -28,17 +28,11 @@ export const FormikOdahuSelect: React.FC<FormikOdahuSelectProps> = (
     )
 };
 
-export interface OdahuSelectProps {
+export type OdahuSelectProps = {
     label: string;
-    name: string;
     options: any[];
-    onChange?: SelectProps['onChange'];
-    value?: unknown;
-    defaultValue?: SelectProps['defaultValue'];
-    error?: boolean;
     helperText?: string;
-    style?: React.CSSProperties;
-}
+} & SelectProps;
 
 /**
  * The proxy component for material UI Select
@@ -52,16 +46,15 @@ export const OdahuSelect: React.FC<OdahuSelectProps> = (
         defaultValue,
         error,
         helperText,
-        style,
         options,
+        className,
     }
 ) => {
-    const classes = editPageStyles();
+    const classes = useFieldsStyles();
 
     return (
         <FormControl
-            style={style}
-            className={clsx(classes.formControl, classes.fields)}
+            className={className ?? classes.fields}
             error={error}
         >
             <InputLabel shrink>

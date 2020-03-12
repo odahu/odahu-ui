@@ -49,18 +49,9 @@ export const LogsView: React.FC<LogsViewProps> = (
 ) => {
     const classes = useLogsViewStyles();
     const editor = useRef<AceEditor | null>(null);
-    const [logs, setLogs] = useState<string>('');
-    const [timerID, setTimerID] = useState<null | number>(null);
+    const [logs, setLogs] = useState<string | null>();
     const [isProgressBarVisible, setProgressBarVisible] = useState<boolean>(true);
     const dispatch: any = useDispatch();
-
-    function cleanupTimer(timerID: number | null) {
-        if (timerID !== null) {
-            window.clearInterval(timerID);
-        }
-
-        setTimerID(null);
-    }
 
     function fetchLogs() {
         return dispatch(fetchLogsRequest(entity.id ?? '')).then((res: string) => {
@@ -76,19 +67,18 @@ export const LogsView: React.FC<LogsViewProps> = (
 
                 return;
             } else if (isEntityCompleted(entity)) {
-                cleanupTimer(timerID);
-
                 return fetchLogs();
             } else {
+                window.setTimeout(refreshLogs, defaultUpdateTimeout);
                 return fetchLogs();
             }
         }).catch((err: string) => {
             // TODO: consider proper logging
             console.log(err);
+            setLogs('Logs not found')
         }).finally(() => {
             if (isEntityCompleted(entity)) {
                 setProgressBarVisible(false);
-                cleanupTimer(timerID);
             }
         });
     }
@@ -99,13 +89,7 @@ export const LogsView: React.FC<LogsViewProps> = (
     }
 
     useEffect(() => {
-        cleanupTimer(timerID);
-        setTimerID(window.setInterval(refreshLogs, defaultUpdateTimeout));
         refreshLogs();
-
-        return () => {
-            cleanupTimer(timerID);
-        }
     }, []);
 
     return (
@@ -119,7 +103,7 @@ export const LogsView: React.FC<LogsViewProps> = (
                 theme="github"
                 name="UNIQUE_ID_OF_DIV"
                 editorProps={{$blockScrolling: true}}
-                value={logs.length === 0 && isEntityCompleted(entity) ? "Logs not found" : logs}
+                value={logs ?? "..."}
                 ref={editor}
                 readOnly
             />

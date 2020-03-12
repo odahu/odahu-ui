@@ -44,3 +44,4 @@ export * from './ToolchainIntegrationSpec';
 export * from './ToolchainIntegrationStatus';
 export * from './TrainingConfiguration';
 export * from './TrainingResult';
+export * from './UserInfo';

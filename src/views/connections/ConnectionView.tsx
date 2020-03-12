@@ -12,6 +12,16 @@ export const ConnectionView: React.FC<ConnectionViewProps> = (({connection, stat
     const parameters: Array<ViewParam> = [
         {name: "ID", elem: connection.id},
         {name: "Type", elem: connection.spec?.type},
+    ];
+
+    if (status) {
+        parameters.push(
+            {name: "Created at", elem: humanDate(connection.status?.createdAt)},
+            {name: "Updated at", elem: humanDate(connection.status?.updatedAt)},
+        )
+    }
+
+    parameters.push(
         {name: "Description", elem: connection.spec?.description},
         {
             name: "WEB UI Link", elem: connection.spec?.webUILink && (
@@ -20,14 +30,7 @@ export const ConnectionView: React.FC<ConnectionViewProps> = (({connection, stat
         },
         {name: "URI", elem: connection.spec?.uri},
         ...specTypeParameters
-    ];
-
-    if (status){
-        parameters.push(
-            {name: "Created at", elem: humanDate(connection.status?.createdAt)},
-            {name: "Updated at", elem: humanDate(connection.status?.updatedAt)},
-        )
-    }
+    );
 
     return (
         <ParametersView params={parameters}/>
