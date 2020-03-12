@@ -4,8 +4,9 @@ import {ViewParam} from "../../../components/ParametersView";
 import * as Yup from "yup";
 import {FormikSecretTextField} from "../../../components/SecretTextField";
 import {ConnectionSpecPlugin, ConnectionTypes} from "./index";
-import {OdahuTextField} from "../../../components/CustomTextField";
+import {OdahuTextField} from "../../../components/OdahuTextField";
 import {FormikOdahuAutocomplete} from "../../../components/OdahuAutocomplete";
+import {useFieldsStyles} from "../../../components/fields";
 
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
@@ -46,24 +47,30 @@ const ALL_AWS_REGIONS = [
 ];
 
 export const EditableFields: React.FC = () => {
+    const classes = useFieldsStyles();
+
     return (
         <>
             <OdahuTextField
+                className={classes.editorField}
                 name="spec.uri"
                 label="URI"
                 description='S3 compatible URI, for example s3://<bucket-name>/dir1/dir2/'
             />
             <FormikOdahuAutocomplete
+                className={classes.editorField}
                 name="spec.region"
                 label="Region"
                 options={ALL_AWS_REGIONS}
             />
             <FormikSecretTextField
+                className={classes.editorField}
                 name="spec.keyID"
                 label="Access Key ID"
                 description='access key ID (for example, "AKIAIOSFODNN7EXAMPLE").'
             />
             <FormikSecretTextField
+                className={classes.editorField}
                 name="spec.keySecret"
                 label="Access Key Secret"
                 description='secret access key (for example, "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY").'

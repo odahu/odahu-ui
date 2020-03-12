@@ -1,7 +1,6 @@
 import {StandardProps} from "@material-ui/core";
 import {FieldsOptions} from "./EditablePage";
-import {getIn} from "formik";
-import {FormikHelper} from "./fields";
+import {FormikProps, getIn} from "formik";
 
 /**
  * Output Odahu component properties.
@@ -29,20 +28,27 @@ export interface FormikProperties {
  * withFormik higher-order component).
  */
 export function calculateFormikFieldProperties<T>(
-    formik: FormikHelper<T>,
+    formik: FormikProps<T>,
     fieldsOptions: FieldsOptions,
     name: FormikProperties["name"],
     description: FormikProperties["description"] = '',
 ): OdahuComponentProperties {
     const errorMessage = getIn(formik.errors, name);
     const value = getIn(formik.values, name);
-    const isError = fieldsOptions.isValidatorActivated && !!errorMessage;
+    const touched = getIn(formik.touched, name);
+    const isError = (fieldsOptions.isValidatorActivated || touched) && !!errorMessage;
+
+    const change = (e: any) => {
+        e.persist();
+        formik.handleChange(e);
+        formik.setFieldTouched(name, true, false);
+    };
 
     return {
         error: isError,
         helperText: isError ? errorMessage : description,
         name: name,
-        onChange: formik.handleChange,
+        onChange: change,
         value: value,
     }
 }

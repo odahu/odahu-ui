@@ -4,7 +4,8 @@ import {ViewParam} from "../../../components/ParametersView";
 import * as Yup from "yup";
 import {FormikSecretTextField} from "../../../components/SecretTextField";
 import {ConnectionSpecPlugin, ConnectionTypes} from "./index";
-import {OdahuTextField} from "../../../components/CustomTextField";
+import {OdahuTextField} from "../../../components/OdahuTextField";
+import {useFieldsStyles} from "../../../components/fields";
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
     return [
@@ -21,19 +22,24 @@ export const Schema = {
 
 
 export const EditableFields: React.FC = () => {
+    const classes = useFieldsStyles();
+
     return (
         <>
             <OdahuTextField
+                className={classes.editorField}
                 name="spec.region"
                 label="Project"
                 description='GCP Project, where a bucket was created'
             />
             <OdahuTextField
+                className={classes.editorField}
                 name="spec.uri"
                 label="URI"
                 description='GCS compatible URI, for example gcs://<bucket-name>/dir1/dir2/'
             />
             <FormikSecretTextField
+                className={classes.editorField}
                 name="spec.keySecret"
                 label="Service account secret"
                 description='Service account key in json format'

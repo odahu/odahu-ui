@@ -5,7 +5,7 @@ import {Visibility, VisibilityOff} from "@material-ui/icons";
 import {useFormikContext} from "formik";
 import {FieldsOptions, FieldsOptionsContext} from "./EditablePage";
 import {calculateFormikFieldProperties, FormikProperties} from "./FormikProperties";
-import {useFieldsStyles} from "./CustomTextField";
+import {useFieldsStyles} from "./fields";
 
 export type FormikSecretTextFieldProps = FormikProperties & SecretTextFieldProps;
 
@@ -36,7 +36,7 @@ export type SecretTextFieldProps = {
     helperText?: string;
 } & InputProps;
 
-export const SecretTextField: React.FC<SecretTextFieldProps> = ({error, helperText, label, ...otherProps}) => {
+export const SecretTextField: React.FC<SecretTextFieldProps> = ({className, error, helperText, label, ...otherProps}) => {
     const classes = useFieldsStyles();
 
     const [showPassword, setShowPassword] = React.useState(false);
@@ -46,7 +46,7 @@ export const SecretTextField: React.FC<SecretTextFieldProps> = ({error, helperTe
     };
 
     return (
-        <FormControl className={classes.fields} error={error}>
+        <FormControl className={className ?? classes.fields} error={error}>
             <InputLabel>{label}</InputLabel>
             <Input
                 type={showPassword ? 'text' : 'password'}

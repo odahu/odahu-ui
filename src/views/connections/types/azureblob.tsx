@@ -4,7 +4,8 @@ import {ViewParam} from "../../../components/ParametersView";
 import * as Yup from "yup";
 import {FormikSecretTextField} from "../../../components/SecretTextField";
 import {ConnectionSpecPlugin, ConnectionTypes} from "./index";
-import {OdahuTextField} from "../../../components/CustomTextField";
+import {OdahuTextField} from "../../../components/OdahuTextField";
+import {useFieldsStyles} from "../../../components/fields";
 
 
 function extractViewParameters(conn: Connection): Array<ViewParam> {
@@ -19,14 +20,18 @@ const Schema = {
 };
 
 const EditableFields: React.FC = () => {
+    const classes = useFieldsStyles();
+
     return (
         <>
             <OdahuTextField
+                className={classes.editorField}
                 name="spec.uri"
                 label="URI"
                 description="Azure storage compatible URI, for example <bucket-name>/dir1/dir2/"
             />
             <FormikSecretTextField
+                className={classes.editorField}
                 name='spec.keySecret'
                 label="SAS Token"
                 description='Shared access signatures, format: “<primary_blob_endpoint>/<sas_token>”'

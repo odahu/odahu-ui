@@ -14,9 +14,10 @@ import {EditableTrainingPage} from "./TrainingEditablePage";
 import {ModelTraining} from "../../models/odahuflow/ModelTraining";
 import {LogsView} from "../../components/LogsView";
 import {useFetchingEntity} from "../../components/EntitiyFetching";
+import {createDashboardURL, GrafanaDashboard} from "../../components/Dashboard";
 
 
-const tabHeaders = ["View", "Edit", "YAML", "Logs"];
+const tabHeaders = ["View", "Edit", "YAML", "Logs", "Dashboard"];
 const editableSaveButtonClick = new SaveButtonClick<ModelTraining>(
     editTrainingRequest,
     fetchAllTrainingRequest,
@@ -57,6 +58,14 @@ export const TrainingPage: React.FC = () => {
                     fileName={`${id}.logs.training.odahuflow.txt`}
                     fetchLogsRequest={fetchTrainingLogsRequest}
                     fetchEntityRequest={fetchTrainingRequest}
+                />,
+                <GrafanaDashboard
+                    key="grafana"
+                    dashboardURL={createDashboardURL(
+                        // This hardcode
+                        "/grafana/d/ab4f13a9892a76a4d21ce8c2445bf4ea/pods",
+                        {namespace: "odahu-flow-training", pod: entity.status?.podName}
+                    )}
                 />
             ]}
         />

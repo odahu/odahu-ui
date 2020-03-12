@@ -4,7 +4,8 @@ import {ViewParam} from "../../../components/ParametersView";
 import * as Yup from "yup";
 import {FormikSecretTextField} from "../../../components/SecretTextField";
 import {ConnectionSpecPlugin, ConnectionTypes} from "./index";
-import {OdahuTextField} from "../../../components/CustomTextField";
+import {OdahuTextField} from "../../../components/OdahuTextField";
+import {useFieldsStyles} from "../../../components/fields";
 
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
@@ -21,19 +22,24 @@ export const Schema = {
 };
 
 export const EditableFields: React.FC = () => {
+    const classes = useFieldsStyles();
+
     return (
         <>
             <OdahuTextField
+                className={classes.editorField}
                 name="spec.uri"
                 label="URI"
                 description="Docker registry host, for example: gcr.io/project/odahuflow"
             />
             <FormikSecretTextField
+                className={classes.editorField}
                 name="spec.username"
                 label="Username"
                 description='Docker registry username'
             />
             <FormikSecretTextField
+                className={classes.editorField}
                 name="spec.password"
                 label="Password"
                 description="Docker registry password"

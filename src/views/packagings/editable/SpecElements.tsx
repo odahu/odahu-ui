@@ -7,12 +7,14 @@ import {ConnectionState} from "../../../store/connections/types";
 import {PackagerState} from "../../../store/packagers/types";
 import {InputParametersView, ItemInputParametersView} from "../../../components/InputParametersView";
 import {FormikOdahuSelect} from "../../../components/OdahuSelect";
-import {OdahuTextField} from "../../../components/CustomTextField";
+import {OdahuTextField} from "../../../components/OdahuTextField";
 import {ModelTrainingState} from "../../../store/trainings/types";
 import {FormikOdahuAutocomplete} from "../../../components/OdahuAutocomplete";
 import {ResourcesSpecElements} from "../../../components/ResourceSpecElements";
+import {useFieldsStyles} from "../../../components/fields";
 
 const Targets: React.FC = () => {
+    const classes = useFieldsStyles();
     const formik = useFormikContext<ModelPackaging>();
 
     const connectionsState = useSelector<ApplicationState, ConnectionState>(state => state.connections);
@@ -33,6 +35,7 @@ const Targets: React.FC = () => {
             name="spec.targets"
             render={arrayHelpers => (
                 <InputParametersView
+                    className={classes.editorField}
                     description='List of connections for a packager'
                     arrayHelpers={arrayHelpers}
                     createNewElem={() => {
@@ -69,6 +72,7 @@ export interface Argument {
 }
 
 const Arguments: React.FC = () => {
+    const classes = useFieldsStyles();
     const formik = useFormikContext<ModelPackaging>();
 
     const packagerState = useSelector<ApplicationState, PackagerState>(state => state.packagers);
@@ -86,7 +90,7 @@ const Arguments: React.FC = () => {
             name="spec.arguments"
             render={arrayHelpers => (
                 <InputParametersView
-                    style={{maxWidth: '60%', minWidth: '30%'}}
+                    className={classes.editorField}
                     arrayHelpers={arrayHelpers}
                     createNewElem={() => {
                         return {name: argumentNames[0], value: ''}
@@ -97,7 +101,6 @@ const Arguments: React.FC = () => {
                     {formik.values.spec?.arguments?.map((target: Argument, index: number) => (
                             <ItemInputParametersView arrayHelpers={arrayHelpers} index={index}>
                                 <FormikOdahuSelect
-                                    style={{minWidth: '300px'}}
                                     name={`spec.arguments[${index}].name`}
                                     label="Name"
                                     options={argumentNames}
@@ -116,6 +119,7 @@ const Arguments: React.FC = () => {
 };
 
 export const SpecElements: React.FC = () => {
+    const classes = useFieldsStyles();
     const trainingState = useSelector<ApplicationState, ModelTrainingState>(state => state.trainings);
     const trainingArtifacts = Object.values(trainingState.data)
         .filter(mt => mt.status?.state === "succeeded")
@@ -125,6 +129,7 @@ export const SpecElements: React.FC = () => {
     return (
         <>
             <FormikOdahuAutocomplete
+                className={classes.editorField}
                 name="spec.artifactName"
                 label='Artifact'
                 options={trainingArtifacts}

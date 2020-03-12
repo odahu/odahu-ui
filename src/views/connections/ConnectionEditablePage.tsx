@@ -10,9 +10,9 @@ import {EditablePage} from "../../components/EditablePage";
 import {SaveButtonClick} from "../../components/actions";
 import {useFormikContext} from "formik";
 import {FormikOdahuSelect} from "../../components/OdahuSelect";
-import {OdahuTextField} from "../../components/CustomTextField";
+import {OdahuTextField} from "../../components/OdahuTextField";
 import * as Yup from "yup";
-import {IDSchema} from "../../components/fields";
+import {IDSchema, useFieldsStyles} from "../../components/fields";
 import {ConnectionSpec} from "../../models/odahuflow/ConnectionSpec";
 import {ConnectionView} from "./ConnectionView";
 import {connectionPluginsMapping} from "./plugins";
@@ -71,26 +71,32 @@ interface MetadataElementsPros {
 }
 
 const MetadataElements: React.FC<MetadataElementsPros> = ({readonlyID}) => {
+    const classes = useFieldsStyles();
+
     return (
         <>
             <OdahuTextField
+                className={classes.editorField}
                 disabled={readonlyID}
                 name="id"
                 label='ID'
                 description="Unique value among all connections"
             />
             <FormikOdahuSelect
+                className={classes.editorField}
                 name='spec.type'
                 label="Type"
                 defaultValue={ConnectionTypes.AZUREBLOB}
                 options={allConnectionTypes}
             />
             <OdahuTextField
+                className={classes.editorField}
                 name='spec.webUILink'
                 label="WEB UI Link"
                 description='Link to the web resource. For example, git repo or a gcp bucket'
             />
             <OdahuTextField
+                className={classes.editorField}
                 name='spec.description'
                 label="Description"
                 multiline

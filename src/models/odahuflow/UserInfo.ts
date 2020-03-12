@@ -12,13 +12,9 @@
 
 import * as models from './models';
 
-export interface TargetSchema {
-    connectionTypes?: Array<string>;
+export interface UserInfo {
+    email?: string;
 
-    default?: string;
-
-    name?: string;
-
-    required?: boolean;
+    username?: string;
 
 }

@@ -1,7 +1,11 @@
 import React from 'react';
 import {EditablePage} from "../../components/EditablePage";
 import {ModelDeployment} from "../../models/odahuflow/ModelDeployment";
-import {createDeploymentRequest, fetchAllDeploymentRequest} from "../../store/deployments/actions";
+import {
+    createDeploymentRequest,
+    fetchAllDeploymentRequest,
+    fetchDeploymentRequest
+} from "../../store/deployments/actions";
 import {SaveButtonClick} from "../../components/actions";
 import {DeploymentView} from "./DeploymentView";
 import {SpecElements} from "./editable/SpecElements";
@@ -10,7 +14,6 @@ import {DeploymentMetaSchema, DeploymentSchema} from "./editable/schemas";
 import {DeploymentURLs} from "./urls";
 import {ModelDeploymentSpec} from "../../models/odahuflow/ModelDeploymentSpec";
 import {FetchingEntity} from "../../components/EntitiyFetching";
-import {fetchConnectionRequest} from "../../store/connections/actions";
 import {addSuffixToID} from "../../utils/enities";
 
 const defaultFields = {
@@ -89,7 +92,7 @@ export const NewDeploymentPage: React.FC = () => {
 export const CloneDeploymentPage: React.FC = () => {
     return (
         <FetchingEntity
-            fetchAction={fetchConnectionRequest}
+            fetchAction={fetchDeploymentRequest}
         >
             {
                 (deployment: ModelDeployment) => (

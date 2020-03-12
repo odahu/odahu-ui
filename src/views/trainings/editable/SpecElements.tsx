@@ -1,19 +1,35 @@
 import React from "react";
-import {useFieldsStyles} from "../../../components/fields";
+import {fieldMargin, useFieldsStyles} from "../../../components/fields";
 import {useSelector} from "react-redux";
 import {ApplicationState} from "../../../store";
 import {ConnectionState} from "../../../store/connections/types";
 import {ConnectionTypes} from "../../connections/types";
-import {Paper, Typography} from "@material-ui/core";
+import {Divider, Paper, Typography} from "@material-ui/core";
 import {FormikOdahuSelect} from "../../../components/OdahuSelect";
-import {OdahuTextField} from "../../../components/CustomTextField";
+import {OdahuTextField} from "../../../components/OdahuTextField";
 import {FieldArray, useFormikContext} from "formik";
 import {ModelTraining} from "../../../models/odahuflow/ModelTraining";
 import {InputParametersView, ItemInputParametersView} from "../../../components/InputParametersView";
 import {ResourcesSpecElements} from "../../../components/ResourceSpecElements";
+import {createStyles, makeStyles} from "@material-ui/core/styles";
+
+export const useTrainingClasses = makeStyles(() =>
+    createStyles({
+        gitContent: {
+            display: "grid",
+            gridTemplateColumns: "50% 50%",
+        },
+        gitWorkDir: {
+            margin: `${fieldMargin} !important`,
+            gridColumnStart: "1",
+            gridColumnEnd: "3"
+        },
+    }),
+);
 
 const GitSpecElements: React.FC = () => {
     const classes = useFieldsStyles();
+    const trainClasses = useTrainingClasses();
 
     const connectionsState = useSelector<ApplicationState, ConnectionState>(state => state.connections);
     const vcsConnectionIDs = Object.values(connectionsState.data)
@@ -21,33 +37,36 @@ const GitSpecElements: React.FC = () => {
         .map(conn => conn.id);
 
     return (
-        <Paper className={classes.fields}>
-            <Typography style={{margin: '5px'}}>GIT Settings</Typography>
-            <FormikOdahuSelect
-                name="spec.vcsName"
-                label="VCS ID"
-                style={{maxWidth: '90%'}}
-                options={vcsConnectionIDs}
-                description='A connection which describes credentials to a GIT repository'
-            />
-            <OdahuTextField
-                name="spec.reference"
-                label='Reference'
-                style={{maxWidth: '90%'}}
-                description='a branch, tag, or commit'
-            />
-            <OdahuTextField
-                name="spec.workDir"
-                label={'Work dir'}
-                style={{maxWidth: '90%'}}
-                description='Relative model location'
-            />
+        <Paper className={classes.editorField}>
+            <Typography className={classes.paperHeader}>GIT Settings</Typography>
+            <p className={classes.helperText}>Model git repository options</p>
+            <Divider/>
+            <div className={trainClasses.gitContent}>
+                <FormikOdahuSelect
+                    name="spec.vcsName"
+                    label="VCS ID"
+                    options={vcsConnectionIDs}
+                    description='A connection which describes credentials to a GIT repository'
+                />
+                <OdahuTextField
+                    name="spec.reference"
+                    label='Reference'
+                    description='a branch, tag, or commit'
+                />
+                <OdahuTextField
+                    className={trainClasses.gitWorkDir}
+                    name="spec.workDir"
+                    label={'Work dir'}
+                    description='Relative model location'
+                />
+            </div>
         </Paper>
     )
 };
 
 
 const DataSection: React.FC = () => {
+    const classes = useFieldsStyles();
     const formik = useFormikContext<ModelTraining>();
 
     const connectionsState = useSelector<ApplicationState, ConnectionState>(state => state.connections);
@@ -62,6 +81,7 @@ const DataSection: React.FC = () => {
             name="spec.data"
             render={arrayHelpers => (
                 <InputParametersView
+                    className={classes.editorField}
                     arrayHelpers={arrayHelpers}
                     createNewElem={() => {
                         return {
@@ -71,29 +91,22 @@ const DataSection: React.FC = () => {
                         }
                     }}
                     header="Data section"
-                    style={{minWidth: '50%', maxWidth: '50%'}}
                 >
                     {formik.values.spec?.data?.map((data, index) => (
                             <ItemInputParametersView arrayHelpers={arrayHelpers} index={index}>
-                                <FormikOdahuSelect
-                                    name={`spec.data.${index}.connName`}
-                                    label="Connection ID"
-                                    defaultValue={connectionIDs[0]}
-                                    style={{minWidth: '30%', maxWidth: '30%', paddingRight: '10px'}}
-                                    options={connectionIDs}
-                                >
-                                </FormikOdahuSelect>
                                 <OdahuTextField
                                     name={`spec.data.${index}.localPath`}
                                     label='Target Path'
-                                    style={{minWidth: '30%', maxWidth: '30%', paddingRight: '10px'}}
-                                    className={''}
                                 />
                                 <OdahuTextField
                                     name={`spec.data.${index}.remotePath`}
                                     label='Source Path'
-                                    style={{minWidth: '30%', maxWidth: '30%'}}
-                                    className={''}
+                                />
+                                <FormikOdahuSelect
+                                    name={`spec.data.${index}.connName`}
+                                    label="Connection ID"
+                                    defaultValue={connectionIDs[0]}
+                                    options={connectionIDs}
                                 />
                             </ItemInputParametersView>
                         )
@@ -110,6 +123,7 @@ export interface HyperParameter {
 }
 
 const HyperParametersSection: React.FC = () => {
+    const classes = useFieldsStyles();
     const formik = useFormikContext<ModelTraining>();
 
     return (
@@ -117,6 +131,7 @@ const HyperParametersSection: React.FC = () => {
             name="spec.hyperParameters"
             render={arrayHelpers => (
                 <InputParametersView
+                    className={classes.editorField}
                     arrayHelpers={arrayHelpers}
                     createNewElem={() => {
                         return {name: '', value: ''}
@@ -143,6 +158,7 @@ const HyperParametersSection: React.FC = () => {
 };
 
 const EnvironmentVariablesSection: React.FC = () => {
+    const classes = useFieldsStyles();
     const formik = useFormikContext<ModelTraining>();
 
     return (
@@ -150,8 +166,10 @@ const EnvironmentVariablesSection: React.FC = () => {
             name="spec.envs"
             render={arrayHelpers => (
                 <InputParametersView
+                    className={classes.editorField}
                     arrayHelpers={arrayHelpers}
                     header="Environment variables"
+                    description="These environment variables will be propagated to the training script."
                     createNewElem={() => {
                         return {name: '', value: ''}
                     }}
@@ -161,12 +179,10 @@ const EnvironmentVariablesSection: React.FC = () => {
                                 <OdahuTextField
                                     name={`spec.envs.${index}.name`}
                                     label='Name'
-                                    style={{minWidth: '40%', paddingRight: '5px'}}
                                 />
                                 <OdahuTextField
                                     name={`spec.envs.${index}.value`}
                                     label='Value'
-                                    style={{minWidth: '40%'}}
                                 />
                             </ItemInputParametersView>
                         )
@@ -178,9 +194,12 @@ const EnvironmentVariablesSection: React.FC = () => {
 };
 
 export const SpecElements: React.FC = () => {
+    const classes = useFieldsStyles();
+
     return (
         <>
             <OdahuTextField
+                className={classes.editorField}
                 name="spec.entrypoint"
                 label='Entrypoint'
                 description='Mlflow MLProject file can contains the list of entrypoints. You must choose one of these.'
