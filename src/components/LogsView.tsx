@@ -6,7 +6,7 @@ import "ace-builds/src-noconflict/theme-github";
 import {useDispatch} from "react-redux";
 import {Button, Collapse, LinearProgress} from "@material-ui/core";
 import {AsyncAction} from "../store";
-import {isEntityCompleted} from "../utils/enities";
+import {isEntityCompleted, isEntityScheduling} from "../utils/enities";
 import {saveAsFile} from "../utils/file";
 import {createStyles, makeStyles} from "@material-ui/core/styles";
 
@@ -60,27 +60,24 @@ export const LogsView: React.FC<LogsViewProps> = (
     }
 
     function refreshLogs() {
-        // TODO: need to update entity before fetch logs
         dispatch(fetchEntityRequest(entity.id as string)).then((entity: LoggedEntity) => {
-            if (entity.status?.state === "scheduling") {
-                setLogs('The container is scheduling...');
-
-                return;
-            } else if (isEntityCompleted(entity)) {
+            if (isEntityCompleted(entity)) {
+                setProgressBarVisible(false);
                 return fetchLogs();
+            }
+
+            window.setTimeout(refreshLogs, defaultUpdateTimeout);
+
+            if (isEntityScheduling(entity)) {
+                setLogs('The container is scheduling...');
             } else {
-                window.setTimeout(refreshLogs, defaultUpdateTimeout);
                 return fetchLogs();
             }
         }).catch((err: string) => {
             // TODO: consider proper logging
             console.log(err);
             setLogs('Logs not found')
-        }).finally(() => {
-            if (isEntityCompleted(entity)) {
-                setProgressBarVisible(false);
-            }
-        });
+        })
     }
 
     // Get editor content and save as a file

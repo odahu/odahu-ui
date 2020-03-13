@@ -26,6 +26,10 @@ export function isEntityCompleted(entity: EntityWithState): boolean {
     return currentState === 'succeeded' || currentState === 'failed';
 }
 
+export function isEntityScheduling(entity: EntityWithState): boolean {
+    return entity.status?.state === "scheduling";
+}
+
 /**
  * Deep copy of an entity
  * @param entity
