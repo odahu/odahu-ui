@@ -32,7 +32,7 @@ export const EditableFields: React.FC = () => {
                 label="URI"
                 description="Docker registry host, for example: gcr.io/project/odahuflow"
             />
-            <FormikSecretTextField
+            <OdahuTextField
                 className={classes.editorField}
                 name="spec.username"
                 label="Username"
