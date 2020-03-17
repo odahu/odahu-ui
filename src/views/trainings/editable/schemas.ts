@@ -22,6 +22,7 @@ export const TrainingSchema = Yup.object().shape({
             version: Yup.string().required('Model version is a required field'),
         }),
         entrypoint: Yup.string().required('Entrypoint is a required field'),
+        vcsName: Yup.string().required('VCS ID is a required field'),
         toolchain: Yup.string().required('Toolchain is a required field'),
         envs: Yup.array().of(
             Yup.object().shape({
