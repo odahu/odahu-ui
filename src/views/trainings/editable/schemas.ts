@@ -1,5 +1,6 @@
 import * as Yup from "yup";
 import {IDSchema} from "../../../components/fields";
+import {isValidLabel} from "../../../utils/enities";
 
 export const TrainingMetaSchema = Yup.object().shape({
     id: IDSchema,
@@ -7,8 +8,10 @@ export const TrainingMetaSchema = Yup.object().shape({
         image: Yup.string(),
         toolchain: Yup.string().required('Toolchain is a required field'),
         model: Yup.object().shape({
-            name: Yup.string().required('Model name is a required field'),
-            version: Yup.string().required('Model version is a required field'),
+            name: Yup.string().required('Model name is a required field')
+                .test('name', "Model name is not valid", isValidLabel),
+            version: Yup.string().required('Model version is a required field')
+                .test('spec.model.version', "Model version is not valid", isValidLabel),
         }),
     }),
 });
@@ -18,8 +21,10 @@ export const TrainingSchema = Yup.object().shape({
     spec: Yup.object().shape({
         image: Yup.string(),
         model: Yup.object().shape({
-            name: Yup.string().required('Model name is a required field'),
-            version: Yup.string().required('Model version is a required field'),
+            name: Yup.string().required('Model name is a required field')
+                .test('name', "Model name is not valid", isValidLabel),
+            version: Yup.string().required('Model version is a required field')
+                .test('spec.model.version', "Model version is not valid", isValidLabel),
         }),
         entrypoint: Yup.string().required('Entrypoint is a required field'),
         toolchain: Yup.string().required('Toolchain is a required field'),
