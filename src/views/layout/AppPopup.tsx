@@ -63,7 +63,9 @@ export const AppPopup: React.FC = () => {
 
     const onExternalUrlClick = (externalUrl: ExternalUrl) => {
         // open an external URL in the new tab
-        window.open(externalUrl.url, "_blank")
+        window.open(externalUrl.url, "_blank");
+
+        handleClose();
     };
 
     const appsButtonClassName = clsx({
