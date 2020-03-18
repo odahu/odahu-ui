@@ -122,10 +122,8 @@ export const NewTrainingPage: React.FC = () => {
     const toolchainIDs = Object.values(toolchainState.data).map(toolchain => toolchain.id);
 
     const connectionsState = useSelector<ApplicationState, ConnectionState>(state => state.connections);
-    const connectionIDs = Object.values(connectionsState.data)
-        .filter(conn => conn.spec?.type === ConnectionTypes.S3 ||
-            conn.spec?.type === ConnectionTypes.GCS ||
-            conn.spec?.type === ConnectionTypes.AZUREBLOB)
+    const vcsConnectionID = Object.values(connectionsState.data)
+        .filter(conn => conn.spec?.type === ConnectionTypes.GIT)
         .map(conn => conn.id);
 
     return (
@@ -136,7 +134,7 @@ export const NewTrainingPage: React.FC = () => {
                 id: '',
                 spec: defaultTrainingSpec(
                     extractZeroElement(toolchainIDs, ''),
-                    extractZeroElement(connectionIDs, '')
+                    extractZeroElement(vcsConnectionID, '')
                 )
             }}
         />
