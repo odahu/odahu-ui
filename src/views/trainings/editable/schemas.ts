@@ -27,6 +27,7 @@ export const TrainingSchema = Yup.object().shape({
                 .test('spec.model.version', "Model version is not valid", isValidLabel),
         }),
         entrypoint: Yup.string().required('Entrypoint is a required field'),
+        vcsName: Yup.string().required('VCS ID is a required field'),
         toolchain: Yup.string().required('Toolchain is a required field'),
         envs: Yup.array().of(
             Yup.object().shape({
