@@ -67,3 +67,19 @@ export function addSuffixToID(id: string, suffix: string): string {
 
     return id.substr(0, ID_MAX_LENGTH - suffix.length) + suffix
 }
+
+const LABEL_REGEX = /^(([A-Za-z0-9][-A-Za-z0-9_.]{0,61})?[A-Za-z0-9])?$/;
+export const LABEL_MAX_LENGTH = 63;
+
+/**
+ * TODO: remove after migration to PostgreSQL
+ * For now, some fields store inside kubernetes labels.
+ * They have the following restrictions:
+ *  * 63 characters or less
+ *  * beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.)
+ *  * alphanumerics between
+ * @param label for verifying
+ */
+export function isValidLabel(label: string | undefined): boolean {
+    return label !== undefined && LABEL_REGEX.test(label);
+}

@@ -27,6 +27,7 @@ function defaultTrainingSpec(toolchain = '', vcsName = ''): ModelTrainingSpec {
         envs: [],
         model: {name: '', version: ''},
         vcsName: vcsName,
+        outputConnection: '',
         resources: {
             requests: {
                 cpu: '',

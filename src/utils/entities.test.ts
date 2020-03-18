@@ -1,4 +1,4 @@
-import {addSuffixToID, deepCopy, ID_MAX_LENGTH, isValidID, normalize} from "./enities";
+import {addSuffixToID, deepCopy, ID_MAX_LENGTH, isValidID, isValidLabel, LABEL_MAX_LENGTH, normalize} from "./enities";
 
 test('normalize empty list', () => {
     expect(Object.keys(normalize([]))).toHaveLength(0);
@@ -64,4 +64,36 @@ test('suffix exceed the max length of ID', () => {
     expect(() => {
         addSuffixToID('test', 's'.repeat(ID_MAX_LENGTH + 1))
     }).toThrow(`Suffix length exceed the max length of the ID`);
+});
+
+test('valid label', () => {
+    expect(isValidLabel('test-1.2')).toBeTruthy();
+});
+
+test('begin with dot', () => {
+    expect(isValidLabel('.test-1.2')).toBeFalsy();
+});
+
+test('end with dot', () => {
+    expect(isValidLabel('test-1.2.')).toBeFalsy();
+});
+
+test('begin with dash', () => {
+    expect(isValidLabel('-test-1.2')).toBeFalsy();
+});
+
+test('end with dash', () => {
+    expect(isValidLabel('test-1.2-')).toBeFalsy();
+});
+
+test('capital letters', () => {
+    expect(isValidLabel('TEST-1.2')).toBeTruthy();
+});
+
+test('max length exceeds', () => {
+    expect(isValidLabel('s'.repeat(LABEL_MAX_LENGTH + 1))).toBeFalsy();
+});
+
+test('min length', () => {
+    expect(isValidLabel('s')).toBeTruthy();
 });
