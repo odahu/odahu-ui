@@ -12,7 +12,12 @@
 
 import * as models from './models';
 
-export interface TrainingConfiguration {
-    metricUrl?: string;
+export interface APIConfig {
+    backend?: models.APIBackendConfig;
+
+    /**
+     * API HTTP port
+     */
+    port?: number;
 
 }

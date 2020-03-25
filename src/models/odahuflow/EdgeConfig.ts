@@ -12,15 +12,10 @@
 
 import * as models from './models';
 
-export interface Configuration {
+export interface EdgeConfig {
     /**
-     * Common secretion of configuration
+     * External model host
      */
-    common?: models.CommonConfiguration;
-
-    /**
-     * Configuration describe training process
-     */
-    training?: models.TrainingConfiguration;
+    host?: string;
 
 }

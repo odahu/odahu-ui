@@ -1,6 +1,6 @@
 import {action} from 'typesafe-actions'
 import {AsyncAction} from "../index";
-import {Configuration} from "../../models/odahuflow/Configuration";
+import {Config} from "../../models/odahuflow/Config";
 
 export enum ConfigurationActionTypes {
     FETCH = '@@configuration/FETCH',
@@ -10,7 +10,7 @@ export enum ConfigurationActionTypes {
 
 // FETCH actions
 export const fetch = () => action(ConfigurationActionTypes.FETCH);
-export const fetchSuccess = (conf: Configuration) => action(
+export const fetchSuccess = (conf: Config) => action(
     ConfigurationActionTypes.FETCH_SUCCESS,
     {configuration: conf})
 ;
