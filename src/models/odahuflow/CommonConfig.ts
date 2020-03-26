@@ -12,10 +12,15 @@
 
 import * as models from './models';
 
-export interface CommonConfiguration {
+export interface CommonConfig {
     /**
      * The collection of external urls, for example: metrics, edge, service catalog and so on
      */
     externalUrls?: Array<models.ExternalUrl>;
+
+    /**
+     * Kubernetes can consume the GPU resource in the <vendor>.com/gpu format. For example, amd.com/gpu or nvidia.com/gpu.
+     */
+    resourceGpuName?: string;
 
 }

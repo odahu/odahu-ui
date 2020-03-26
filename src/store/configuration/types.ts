@@ -1,8 +1,8 @@
-import {Configuration} from "../../models/odahuflow/Configuration";
+import {Config} from "../../models/odahuflow/Config";
 
 
 export interface ConfigurationState {
     readonly loading: boolean;
-    readonly data: Configuration;
+    readonly data: Config;
     readonly error?: string;
 }

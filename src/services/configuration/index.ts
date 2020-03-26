@@ -1,4 +1,4 @@
-import {Configuration} from "../../models/odahuflow/Configuration";
+import {Config} from "../../models/odahuflow/Config";
 import {extractEntity} from "../index";
 
 export class ConfigurationService {
@@ -9,7 +9,7 @@ export class ConfigurationService {
         this.baseURL = baseURL;
     }
 
-    get(): Promise<Configuration> {
+    get(): Promise<Config> {
         return fetch(`${this.baseURL}/api/v1/configuration`).then(extractEntity);
     }
 
