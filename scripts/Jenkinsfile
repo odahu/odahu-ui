@@ -100,7 +100,7 @@ pipeline {
             steps {
                 script {
                     cicdLibrary.buildDockerImage('odahu-ui', ".", 'containers/ui/Dockerfile')
-                    cicdLibrary.uploadDockerImage('odahu-ui', env.param_stable_release.toBoolean())
+                    cicdLibrary.uploadDockerImage('odahu-ui', env.param_stable_release.toBoolean()  && env.param_dockerhub_publishing_enabled.toBoolean())
                 }
             }
         }
