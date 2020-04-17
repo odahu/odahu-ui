@@ -28,6 +28,6 @@ export interface TrainerConfig {
     /**
      * The path to the dir when a user trainer will save their result.
      */
-    outputTrainingDir?: string;
+    outputDir?: string;
 
 }

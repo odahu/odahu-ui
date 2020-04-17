@@ -23,4 +23,9 @@ export interface CommonConfig {
      */
     resourceGpuName?: string;
 
+    /**
+     * Version of ODAHU platform
+     */
+    version?: string;
+
 }
