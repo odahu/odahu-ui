@@ -8,6 +8,7 @@ import React from "react";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import {AppPopup} from "./AppPopup";
 import {UserPopup} from "./UserPopup";
+import {VersionPopup} from "./VersionPopup";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -77,6 +78,7 @@ export const TopBar: React.FC<TopBarProps> = (
                 <div className={classes.content}/>
                 <AppPopup/>
                 <UserPopup/>
+                <VersionPopup/>
             </Toolbar>
         </AppBar>
     )

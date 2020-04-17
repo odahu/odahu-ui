@@ -28,6 +28,6 @@ export interface PackagerConfig {
     /**
      * The path to the dir when a user packager will save their result.
      */
-    outputTrainingDir?: string;
+    outputDir?: string;
 
 }
