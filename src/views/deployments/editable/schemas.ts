@@ -9,9 +9,9 @@ export const DeploymentSchema = Yup.object().shape({
         livenessProbeInitialDelay: Yup.number().moreThan(0),
         readinessProbeInitialDelay: Yup.number().moreThan(0),
         minReplicas: Yup.number()
-            .test('>=', 'Maximum replicas number must be greater than 0', value => value >= 0),
+            .test('>=', 'Minimum replicas number must not be lower than 0', value => value >= 0),
         maxReplicas: Yup.number()
-            .test('>=', 'Maximum replicas number must be greater than 1', value => value >= 1),
+            .test('>=', 'Maximum replicas number must be greater than 0', value => value >= 1),
         resources: ResourceRequirementsSchema,
     }),
 });
