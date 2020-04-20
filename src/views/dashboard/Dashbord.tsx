@@ -27,19 +27,19 @@ export const DashboardView: React.FC = () => {
     return (
         <div className={classes.root}>
             <Grid container spacing={3}>
-                <Grid item xs={2}>
+                <Grid item sm={5} md={4} lg={3}>
                     <Documentation/>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item sm={5} md={4} lg={3}>
                     <ConnectionDashboardPanel/>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item sm={4} md={3} lg={2}>
                     <TrainingDashboardPanel/>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item sm={4} md={3} lg={2}>
                     <PackagingDashboardPanel/>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item sm={4} md={3} lg={2}>
                     <DeploymentDashboardPanel/>
                 </Grid>
             </Grid>

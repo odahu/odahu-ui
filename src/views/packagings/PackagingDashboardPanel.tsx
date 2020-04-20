@@ -62,6 +62,7 @@ export const PackagingDashboardPanel: React.FC = () => {
                 scales: {
                     yAxes: [{
                         ticks: {
+                            display: false,
                             beginAtZero: true
                         }
                     }]

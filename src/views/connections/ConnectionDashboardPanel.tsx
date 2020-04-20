@@ -63,6 +63,7 @@ export const ConnectionDashboardPanel: React.FC = () => {
                 scales: {
                     yAxes: [{
                         ticks: {
+                            stepSize: 1,
                             beginAtZero: true
                         }
                     }]
