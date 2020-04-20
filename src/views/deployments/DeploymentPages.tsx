@@ -14,7 +14,10 @@ import {DeploymentMetaSchema, DeploymentSchema} from "./editable/schemas";
 import {DeploymentURLs} from "./urls";
 import {ModelDeploymentSpec} from "../../models/odahuflow/ModelDeploymentSpec";
 import {FetchingEntity} from "../../components/EntitiyFetching";
-import {addSuffixToID} from "../../utils/enities";
+import {addSuffixToID, merge} from "../../utils/enities";
+import {useSelector} from "react-redux";
+import {ApplicationState} from "../../store";
+import {ConfigurationState} from "../../store/configuration/types";
 
 const defaultFields = {
     redirectURL: DeploymentURLs.Page,
@@ -34,8 +37,8 @@ const defaultFields = {
     )
 };
 
-function defaultDeploymentSpec(): ModelDeploymentSpec {
-    return {
+function defaultDeploymentSpec(mds?: ModelDeploymentSpec): ModelDeploymentSpec {
+    return merge({
         livenessProbeInitialDelay: 10,
         readinessProbeInitialDelay: 10,
         minReplicas: 0,
@@ -52,7 +55,7 @@ function defaultDeploymentSpec(): ModelDeploymentSpec {
                 memory: '',
             },
         }
-    }
+    }, mds ?? {})
 }
 
 export interface EditableDeploymentPageProps {
@@ -77,13 +80,18 @@ export const EditableDeploymentPage: React.FC<EditableDeploymentPageProps> = ({d
 };
 
 export const NewDeploymentPage: React.FC = () => {
+    const config = useSelector<ApplicationState, ConfigurationState>(state => state.configuration);
+
     return (
         <EditablePage
             {...defaultFields}
             title="New Deployment"
             entity={{
                 id: '',
-                spec: defaultDeploymentSpec()
+                spec: defaultDeploymentSpec({
+                    resources: config.data.deployment?.defaultResources,
+                    imagePullConnID: config.data.deployment?.defaultDockerPullConnName,
+                })
             }}
         />
     );

@@ -14,6 +14,11 @@ import * as models from './models';
 
 export interface ModelPackagingConfig {
     /**
+     * Default resources for packaging pods
+     */
+    defaultResources?: models.ResourceRequirements;
+
+    /**
      * Enable packaging API/operator
      */
     enabled?: boolean;

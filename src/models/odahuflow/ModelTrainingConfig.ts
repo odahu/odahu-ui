@@ -14,6 +14,11 @@ import * as models from './models';
 
 export interface ModelTrainingConfig {
     /**
+     * Default resources for training pods
+     */
+    defaultResources?: models.ResourceRequirements;
+
+    /**
      * Enable deployment API/operator
      */
     enabled?: boolean;

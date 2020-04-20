@@ -13,13 +13,14 @@ import {MetadataElements} from "./editable/MetadataElements";
 import {PackagingURLs} from "./urls";
 import {ModelPackagingSpec} from "../../models/odahuflow/ModelPackagingSpec";
 import {extractLastElement} from "../../utils";
-import {addSuffixToID, deepCopy} from "../../utils/enities";
+import {addSuffixToID, deepCopy, merge} from "../../utils/enities";
 import {FetchingEntity} from "../../components/EntitiyFetching";
+import {ConfigurationState} from "../../store/configuration/types";
 
-function defaultPackagingSpec(integrationName = ''): ModelPackagingSpec {
-    return {
+function defaultPackagingSpec(mps?: ModelPackagingSpec): ModelPackagingSpec {
+    return merge({
         artifactName: "",
-        integrationName: integrationName,
+        integrationName: "",
         outputConnection: "",
         targets: [],
         arguments: [],
@@ -35,7 +36,7 @@ function defaultPackagingSpec(integrationName = ''): ModelPackagingSpec {
                 memory: '',
             },
         }
-    }
+    }, mps ?? {})
 }
 
 function processArgumentsBeforeSubmit(packaging: ModelPackaging): ModelPackaging {
@@ -118,13 +119,19 @@ export const NewPackagingPage: React.FC = () => {
     const packagerState = useSelector<ApplicationState, PackagerState>(state => state.packagers);
     const packagerIDs = Object.values(packagerState.data).map(packager => packager.id);
 
+    const config = useSelector<ApplicationState, ConfigurationState>(state => state.configuration);
+
     return (
         <EditablePage
             {...defaultFields}
             title="New Packaging"
             entity={{
                 id: '',
-                spec: defaultPackagingSpec(extractLastElement(packagerIDs, ''))
+                spec: defaultPackagingSpec({
+                    integrationName: extractLastElement(packagerIDs, ''),
+                    resources: config.data.packaging?.defaultResources,
+                    outputConnection: config.data.packaging?.outputConnectionID,
+                })
             }}
         />
     );
@@ -143,10 +150,7 @@ export const ClonePackagingPage: React.FC = () => {
                         title="Clone Packaging"
                         entity={{
                             id: addSuffixToID(packaging.id as string, '-clone'),
-                            spec: Object.assign(
-                                defaultPackagingSpec(),
-                                processArguments(packaging).spec
-                            ),
+                            spec: defaultPackagingSpec(processArguments(packaging).spec),
                         }}
                     />
                 )
