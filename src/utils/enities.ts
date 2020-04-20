@@ -1,3 +1,5 @@
+import deepmerge from "deepmerge";
+
 export interface Entity {
     id?: string;
 }
@@ -82,4 +84,13 @@ export const LABEL_MAX_LENGTH = 63;
  */
 export function isValidLabel(label: string | undefined): boolean {
     return label !== undefined && LABEL_REGEX.test(label);
+}
+
+/**
+ * Merge objects deeply, returning a new merged object with the elements from all objects.
+ * @param firstElem
+ * @param otherElements
+ */
+export function merge<T>(firstElem: T, ...otherElements: T[]): T {
+    return deepmerge.all([firstElem].concat(...otherElements))
 }

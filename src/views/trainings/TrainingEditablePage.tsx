@@ -15,18 +15,20 @@ import {HyperParameter, SpecElements} from "./editable/SpecElements";
 import {TrainingURLs} from "./urls";
 import {ModelTrainingSpec} from "../../models/odahuflow/ModelTrainingSpec";
 import {extractZeroElement} from "../../utils";
-import {addSuffixToID, deepCopy} from "../../utils/enities";
+import {addSuffixToID, deepCopy, merge} from "../../utils/enities";
 import {FetchingEntity} from "../../components/EntitiyFetching";
+import {ConfigurationState} from "../../store/configuration/types";
 
-
-function defaultTrainingSpec(toolchain = '', vcsName = ''): ModelTrainingSpec {
-    return {
+function defaultTrainingSpec(mts?: ModelTrainingSpec): ModelTrainingSpec {
+    return merge({
         entrypoint: '',
-        toolchain: toolchain,
+        toolchain: '',
         data: [],
         envs: [],
         model: {name: '', version: ''},
-        vcsName: vcsName,
+        vcsName: '',
+        reference: 'develop',
+        workDir: './',
         outputConnection: '',
         resources: {
             requests: {
@@ -40,7 +42,7 @@ function defaultTrainingSpec(toolchain = '', vcsName = ''): ModelTrainingSpec {
                 memory: '',
             },
         }
-    }
+    }, mts ?? {})
 }
 
 function processHyperParamsBeforeSubmit(training: ModelTraining): ModelTraining {
@@ -126,16 +128,20 @@ export const NewTrainingPage: React.FC = () => {
         .filter(conn => conn.spec?.type === ConnectionTypes.GIT)
         .map(conn => conn.id);
 
+    const config = useSelector<ApplicationState, ConfigurationState>(state => state.configuration);
+
     return (
         <EditablePage
             {...defaultFields}
             title="New Training"
             entity={{
                 id: '',
-                spec: defaultTrainingSpec(
-                    extractZeroElement(toolchainIDs, ''),
-                    extractZeroElement(vcsConnectionID, '')
-                )
+                spec: defaultTrainingSpec({
+                    toolchain: extractZeroElement(toolchainIDs, ''),
+                    vcsName: extractZeroElement(vcsConnectionID, ''),
+                    outputConnection: config.data.training?.outputConnectionID,
+                    resources: config.data.training?.defaultResources,
+                })
             }}
         />
     );
@@ -158,10 +164,7 @@ export const NewCloneTrainingPage: React.FC = () => {
                         )}
                         entity={{
                             id: addSuffixToID(training.id as string, '-clone'),
-                            spec: Object.assign(
-                                defaultTrainingSpec(),
-                                processHyperParams(training).spec
-                            )
+                            spec: defaultTrainingSpec(processHyperParams(training).spec),
                         }}
                     />
                 )

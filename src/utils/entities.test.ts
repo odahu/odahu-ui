@@ -1,4 +1,14 @@
-import {addSuffixToID, deepCopy, ID_MAX_LENGTH, isValidID, isValidLabel, LABEL_MAX_LENGTH, normalize} from "./enities";
+import {
+    addSuffixToID,
+    deepCopy,
+    ID_MAX_LENGTH,
+    isValidID,
+    isValidLabel,
+    LABEL_MAX_LENGTH,
+    merge,
+    normalize
+} from "./enities";
+import {ModelTrainingSpec} from "../models/odahuflow/ModelTrainingSpec";
 
 test('normalize empty list', () => {
     expect(Object.keys(normalize([]))).toHaveLength(0);
@@ -96,4 +106,93 @@ test('max length exceeds', () => {
 
 test('min length', () => {
     expect(isValidLabel('s')).toBeTruthy();
+});
+
+test('merge one element', () => {
+    const mt: ModelTrainingSpec = {
+        entrypoint: "main",
+        image: "image:123",
+        resources: {
+            limits: {
+                cpu: "1", gpu: "2", memory: "33"
+            }
+        }
+    }
+
+    expect(merge(mt)).toEqual(mt)
+});
+
+test('merge two elements', () => {
+    const mt1: ModelTrainingSpec = {
+        entrypoint: "main",
+        image: "image:123",
+        resources: {
+            limits: {
+                cpu: "1",
+                gpu: "2",
+                memory: "33"
+            }
+        }
+    }
+
+    const mt2: ModelTrainingSpec = {
+        entrypoint: "new_entrypoint",
+        resources: {
+            limits: {
+                gpu: "new_gpu"
+            }
+        }
+    };
+
+    expect(merge(mt1, mt2)).toEqual({
+        entrypoint: "new_entrypoint",
+        image: "image:123",
+        resources: {
+            limits: {
+                cpu: "1", gpu: "new_gpu", memory: "33"
+            }
+        }
+    })
+});
+
+test('merge three elements', () => {
+    const mt1: ModelTrainingSpec = {
+        entrypoint: "main",
+        image: "image:123",
+        vcsName: "vcs",
+        resources: {
+            limits: {
+                cpu: "1", gpu: "2", memory: "33"
+            }
+        }
+    }
+
+    const mt2: ModelTrainingSpec = {
+        entrypoint: "new_entrypoint",
+        resources: {
+            limits: {
+                gpu: "new_gpu"
+            }
+        }
+    };
+
+    const mt3: ModelTrainingSpec = {
+        image: "new_image",
+        resources: {
+            limits: {
+                cpu: "new_cpu"
+            }
+        }
+    };
+
+    expect(merge(mt1, mt2, mt3)).toEqual({
+        entrypoint: "new_entrypoint",
+        image: "new_image",
+        vcsName: "vcs",
+        resources: {
+            limits: {
+                cpu: "new_cpu", gpu: "new_gpu", memory: "33"
+            }
+        }
+    })
 });
