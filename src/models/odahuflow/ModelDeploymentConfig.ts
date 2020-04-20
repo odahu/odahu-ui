@@ -18,6 +18,11 @@ export interface ModelDeploymentConfig {
      */
     defaultDockerPullConnName?: string;
 
+    /**
+     * Default resources for deployment pods
+     */
+    defaultResources?: models.ResourceRequirements;
+
     edge?: models.EdgeConfig;
 
     /**
