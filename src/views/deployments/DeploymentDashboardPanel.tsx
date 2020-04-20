@@ -62,6 +62,7 @@ export const DeploymentDashboardPanel: React.FC = () => {
                 scales: {
                     yAxes: [{
                         ticks: {
+                            display: false,
                             beginAtZero: true
                         }
                     }]
