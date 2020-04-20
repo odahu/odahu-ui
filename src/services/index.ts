@@ -24,6 +24,12 @@ export function extractEntity(resp: Response): Promise<any> {
         })
     }
 
+    if (resp.redirected || resp.status === 0) {
+        // if we get a redirect then we are not authorized. Maybe it race condition inside oauth2proxy
+        // TODO: investigate this
+        window.location.reload()
+    }
+
     if (resp.status >= 500) {
         return resp.text().then(errorMessage => {
             throw new Error(errorMessage);
@@ -78,12 +84,14 @@ export class CommonService<T> implements Service<T, string> {
         return fetch(`${this.baseURL}/${this.apiURL}`, {
             method: 'POST',
             body: JSON.stringify(entity),
+            redirect: 'manual',
         }).then(extractEntity);
     }
 
     delete(id: string): Promise<void> {
         return fetch(`${this.baseURL}/${this.apiURL}/${id}`, {
             method: 'DELETE',
+            redirect: 'manual',
         }).then(extractEntity);
     }
 
@@ -91,15 +99,21 @@ export class CommonService<T> implements Service<T, string> {
         return fetch(`${this.baseURL}/${this.apiURL}`, {
             method: 'PUT',
             body: JSON.stringify(entity),
+            redirect: 'manual',
         }).then(extractEntity);
     }
 
     get(id: string): Promise<T> {
-        return fetch(`${this.baseURL}/${this.apiURL}/${id}`).then(extractEntity);
+        return fetch(`${this.baseURL}/${this.apiURL}/${id}`,
+            {redirect: 'manual'}
+        ).then(extractEntity);
     }
 
     getAll(): Promise<T[]> {
-        return fetch(`${this.baseURL}/${this.apiURL}`).then(extractEntity);
+        return fetch(
+            `${this.baseURL}/${this.apiURL}`,
+            {redirect: 'manual'}
+        ).then(extractEntity);
     }
 
 }
