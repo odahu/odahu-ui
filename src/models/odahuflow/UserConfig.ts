@@ -15,4 +15,9 @@ import * as models from './models';
 export interface UserConfig {
     claims?: models.Claims;
 
+    /**
+     * The sign out endpoint logs out the authenticated 
+     */
+    signOutUrl?: string;
+
 }

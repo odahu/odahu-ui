@@ -10,7 +10,10 @@ export class UserService {
     }
 
     get(): Promise<UserInfo> {
-        return fetch(`${this.baseURL}/api/v1/user/info`).then(extractEntity);
+        return fetch(
+            `${this.baseURL}/api/v1/user/info`,
+            {redirect: 'manual'}
+        ).then(extractEntity);
     }
 
 }
