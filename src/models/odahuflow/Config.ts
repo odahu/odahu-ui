@@ -33,6 +33,6 @@ export interface Config {
 
     training?: models.ModelTrainingConfig;
 
-    user?: models.UserConfig;
+    users?: models.UserConfig;
 
 }

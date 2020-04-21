@@ -10,7 +10,10 @@ export class ConfigurationService {
     }
 
     get(): Promise<Config> {
-        return fetch(`${this.baseURL}/api/v1/configuration`).then(extractEntity);
+        return fetch(
+            `${this.baseURL}/api/v1/configuration`,
+            {redirect: 'manual'}
+        ).then(extractEntity);
     }
 
 }
