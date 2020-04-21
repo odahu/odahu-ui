@@ -1,5 +1,5 @@
 export enum StateColors {
-    SCHEDULING = 'rgba(232,236,255,0.2)',
+    SCHEDULING = 'rgba(114,133,219,0.2)',
     FAILED = 'rgba(192,34,42,0.2)',
     SUCCESS = 'rgba(64,255,43,0.2)',
     PROCESSING = 'rgba(255,234,119,0.2)',
@@ -7,7 +7,7 @@ export enum StateColors {
 }
 
 export enum StateBorderColors {
-    SCHEDULING = 'rgba(232,236,255,1)',
+    SCHEDULING = 'rgb(70,94,206)',
     FAILED = 'rgba(192,34,42,1)',
     SUCCESS = 'rgba(64,255,43,1)',
     PROCESSING = 'rgba(255,234,119,1)',

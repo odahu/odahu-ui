@@ -62,6 +62,7 @@ export const TrainingDashboardPanel: React.FC = () => {
                 scales: {
                     yAxes: [{
                         ticks: {
+                            display: false,
                             beginAtZero: true
                         }
                     }]
