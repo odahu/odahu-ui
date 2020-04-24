@@ -17,7 +17,7 @@ export const DeploymentSchema = Yup.object().shape({
 });
 
 export const DeploymentMetaSchema = Yup.object().shape({
-    id: Yup.string().required(),
+    id: IDSchema,
     spec: Yup.object().shape({
         imagePullConnID: Yup.string(),
     }),
