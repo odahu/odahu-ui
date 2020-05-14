@@ -46,13 +46,13 @@ const Targets: React.FC = () => {
                     {formik.values.spec?.targets?.map((target, index) => (
                             <ItemInputParametersView arrayHelpers={arrayHelpers} index={index}>
                                 <FormikOdahuSelect
-                                    name={`spec.target[${index}].name`}
+                                    name={`spec.targets[${index}].name`}
                                     label="Name"
                                     defaultValue={targetNames[0]}
                                     options={targetNames}
                                 />
                                 <FormikOdahuSelect
-                                    name={`spec.target[${index}].connectionName`}
+                                    name={`spec.targets[${index}].connectionName`}
                                     label="Connection ID"
                                     defaultValue={connectionIDs[0]}
                                     options={connectionIDs}
