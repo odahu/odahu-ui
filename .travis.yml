@@ -1,0 +1,39 @@
+language: node_js
+dist: bionic
+node_js: 12.13.1
+services:
+  - docker
+install: skip
+
+matrix:
+  include:
+    ################
+    ### SECURITY ###
+    ################
+    - language: bash
+      sudo: true
+      before_script:
+        - make install-vulnerabilities-checker
+      script:
+        - make check-vulnerabilities
+    ##################
+    ### TypeScript ###
+    ##################
+    - language: node_js
+      node_js: 12.13.1
+      before_script:
+        - make install-dependencies
+      script:
+        - make lint
+    - language: node_js
+      node_js: 12.13.1
+      before_script:
+        - make install-dependencies
+      script:
+        - make unittests
+    #####################
+    ### DOCKER IMAGES ###
+    #####################
+    - language: bash
+      script:
+        - make docker-build-ui
