@@ -10,7 +10,7 @@ matrix:
     ################
     ### SECURITY ###
     ################
-    - language: bash
+    - language: shell
       sudo: true
       before_script:
         - sudo make install-vulnerabilities-checker
@@ -34,6 +34,6 @@ matrix:
     #####################
     ### DOCKER IMAGES ###
     #####################
-    - language: bash
+    - language: shell
       script:
         - make docker-build-ui
