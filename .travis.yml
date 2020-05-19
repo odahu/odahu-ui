@@ -13,7 +13,7 @@ matrix:
     - language: bash
       sudo: true
       before_script:
-        - make install-vulnerabilities-checker
+        - sudo make install-vulnerabilities-checker
       script:
         - make check-vulnerabilities
     ##################
