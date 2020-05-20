@@ -12,7 +12,6 @@ matrix:
     ### SECURITY ###
     ################
     - language: shell
-      sudo: true
       before_script:
         - sudo make install-vulnerabilities-checker
       script:
