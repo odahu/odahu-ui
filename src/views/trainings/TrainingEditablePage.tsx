@@ -27,7 +27,7 @@ function defaultTrainingSpec(mts?: ModelTrainingSpec): ModelTrainingSpec {
         envs: [],
         model: {name: '', version: ''},
         vcsName: '',
-        reference: 'develop',
+        reference: '',
         workDir: './',
         outputConnection: '',
         resources: {

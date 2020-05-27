@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {fieldMargin, useFieldsStyles} from "../../../components/fields";
 import {useSelector} from "react-redux";
 import {ApplicationState} from "../../../store";
@@ -7,7 +7,7 @@ import {ConnectionTypes} from "../../connections/types";
 import {Divider, Paper, Typography} from "@material-ui/core";
 import {FormikOdahuSelect} from "../../../components/OdahuSelect";
 import {OdahuTextField} from "../../../components/OdahuTextField";
-import {FieldArray, useFormikContext} from "formik";
+import {FieldArray, getIn, useFormikContext} from "formik";
 import {ModelTraining} from "../../../models/odahuflow/ModelTraining";
 import {InputParametersView, ItemInputParametersView} from "../../../components/InputParametersView";
 import {ResourcesSpecElements} from "../../../components/ResourceSpecElements";
@@ -36,6 +36,19 @@ const GitSpecElements: React.FC = () => {
         .filter(conn => conn.spec?.type === ConnectionTypes.GIT)
         .map(conn => conn.id);
 
+    const formik = useFormikContext();
+
+    // If vcs reference is not selected then fill by default reference from selected vcs connection
+    // or set "develop" in case if default reference in VCS is not filled
+    useEffect(() => {
+        const vcsName = getIn(formik.values, 'spec.vcsName');
+        const reference = getIn(formik.values, 'spec.reference');
+        if (!!vcsName && !reference ){
+            const defaultReference = connectionsState.data[vcsName]?.spec?.reference ?? 'develop';
+            formik.setFieldValue('spec.reference', defaultReference);
+        }
+    })
+
     return (
         <Paper className={classes.editorField}>
             <Typography className={classes.paperHeader}>GIT Settings</Typography>
@@ -47,6 +60,12 @@ const GitSpecElements: React.FC = () => {
                     label="VCS ID"
                     options={vcsConnectionIDs}
                     description='A connection which describes credentials to a GIT repository'
+                    onChange={ (e: any) => {
+                        e.persist();
+                        formik.handleChange(e);
+                        formik.setFieldTouched("spec.vcsName", true, false);
+                        formik.setFieldValue('spec.reference', '');
+                    }}
                 />
                 <OdahuTextField
                     name="spec.reference"
