@@ -7,15 +7,14 @@ import {TrainingView} from "./TrainingView";
 import {
     editTrainingRequest,
     fetchAllTrainingRequest,
-    fetchTrainingLogsRequest,
     fetchTrainingRequest
 } from "../../store/trainings/actions";
 import {EditableTrainingPage} from "./TrainingEditablePage";
 import {ModelTraining} from "../../models/odahuflow/ModelTraining";
-import {LogsView} from "../../components/LogsView";
+//import {LogsView} from "../../components/LogsView";
 import {useFetchingEntity} from "../../components/EntitiyFetching";
 import {createDashboardURL, GrafanaDashboard} from "../../components/Dashboard";
-
+import {createLogsURL, LogsDashboard} from "../../components/Dashboard";
 
 const tabHeaders = ["View", "Edit", "YAML", "Logs", "Dashboard"];
 const editableSaveButtonClick = new SaveButtonClick<ModelTraining>(
@@ -52,12 +51,13 @@ export const TrainingPage: React.FC = () => {
                     fileName={`${id}.training.odahuflow.yaml`}
                     saveButtonClick={editableSaveButtonClick}
                 />,
-                <LogsView
+                <LogsDashboard
                     key="logs"
-                    entity={entity}
-                    fileName={`${id}.logs.training.odahuflow.txt`}
-                    fetchLogsRequest={fetchTrainingLogsRequest}
-                    fetchEntityRequest={fetchTrainingRequest}
+                    logsURL={createLogsURL(
+                        // This is hardcode
+                        "/kibana/app/kibana#/dashboard/23e7b410-95b8-11ea-b67b-07a8a3aceb39",
+                        entity.status?.podName
+                    )}
                 />,
                 <GrafanaDashboard
                     key="grafana"
