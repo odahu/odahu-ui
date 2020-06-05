@@ -55,7 +55,7 @@ export const PackagingViewPage: React.FC = () => {
                     key="logs"
                     logsURL={createLogsURL(
                         // This is hardcode
-                        "/kibana/app/kibana#/dashboard/23e7b410-95b8-11ea-b67b-07a8a3aceb39",
+                        "/kibana/app/kibana#/dashboard/0882d020-a6ba-11ea-bc41-3318d1349021",
                         {"kubernetes.pod_name": entity.status?.podName}
                     )}
                 />,
