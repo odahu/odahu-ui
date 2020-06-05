@@ -41,7 +41,8 @@ export const LogsDashboard: React.FC<LogsProps> = ({logsURL}) => {
 export function createLogsURL(baseLogsURL: string, parameters: Record<string, string | any>): string {
     let filter_key = Object.keys(parameters)[0];
     let filter_val = Object.values(parameters)[0];
-    let a = "_a=(description:'',filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:logstash,key:KEY,negate:!f,params:(query:VALUE),type:phrase),query:(match_phrase:(KEY:VALUE)))),fullScreenMode:!f,options:(hidePanelTitles:!f,useMargins:!t),panels:!((embeddableConfig:(),type:search,version:'7.6.2')),query:(language:kuery,query:''),timeRestore:!f,title:'',viewMode:view)&query='KEY:VALUE'".replace(/VALUE/g, filter_val).replace(/KEY/g, filter_key);
+    let a = "_a=(description:'',filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:logstash,key:KEY,negate:!f,params:(query:VALUE),type:phrase),query:(match_phrase:(KEY:VALUE)))),fullScreenMode:!f,options:(hidePanelTitles:!f,useMargins:!t),panels:!((embeddableConfig:(),gridData:(h:15,i:a637bcb2-4c05-4ad8-ad59-89cb37c9c66c,w:48,x:0,y:0),id:e0d473a0-a6c1-11ea-bc41-3318d1349021,panelIndex:a637bcb2-4c05-4ad8-ad59-89cb37c9c66c,type:search,version:'7.6.2')),query:(language:kuery,query:''),timeRestore:!f,title:'',viewMode:view)&query='KEY:VALUE'".replace(/VALUE/g, filter_val).replace(/KEY/g, filter_key);
+
 
     return baseLogsURL + '?' + a + '&embed=true&_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-1y,to:now))'
 }
