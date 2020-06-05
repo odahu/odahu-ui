@@ -15,6 +15,7 @@ import {EditablePackagingPage} from "./PackagingEditablePage";
 import {LogsView} from "../../components/LogsView";
 import {useFetchingEntity} from "../../components/EntitiyFetching";
 import {createDashboardURL, GrafanaDashboard} from "../../components/Dashboard";
+import {createLogsURL, LogsDashboard} from "../../components/Dashboard";
 
 const saveButtonClick = new SaveButtonClick<ModelPackaging>(
     editPackagingRequest,
@@ -50,12 +51,13 @@ export const PackagingViewPage: React.FC = () => {
                     fileName={`${id}.packaging.odahuflow.yaml`}
                     saveButtonClick={saveButtonClick}
                 />,
-                <LogsView
+                <LogsDashboard
                     key="logs"
-                    entity={entity}
-                    fileName={`${id}.logs.packaging.odahuflow.txt`}
-                    fetchLogsRequest={fetchPackagingLogsRequest}
-                    fetchEntityRequest={fetchPackagingRequest}
+                    logsURL={createLogsURL(
+                        // This is hardcode
+                        "/kibana/app/kibana#/dashboard/23e7b410-95b8-11ea-b67b-07a8a3aceb39",
+                        {"kubernetes.pod_name": entity.status?.podName}
+                    )}
                 />,
                 <GrafanaDashboard
                     key="grafana"
