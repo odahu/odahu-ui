@@ -56,7 +56,7 @@ export const TrainingPage: React.FC = () => {
                     logsURL={createLogsURL(
                         // This is hardcode
                         "/kibana/app/kibana#/dashboard/23e7b410-95b8-11ea-b67b-07a8a3aceb39",
-                        entity.status?.podName
+                        {"kubernetes.pod_name": entity.status?.podName}
                     )}
                 />,
                 <GrafanaDashboard
