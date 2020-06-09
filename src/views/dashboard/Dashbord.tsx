@@ -6,7 +6,6 @@ import {TrainingDashboardPanel} from "../trainings/TrainingDashboardPanel";
 import {PackagingDashboardPanel} from "../packagings/PackagingDashboardPanel";
 import {DeploymentDashboardPanel} from "../deployments/DeploymentDashboardPanel";
 
-
 export const DashboardURLPrefix = "/dashboard";
 
 const useStyles = makeStyles((theme: Theme) =>
