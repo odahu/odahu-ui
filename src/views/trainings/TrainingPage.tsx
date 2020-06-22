@@ -37,7 +37,7 @@ export const TrainingPage: React.FC = () => {
     const kibanaEnabled = (config.data.common?.externalUrls?.map((i,e) => i.name == 'Kibana').indexOf(true) == -1) ? false : true;
  
     if (kibanaEnabled == false) {
-        var logsView = <LogsView
+        const logsView = <LogsView
                         key="logs"
                         entity={entity}
                         fileName={`${id}.logs.training.odahuflow.txt`}
@@ -45,7 +45,7 @@ export const TrainingPage: React.FC = () => {
                         fetchEntityRequest={fetchTrainingRequest}
                        />;
     } else {
-        var logsView = <LogsDashboard
+        const logsView = <LogsDashboard
                         key="logs"
                         logsURL={createLogsURL(
                             // This is hardcode
