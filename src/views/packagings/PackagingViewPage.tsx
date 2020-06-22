@@ -34,8 +34,9 @@ export const PackagingViewPage: React.FC = () => {
 
     const {entity, loading, notFound} = useFetchingEntity(id as string, fetchPackagingRequest);
 
+    let logsView = Object();
     if (kibanaEnabled == false) {
-        const logsView = <LogsView
+        let logsView = <LogsView
                         key="logs"
                         entity={entity}
                         fileName={`${id}.logs.packaging.odahuflow.txt`}
@@ -43,7 +44,7 @@ export const PackagingViewPage: React.FC = () => {
                         fetchEntityRequest={fetchPackagingRequest}
                        />;
     } else {
-        const logsView = <LogsDashboard
+        let logsView = <LogsDashboard
                         key="logs"
                         logsURL={createLogsURL(
                             // This is hardcode
