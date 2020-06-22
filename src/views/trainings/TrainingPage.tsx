@@ -36,26 +36,20 @@ export const TrainingPage: React.FC = () => {
 
     const kibanaEnabled = (config.data.common?.externalUrls?.map((i,e) => i.name == 'Kibana').indexOf(true) == -1) ? false : true;
  
-    let logsView = Object();
-    if (kibanaEnabled == false) {
-        let logsView = <LogsView
-                        key="logs"
-                        entity={entity}
-                        fileName={`${id}.logs.training.odahuflow.txt`}
-                        fetchLogsRequest={fetchTrainingLogsRequest}
-                        fetchEntityRequest={fetchTrainingRequest}
-                       />;
-    } else {
-        let logsView = <LogsDashboard
-                        key="logs"
-                        logsURL={createLogsURL(
-                            // This is hardcode
-                            "/kibana/app/kibana#/dashboard/23e7b410-95b8-11ea-b67b-07a8a3aceb39",
-                            {"kubernetes.pod_name": entity.status?.podName}
-                        )}
-                       />;
-    }
-
+    const logsView = (kibanaEnabled == false) ? <LogsView
+                                                 key="logs"
+                                                 entity={entity}
+                                                 fileName={`${id}.logs.training.odahuflow.txt`}
+                                                 fetchLogsRequest={fetchTrainingLogsRequest}
+                                                 fetchEntityRequest={fetchTrainingRequest}
+                                                /> : <LogsDashboard
+                                                 key="logs"
+                                                 logsURL={createLogsURL(
+                                                   // This is hardcode
+                                                   "/kibana/app/kibana#/dashboard/23e7b410-95b8-11ea-b67b-07a8a3aceb39",
+                                                   {"kubernetes.pod_name": entity.status?.podName}
+                                                 )}
+                                                />;
     return (
         <ViewPage
             loading={loading}

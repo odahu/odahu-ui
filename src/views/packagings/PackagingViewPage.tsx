@@ -34,25 +34,20 @@ export const PackagingViewPage: React.FC = () => {
 
     const {entity, loading, notFound} = useFetchingEntity(id as string, fetchPackagingRequest);
 
-    let logsView = Object();
-    if (kibanaEnabled == false) {
-        let logsView = <LogsView
-                        key="logs"
-                        entity={entity}
-                        fileName={`${id}.logs.packaging.odahuflow.txt`}
-                        fetchLogsRequest={fetchPackagingLogsRequest}
-                        fetchEntityRequest={fetchPackagingRequest}
-                       />;
-    } else {
-        let logsView = <LogsDashboard
-                        key="logs"
-                        logsURL={createLogsURL(
-                            // This is hardcode
-                            "/kibana/app/kibana#/dashboard/23e7b410-95b8-11ea-b67b-07a8a3aceb39",
-                            {"kubernetes.pod_name": entity.status?.podName}
-                        )}
-                       />;
-    }
+    const logsView = (kibanaEnabled == false) ? <LogsView
+                                                 key="logs"
+                                                 entity={entity}
+                                                 fileName={`${id}.logs.packaging.odahuflow.txt`}
+                                                 fetchLogsRequest={fetchPackagingLogsRequest}
+                                                 fetchEntityRequest={fetchPackagingRequest}
+                                                /> : <LogsDashboard
+                                                 key="logs"
+                                                 logsURL={createLogsURL(
+                                                   // This is hardcode
+                                                   "/kibana/app/kibana#/dashboard/23e7b410-95b8-11ea-b67b-07a8a3aceb39",
+                                                   {"kubernetes.pod_name": entity.status?.podName}
+                                                 )}
+                                                />;
     return (
         <ViewPage
             loading={loading}
