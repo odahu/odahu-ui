@@ -22,7 +22,7 @@ export const PackagingSchema = Yup.object().shape({
                 name: Yup.string().required('Target name is a required field'),
             }),
         ),
-        arguments: Yup.array().of(
+        arguments: Yup.array().nullable().of(
             Yup.object().shape({
                 name: Yup.string().required('Connection ID is a required field'),
                 value: Yup.string().required('Target name is a required field'),
