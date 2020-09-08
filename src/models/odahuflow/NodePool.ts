@@ -12,9 +12,9 @@
 
 import * as models from './models';
 
-export interface Claims {
-    email?: string;
+export interface NodePool {
+    nodeSelector?: { [key: string]: string; };
 
-    name?: string;
+    tags?: Array<string>;
 
 }

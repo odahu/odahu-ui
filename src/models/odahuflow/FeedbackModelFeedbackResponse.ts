@@ -1,6 +1,6 @@
 /**
  * API Gateway
- * This is an API Gateway server.
+ * This is an API Gateway webServer.
  *
  * OpenAPI spec version: 1.0
  * 

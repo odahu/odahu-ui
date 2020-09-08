@@ -1,6 +1,6 @@
 /**
  * API Gateway
- * This is an API Gateway server.
+ * This is an API Gateway webServer.
  *
  * OpenAPI spec version: 1.0
  * 
@@ -32,6 +32,11 @@ export interface ModelPackagingSpec {
      * Packaging integration ID
      */
     integrationName?: string;
+
+    /**
+     * Node selector for specifying a node pool
+     */
+    nodeSelector?: { [key: string]: string; };
 
     /**
      * Name of Connection to storage where a packager obtain a model trained artifact. Permitted connection types are defined by specific PackagingIntegration

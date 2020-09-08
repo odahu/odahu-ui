@@ -1,6 +1,6 @@
 /**
  * API Gateway
- * This is an API Gateway server.
+ * This is an API Gateway webServer.
  *
  * OpenAPI spec version: 1.0
  * 
@@ -47,6 +47,6 @@ export interface ModelDeploymentConfig {
     /**
      * Kubernetes tolerations for model deployments
      */
-    toleration?: { [key: string]: string; };
+    tolerations?: string;
 
 }

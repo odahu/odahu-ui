@@ -1,6 +1,6 @@
 /**
  * API Gateway
- * This is an API Gateway server.
+ * This is an API Gateway webServer.
  *
  * OpenAPI spec version: 1.0
  * 
@@ -23,12 +23,15 @@ export interface ModelTrainingConfig {
      */
     enabled?: boolean;
 
-    gpuNodeSelector?: { [key: string]: string; };
+    /**
+     * Node pools to run GPU training tasks on
+     */
+    gpuNodePools?: Array<models.NodePool>;
 
     /**
      * Kubernetes tolerations for GPU model trainings pods
      */
-    gpuToleration?: { [key: string]: string; };
+    gpuTolerations?: string;
 
     metricUrl?: string;
 
@@ -39,7 +42,10 @@ export interface ModelTrainingConfig {
      */
     namespace?: string;
 
-    nodeSelector?: { [key: string]: string; };
+    /**
+     * Node pools to run training tasks on
+     */
+    nodePools?: Array<models.NodePool>;
 
     outputConnectionID?: string;
 
@@ -53,8 +59,13 @@ export interface ModelTrainingConfig {
     /**
      * Kubernetes tolerations for model trainings pods
      */
-    toleration?: { [key: string]: string; };
+    tolerations?: string;
 
     toolchainIntegrationNamespace?: string;
+
+    /**
+     * Storage backend for toolchain integrations. Available options:   * kubernetes   * postgres
+     */
+    toolchainIntegrationRepositoryType?: string;
 
 }

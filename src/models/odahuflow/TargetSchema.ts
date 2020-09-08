@@ -1,6 +1,6 @@
 /**
  * API Gateway
- * This is an API Gateway server.
+ * This is an API Gateway webServer.
  *
  * OpenAPI spec version: 1.0
  * 
@@ -15,7 +15,7 @@ import * as models from './models';
 export interface TargetSchema {
     connectionTypes?: Array<string>;
 
-    default?: string;
+    _default?: string;
 
     name?: string;
 

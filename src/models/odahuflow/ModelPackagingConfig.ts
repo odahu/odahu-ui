@@ -1,6 +1,6 @@
 /**
  * API Gateway
- * This is an API Gateway server.
+ * This is an API Gateway webServer.
  *
  * OpenAPI spec version: 1.0
  * 
@@ -31,13 +31,18 @@ export interface ModelPackagingConfig {
     namespace?: string;
 
     /**
-     * Kubernetes node selectors for model packaging pods
+     * Node pools to run packaging tasks on
      */
-    nodeSelector?: { [key: string]: string; };
+    nodePools?: Array<models.NodePool>;
 
     outputConnectionID?: string;
 
     packagerIntegrationNamespace?: string;
+
+    /**
+     * Storage backend for packaging integrations. Available options:   * kubernetes   * postgres
+     */
+    packagingIntegrationRepositoryType?: string;
 
     serviceAccount?: string;
 
@@ -49,6 +54,6 @@ export interface ModelPackagingConfig {
     /**
      * Kubernetes tolerations for model packaging pods
      */
-    toleration?: { [key: string]: string; };
+    tolerations?: string;
 
 }
