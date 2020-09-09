@@ -1,6 +1,6 @@
 /**
  * API Gateway
- * This is an API Gateway server.
+ * This is an API Gateway webServer.
  *
  * OpenAPI spec version: 1.0
  * 
@@ -14,9 +14,29 @@ import * as models from './models';
 
 export interface CommonConfig {
     /**
+     * Database connection string
+     */
+    databaseConnectionString?: string;
+
+    /**
      * The collection of external urls, for example: metrics, edge, service catalog and so on
      */
     externalUrls?: Array<models.ExternalUrl>;
+
+    /**
+     * Graceful shutdown timeout
+     */
+    gracefulTimeout?: string;
+
+    /**
+     * How often launch new training
+     */
+    launchPeriod?: string;
+
+    /**
+     * OpenID token url
+     */
+    oauthOidcTokenEndpoint?: string;
 
     /**
      * Kubernetes can consume the GPU resource in the <vendor>.com/gpu format. For example, amd.com/gpu or nvidia.com/gpu.

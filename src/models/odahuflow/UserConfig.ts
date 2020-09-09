@@ -1,6 +1,6 @@
 /**
  * API Gateway
- * This is an API Gateway server.
+ * This is an API Gateway webServer.
  *
  * OpenAPI spec version: 1.0
  * 
@@ -16,7 +16,7 @@ export interface UserConfig {
     claims?: models.Claims;
 
     /**
-     * The sign out endpoint logs out the authenticated 
+     * The sign out endpoint logs out the authenticated
      */
     signOutUrl?: string;
 

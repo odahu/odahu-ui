@@ -1,6 +1,6 @@
 /**
  * API Gateway
- * This is an API Gateway server.
+ * This is an API Gateway webServer.
  *
  * OpenAPI spec version: 1.0
  * 
@@ -14,6 +14,11 @@ import * as models from './models';
 
 export interface APIConfig {
     backend?: models.APIBackendConfig;
+
+    /**
+     * If true then only webserver will be setup. Without background workers responsible to monitor storage and call services
+     */
+    disableWorkers?: boolean;
 
     /**
      * API HTTP port

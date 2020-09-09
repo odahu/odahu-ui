@@ -1,6 +1,6 @@
 /**
  * API Gateway
- * This is an API Gateway server.
+ * This is an API Gateway webServer.
  *
  * OpenAPI spec version: 1.0
  * 
@@ -13,6 +13,11 @@
 import * as models from './models';
 
 export interface Vault {
+    /**
+     * Can be used to debug and local development. Skip TLS verification
+     */
+    insecure?: boolean;
+
     /**
      * Vault role for access to the secret engine path
      */

@@ -41,6 +41,7 @@ export * from './ModelTraining';
 export * from './ModelTrainingConfig';
 export * from './ModelTrainingSpec';
 export * from './ModelTrainingStatus';
+export * from './NodePool';
 export * from './OperatorConfig';
 export * from './PackagerConfig';
 export * from './PackagerTarget';
