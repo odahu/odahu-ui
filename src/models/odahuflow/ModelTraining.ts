@@ -14,6 +14,11 @@ import * as models from './models';
 
 export interface ModelTraining {
     /**
+     * CreatedAt
+     */
+    createdAt?: string;
+
+    /**
      * Model training ID
      */
     id?: string;
@@ -27,5 +32,10 @@ export interface ModelTraining {
      * Model training status
      */
     status?: models.ModelTrainingStatus;
+
+    /**
+     * UpdatedAt
+     */
+    updatedAt?: string;
 
 }

@@ -26,8 +26,8 @@ const extractRow = (md: ModelDeployment) => [
     md.spec?.image,
     `${md.spec?.minReplicas}/${md.status?.availableReplicas}/${md.spec?.maxReplicas}`,
     md.status?.state,
-    humanDate(md.status?.createdAt),
-    humanDate(md.status?.updatedAt)
+    humanDate(md.createdAt),
+    humanDate(md.updatedAt)
 ];
 
 export const DeploymentTable: React.FC = () => {

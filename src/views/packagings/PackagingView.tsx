@@ -14,13 +14,13 @@ export const PackagingView: React.FC<PackagingViewProps> = ({packaging, status})
     const params: Array<ViewParam> = [
         {name: "ID", elem: packaging.id},
         {name: "Integration", elem: packaging.spec?.integrationName},
+        {name: "Created at", elem: humanDate(packaging.createdAt)},
+        {name: "Updated at", elem: humanDate(packaging.updatedAt)},
     ];
 
     if (status) {
         params.push(
             {name: 'State', elem: packaging.status?.state},
-            {name: "Created at", elem: humanDate(packaging.status?.createdAt)},
-            {name: "Updated at", elem: humanDate(packaging.status?.updatedAt)},
         )
     }
 

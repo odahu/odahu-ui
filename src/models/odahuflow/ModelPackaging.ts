@@ -14,6 +14,11 @@ import * as models from './models';
 
 export interface ModelPackaging {
     /**
+     * CreatedAt
+     */
+    createdAt?: string;
+
+    /**
      * Model packaging id
      */
     id?: string;
@@ -27,5 +32,10 @@ export interface ModelPackaging {
      * Model packaging status
      */
     status?: models.ModelPackagingStatus;
+
+    /**
+     * UpdatedAt
+     */
+    updatedAt?: string;
 
 }
