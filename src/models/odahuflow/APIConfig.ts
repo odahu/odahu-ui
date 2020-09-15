@@ -16,11 +16,6 @@ export interface APIConfig {
     backend?: models.APIBackendConfig;
 
     /**
-     * If true then only webserver will be setup. Without background workers responsible to monitor storage and call services
-     */
-    disableWorkers?: boolean;
-
-    /**
      * API HTTP port
      */
     port?: number;

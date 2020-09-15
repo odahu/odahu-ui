@@ -14,6 +14,11 @@ import * as models from './models';
 
 export interface ModelDeployment {
     /**
+     * CreatedAt
+     */
+    createdAt?: string;
+
+    /**
      * Model deployment id
      */
     id?: string;
@@ -27,5 +32,10 @@ export interface ModelDeployment {
      * Model deployment status
      */
     status?: models.ModelDeploymentStatus;
+
+    /**
+     * UpdatedAt
+     */
+    updatedAt?: string;
 
 }

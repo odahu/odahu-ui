@@ -37,14 +37,13 @@ export const TrainingView: React.FC<TrainingViewProps> = ({training, status}) =>
         {name: "Model name", elem: training.spec?.model?.name},
         {name: "Model version", elem: training.spec?.model?.version},
         {name: "Toolchain", elem: training.spec?.toolchain},
-
+        {name: 'Created at', elem: humanDate(training.createdAt)},
+        {name: 'Updated at', elem: humanDate(training.updatedAt)},
     ];
 
     if (status) {
         params.push(
             {name: 'State', elem: training.status?.state},
-            {name: 'Created at', elem: humanDate(training.status?.createdAt)},
-            {name: 'Updated at', elem: humanDate(training.status?.updatedAt)},
         )
     }
 

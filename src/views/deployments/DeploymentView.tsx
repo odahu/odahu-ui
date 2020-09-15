@@ -11,13 +11,13 @@ export interface DeploymentViewProps {
 export const DeploymentView: React.FC<DeploymentViewProps> = ({deployment, status}) => {
     const parameters: Array<ViewParam> = [
         {name: "ID", elem: deployment.id},
+        {name: "Created at", elem: humanDate(deployment.createdAt)},
+        {name: "Updated at", elem: humanDate(deployment.updatedAt)},
     ];
 
     if (status) {
         parameters.push(
             {name: "State", elem: deployment.status?.state},
-            {name: "Created at", elem: humanDate(deployment.status?.createdAt)},
-            {name: "Updated at", elem: humanDate(deployment.status?.updatedAt)},
         )
     }
 

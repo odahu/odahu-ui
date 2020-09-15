@@ -25,8 +25,8 @@ const extractRow = (packaging: ModelPackaging) => [
     ),
     packaging.spec?.artifactName,
     packaging.status?.state,
-    humanDate(packaging.status?.createdAt),
-    humanDate(packaging.status?.updatedAt)
+    humanDate(packaging.createdAt),
+    humanDate(packaging.updatedAt)
 ];
 
 export const PackagingTable: React.FC = () => {

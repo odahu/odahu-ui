@@ -35,8 +35,8 @@ const extractRow = (mt: ModelTraining) => [
         </RouterLink>
     ),
     mt.status?.state,
-    humanDate(mt.status?.createdAt),
-    humanDate(mt.status?.updatedAt)
+    humanDate(mt.createdAt),
+    humanDate(mt.updatedAt)
 ];
 
 export const TrainingTable: React.FC = () => {
