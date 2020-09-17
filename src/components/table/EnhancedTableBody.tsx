@@ -4,6 +4,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
 import {Link as RouterLink} from 'react-router-dom';
+import {Order} from "./commons";
+import {EnhancedTableHead} from "./EnhancedTableHead";
+import {type} from "os";
 
 
 export interface EnhancedTableBodyProps<T> {
@@ -15,6 +18,53 @@ export interface EnhancedTableBodyProps<T> {
     pageUrlPrefix: string;
     page: number;
     rowsPerPage: number;
+    orderBy: string | number;
+    order: Order;
+}
+
+function descendingComparator<T, K>(a: any, b: any, orderBy: string | number) {
+    if (b[orderBy] < a[orderBy]) {
+        return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+        return 1;
+    }
+    return 0;
+}
+
+
+function getComparator(
+    order: Order,
+    orderBy: string | number,
+    extractRow: (record: any) => any[]
+): (a: any, b: any) => number {
+
+    if (typeof orderBy == "number") {
+        return (a, b) => {
+            let ea = extractRow(a)
+            let eb = extractRow(b)
+            if (order === 'desc') {
+                return descendingComparator(ea, eb, orderBy)
+            } else {
+                return -descendingComparator(ea, eb, orderBy);
+            }
+        }
+    }
+
+    return order === 'desc'
+        ? (a, b) => descendingComparator(a, b, orderBy)
+        : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+
+function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
+    const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
+    stabilizedThis.sort((a, b) => {
+        const order = comparator(a[0], b[0]);
+        if (order !== 0) return order;
+        return a[1] - b[1];
+    });
+    return stabilizedThis.map((el) => el[0]);
 }
 
 export function EnhancedTableBody<T>(props: EnhancedTableBodyProps<T>): React.ReactElement {
@@ -42,7 +92,7 @@ export function EnhancedTableBody<T>(props: EnhancedTableBodyProps<T>): React.Re
 
     return (
         <TableBody>
-            {Object.keys(props.data).map(key => props.data[key])
+            {stableSort(Object.keys(props.data).map(key => props.data[key]), getComparator(props.order, props.orderBy, props.extractRow))
                 .slice(props.page * props.rowsPerPage, props.page * props.rowsPerPage + props.rowsPerPage)
                 .map((row, index) => {
                     const isItemSelected = isSelected(String(row.id));

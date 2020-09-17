@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
@@ -8,33 +7,8 @@ import {Redirect} from 'react-router-dom';
 import {EnhancedTableToolbar} from "./EnhancedTableToolbar";
 import {EnhancedTableHead} from "./EnhancedTableHead";
 import {EnhancedTableBody} from "./EnhancedTableBody";
+import {Order, useTableStyles} from "./commons";
 
-
-const useTableStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            width: '100%',
-        },
-        paper: {
-            width: '100%',
-            marginBottom: theme.spacing(2),
-        },
-        table: {
-            minWidth: 750,
-        },
-        visuallyHidden: {
-            border: 0,
-            clip: 'rect(0 0 0 0)',
-            height: 1,
-            margin: -1,
-            overflow: 'hidden',
-            padding: 0,
-            position: 'absolute',
-            top: 20,
-            width: 1,
-        },
-    }),
-);
 
 export interface EnhancedReadonlyTableProps<T> {
     readonly: true;
@@ -68,6 +42,15 @@ export function EnhancedTable<T>(props: EnhancedTableProps<T> | EnhancedReadonly
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [newClicked, setNewClicked] = useState(false);
     const [newCloneClicked, setCloneNewClicked] = useState(false);
+    const [order, setOrder] = React.useState<Order>('asc');
+    const [orderBy, setOrderBy] = React.useState<string|number>('id');
+
+    const handleRequestSort = (event: React.MouseEvent<unknown>, property: string | number) => {
+        const isAsc = orderBy === property && order === 'asc';
+        setOrder(isAsc ? 'desc' : 'asc');
+        setOrderBy(property);
+    };
+
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
             const newSelecteds = Object.keys(props.data);
@@ -142,6 +125,9 @@ export function EnhancedTable<T>(props: EnhancedTableProps<T> | EnhancedReadonly
                                 <EnhancedTableHead
                                     readonly={true}
                                     headers={props.headers}
+                                    onRequestSort={handleRequestSort}
+                                    orderBy={orderBy}
+                                    order={order}
                                 />
                             ) : (
                                 <EnhancedTableHead
@@ -150,6 +136,9 @@ export function EnhancedTable<T>(props: EnhancedTableProps<T> | EnhancedReadonly
                                     onSelectAllClick={handleSelectAllClick}
                                     rowCount={props.length}
                                     headers={props.headers}
+                                    onRequestSort={handleRequestSort}
+                                    orderBy={orderBy}
+                                    order={order}
                                 />
                             )
                         }
@@ -162,6 +151,8 @@ export function EnhancedTable<T>(props: EnhancedTableProps<T> | EnhancedReadonly
                             pageUrlPrefix={props.pageUrlPrefix}
                             page={page}
                             rowsPerPage={rowsPerPage}
+                            orderBy={orderBy}
+                            order={order}
                         />
                     </Table>
                 </TableContainer>
