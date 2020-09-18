@@ -19,7 +19,6 @@ import {createLogsURL, LogsDashboard} from "../../components/Dashboard";
 import {useSelector} from "react-redux";
 import {ApplicationState} from "../../store";
 import {ConfigurationState} from "../../store/configuration/types";
-import {ExternalUrl} from "../../models/odahuflow/ExternalUrl";
 
 const tabHeaders = ["View", "Edit", "YAML", "Logs", "Dashboard"];
 const editableSaveButtonClick = new SaveButtonClick<ModelTraining>(
@@ -34,7 +33,7 @@ export const TrainingPage: React.FC = () => {
 
     const {entity, loading, notFound} = useFetchingEntity(id as string, fetchTrainingRequest);
 
-    const kibanaEnabled = (config.data.common?.externalUrls?.map((i,e) => i.name == 'Kibana').indexOf(true) == -1) ? false : true;
+    const kibanaEnabled = (config.data.common?.externalUrls?.map((i) => i.name == 'Kibana').indexOf(true) == -1) ? false : true;
  
     const logsView = (kibanaEnabled == false) ? <LogsView
                                                  key="logs"

@@ -19,7 +19,6 @@ import {createLogsURL, LogsDashboard} from "../../components/Dashboard";
 import {useSelector} from "react-redux";
 import {ApplicationState} from "../../store";
 import {ConfigurationState} from "../../store/configuration/types";
-import {ExternalUrl} from "../../models/odahuflow/ExternalUrl";
 
 const saveButtonClick = new SaveButtonClick<ModelPackaging>(
     editPackagingRequest,
@@ -30,7 +29,7 @@ const saveButtonClick = new SaveButtonClick<ModelPackaging>(
 export const PackagingViewPage: React.FC = () => {
     const config = useSelector<ApplicationState, ConfigurationState>(state => state.configuration);
     const {id} = useParams();
-    const kibanaEnabled = (config.data.common?.externalUrls?.map((i,e) => i.name == 'Kibana').indexOf(true) == -1) ? false : true;
+    const kibanaEnabled = (config.data.common?.externalUrls?.map((i) => i.name == 'Kibana').indexOf(true) == -1) ? false : true;
 
     const {entity, loading, notFound} = useFetchingEntity(id as string, fetchPackagingRequest);
 

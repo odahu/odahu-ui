@@ -5,8 +5,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
 import {Link as RouterLink} from 'react-router-dom';
 import {Order} from "./commons";
-import {EnhancedTableHead} from "./EnhancedTableHead";
-import {type} from "os";
 
 
 export interface EnhancedTableBodyProps<T> {
@@ -41,8 +39,8 @@ function getComparator(
 
     if (typeof orderBy == "number") {
         return (a, b) => {
-            let ea = extractRow(a)
-            let eb = extractRow(b)
+            const ea = extractRow(a)
+            const eb = extractRow(b)
             if (order === 'desc') {
                 return descendingComparator(ea, eb, orderBy)
             } else {
