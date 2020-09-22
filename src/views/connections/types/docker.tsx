@@ -42,7 +42,7 @@ export const EditableFields: React.FC = () => {
                 className={classes.editorField}
                 name="spec.password"
                 label="Password"
-                description="Docker registry password"
+                description="Base64-encoded Docker registry password"
             />
         </>
     )

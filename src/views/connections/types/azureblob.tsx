@@ -34,7 +34,8 @@ const EditableFields: React.FC = () => {
                 className={classes.editorField}
                 name='spec.keySecret'
                 label="SAS Token"
-                description='Shared access signatures, format: “<primary_blob_endpoint>/<sas_token>”'
+                description='The Shared Access Signatures key has the following format:
+                "<primary_blob_endpoint>/<sas_token>" and must be base64-encoded.'
             />
         </>
     )

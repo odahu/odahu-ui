@@ -42,7 +42,7 @@ export const EditableFields: React.FC = () => {
                 className={classes.editorField}
                 name="spec.keySecret"
                 label="Service account secret"
-                description='Service account key in json format'
+                description='Base64-encoded Service Account key in json format'
             />
         </>
     )
