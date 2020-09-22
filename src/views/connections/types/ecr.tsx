@@ -43,13 +43,13 @@ export const EditableFields: React.FC = () => {
                 className={classes.editorField}
                 name="spec.keyID"
                 label="Access Key ID"
-                description='access key ID (for example, "AKIAIOSFODNN7EXAMPLE").'
+                description='Base64-encoded access key ID (for example, "QUtJQUlPU0ZPRE5ON0VYQU1QTEU=").'
             />
             <FormikSecretTextField
                 className={classes.editorField}
                 name="spec.keySecret"
                 label="Access Key Secret"
-                description='secret access key (for example, "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY").'
+                description='Base64-encoded secret access key (for example, "d0phbHJYVXRuRkVNSS9LN01ERU5HL2JQeFJmaUNZRVhBTVBMRUtFWQ==").'
             />
         </>
     )
