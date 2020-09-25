@@ -41,7 +41,7 @@ export function deepCopy<T>(entity: T): T {
     return JSON.parse(JSON.stringify(entity));
 }
 
-const ID_REGEX = /^([a-z0-9]|[a-z0-9][a-z0-9-]{0,61}[a-z0-9])$/;
+const ID_REGEX = /^[a-z]([-a-z0-9]{0,61}[a-z0-9])?$/;
 export const ID_MAX_LENGTH = 63;
 
 /**
