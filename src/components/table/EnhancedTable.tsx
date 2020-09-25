@@ -18,6 +18,7 @@ export interface EnhancedReadonlyTableProps<T> {
     data: Record<string, T extends { id?: string } ? T : never>;
     length: number;
     extractRow: (entity: T) => any[];
+    extractRowValues: (entity: T) => any[];
     pageUrlPrefix: string;
 }
 
@@ -30,6 +31,7 @@ export interface EnhancedTableProps<T> {
     data: Record<string, T extends { id?: string } ? T : never>;
     length: number;
     extractRow: (entity: T) => any[];
+    extractRowValues: (entity: T) => any[];
     newUrlPrefix: string;
     pageUrlPrefix: string;
     cloneUrlPrefix?: string;
@@ -148,6 +150,7 @@ export function EnhancedTable<T>(props: EnhancedTableProps<T> | EnhancedReadonly
                             setSelected={setSelected}
                             data={props.data}
                             extractRow={props.extractRow}
+                            extractRowValues={props.extractRowValues}
                             pageUrlPrefix={props.pageUrlPrefix}
                             page={page}
                             rowsPerPage={rowsPerPage}

@@ -20,6 +20,14 @@ const extractRow = (conn: Connection) => [
     humanDate(conn.status?.createdAt),
     humanDate(conn.status?.updatedAt),
 ];
+const extractRowValues = (conn: Connection) => [
+    conn.spec?.type,
+    conn.spec?.uri,
+    conn.spec?.description,
+    conn.spec?.webUILink,
+    humanDate(conn.status?.createdAt),
+    humanDate(conn.status?.updatedAt),
+];
 
 export const ConnectionTable: React.FC = () => {
     const connectionsState = useSelector<ApplicationState, ConnectionState>(state => state.connections);
@@ -47,6 +55,7 @@ export const ConnectionTable: React.FC = () => {
             onRefreshButtonClick={onRefreshButtonClick}
             onDeleteButtonClick={onDeleteButtonClick}
             extractRow={extractRow}
+            extractRowValues={extractRowValues}
             newUrlPrefix={ConnectionURLs.New}
             pageUrlPrefix={ConnectionURLs.Page}
             cloneUrlPrefix={ConnectionURLs.Clone}

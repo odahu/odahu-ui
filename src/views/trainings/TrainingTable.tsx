@@ -38,6 +38,10 @@ const extractRow = (mt: ModelTraining) => [
     humanDate(mt.createdAt),
     humanDate(mt.updatedAt)
 ];
+const extractRowValues = (mt: ModelTraining) => [
+    mt.spec?.toolchain, mt.spec?.model?.name, mt.spec?.model?.version,
+    mt.spec?.vcsName, mt.status?.state, humanDate(mt.createdAt), humanDate(mt.updatedAt)
+];
 
 export const TrainingTable: React.FC = () => {
     const trainingState = useSelector<ApplicationState, ModelTrainingState>(state => state.trainings);
@@ -65,6 +69,7 @@ export const TrainingTable: React.FC = () => {
             onRefreshButtonClick={onRefreshButtonClick}
             onDeleteButtonClick={onDeleteButtonClick}
             extractRow={extractRow}
+            extractRowValues={extractRowValues}
             newUrlPrefix={TrainingURLs.New}
             pageUrlPrefix={TrainingURLs.Page}
             cloneUrlPrefix={TrainingURLs.Clone}

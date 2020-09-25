@@ -17,6 +17,12 @@ const extractRow = (packager: PackagingIntegration) => [
     humanDate(packager.status?.createdAt),
     humanDate(packager.status?.updatedAt),
 ];
+const extractRowValues = (packager: PackagingIntegration) => [
+    packager.spec?.defaultImage,
+    packager.spec?.entrypoint,
+    humanDate(packager.status?.createdAt),
+    humanDate(packager.status?.updatedAt),
+];
 
 export const PackagerTable: React.FC = () => {
     const packagerState = useSelector<ApplicationState, PackagerState>(state => state.packagers);
@@ -35,6 +41,7 @@ export const PackagerTable: React.FC = () => {
             length={packagerState.length}
             onRefreshButtonClick={onRefreshButtonClick}
             extractRow={extractRow}
+            extractRowValues={extractRowValues}
             pageUrlPrefix={PackagerURLs.Page}
         />
     );
