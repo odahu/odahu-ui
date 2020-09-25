@@ -6,11 +6,12 @@ import {FormikSecretTextField} from "../../../components/SecretTextField";
 import {ConnectionSpecPlugin, ConnectionTypes} from "./index";
 import {OdahuTextField} from "../../../components/OdahuTextField";
 import {useFieldsStyles} from "../../../components/fields";
+import {hide} from "../../../utils/sensitive";
 
 
 function extractViewParameters(conn: Connection): Array<ViewParam> {
     return [
-        {name: "Shared Access Signature URL", elem: conn.spec?.keySecret}
+        {name: "Shared Access Signature URL", elem: hide(conn.spec?.keySecret)}
     ];
 }
 
