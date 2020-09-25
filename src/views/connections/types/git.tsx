@@ -7,12 +7,13 @@ import {ConnectionSpecPlugin, ConnectionTypes} from "./index";
 import {OdahuTextField} from "../../../components/OdahuTextField";
 import {FormikOdahuAutocomplete} from "../../../components/OdahuAutocomplete";
 import {useFieldsStyles} from "../../../components/fields";
+import {hide} from "../../../utils/sensitive";
 
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
     return [
         {name: "Reference", elem: conn.spec?.reference},
-        {name: "SSH private key", elem: conn.spec?.keySecret}
+        {name: "SSH private key", elem: hide(conn.spec?.keySecret)}
     ];
 }
 

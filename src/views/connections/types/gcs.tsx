@@ -6,11 +6,12 @@ import {FormikSecretTextField} from "../../../components/SecretTextField";
 import {ConnectionSpecPlugin, ConnectionTypes} from "./index";
 import {OdahuTextField} from "../../../components/OdahuTextField";
 import {useFieldsStyles} from "../../../components/fields";
+import {hide} from "../../../utils/sensitive";
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
     return [
         {name: "Project", elem: conn.spec?.region},
-        {name: "Service Account Key", elem: conn.spec?.keySecret}
+        {name: "Service Account Key", elem: hide(conn.spec?.keySecret)}
     ];
 }
 
