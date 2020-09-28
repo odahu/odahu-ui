@@ -42,8 +42,6 @@ export class SaveButtonClick<T> {
         dispatch(this.createAction(entity)).then(() => {
             return dispatch(showSuccessAlert('Success', this.successMessage));
         }).then(() => {
-            return dispatch(this.fetchAllAction());
-        }).then(() => {
             if (setRedirect) {
                 setRedirect(true);
             }
