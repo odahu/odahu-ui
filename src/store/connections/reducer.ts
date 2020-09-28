@@ -31,12 +31,14 @@ export const connectionReducer: Reducer<ConnectionState, actionType> = (state = 
             return {...state, error: action.error, loading: false}
         }
         case ConnectionActionTypes.FETCH_SUCCESS: {
+            const data = {
+                ...state.data,
+                [action.payload.connection.id as string]: action.payload.connection,
+            }
             return {
-                data: {
-                    [action.payload.connection.id as string]: action.payload.connection,
-                    ...state.data,
-                },
                 ...state,
+                data: data,
+                length: Object.keys(data).length,
             }
         }
         default:

@@ -31,12 +31,14 @@ export const trainingReducer: Reducer<ModelTrainingState, actionType> = (state =
             return {...state, error: action.error, loading: false}
         }
         case TrainingActionTypes.FETCH_SUCCESS: {
+            const data = {
+                ...state.data,
+                [action.payload.training.id as string]: action.payload.training,
+            }
             return {
-                data: {
-                    [action.payload.training.id as string]: action.payload.training,
-                    ...state.data,
-                },
                 ...state,
+                data: data,
+                length: Object.keys(data).length,
             }
         }
         default:

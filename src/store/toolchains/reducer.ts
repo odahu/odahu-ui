@@ -31,12 +31,14 @@ export const toolchainReducer: Reducer<ToolchainState, actionType> = (state = in
             return {...state, error: action.error, loading: false}
         }
         case ToolchainActionTypes.FETCH_SUCCESS: {
+            const data = {
+                ...state.data,
+                [action.payload.toolchain.id as string]: action.payload.toolchain,
+            }
             return {
-                data: {
-                    [action.payload.toolchain.id as string]: action.payload.toolchain,
-                    ...state.data,
-                },
                 ...state,
+                data: data,
+                length: Object.keys(data).length,
             }
         }
         default:
