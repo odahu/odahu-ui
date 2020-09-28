@@ -31,12 +31,14 @@ export const deploymentReducer: Reducer<ModelDeploymentState, actionType> = (sta
             return {...state, error: action.error, loading: false}
         }
         case DeploymentsActionTypes.FETCH_SUCCESS: {
+            const data = {
+                ...state.data,
+                [action.payload.deployment.id as string]: action.payload.deployment,
+            }
             return {
-                data: {
-                    [action.payload.deployment.id as string]: action.payload.deployment,
-                    ...state.data,
-                },
                 ...state,
+                data: data,
+                length: Object.keys(data).length,
             }
         }
         default:
