@@ -15,7 +15,7 @@ import {UserService} from "./services/user";
 
 export function configureStore(): Store<ApplicationState> {
 
-    let opts: EnhancerOptions = {}
+    const opts: EnhancerOptions = {}
     if (process.env.NODE_ENV === 'development') {
         opts.trace = true
         opts.traceLimit = 15
