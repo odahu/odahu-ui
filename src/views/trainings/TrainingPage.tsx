@@ -21,17 +21,18 @@ import {ApplicationState} from "../../store";
 import {ConfigurationState} from "../../store/configuration/types";
 
 const tabHeaders = ["View", "Edit", "YAML", "Logs", "Dashboard"];
-const editableSaveButtonClick = new SaveButtonClick<ModelTraining>(
-    editTrainingRequest,
-    fetchAllTrainingRequest,
-    "Model Training submitted",
-);
 
 export const TrainingPage: React.FC = () => {
     const config = useSelector<ApplicationState, ConfigurationState>(state => state.configuration);
     const {id} = useParams();
 
-    const {entity, loading, notFound} = useFetchingEntity(id as string, fetchTrainingRequest);
+    const {entity, loading, notFound, setEntity} = useFetchingEntity(id as string, fetchTrainingRequest);
+    const editableSaveButtonClick = new SaveButtonClick<ModelTraining>(
+        editTrainingRequest,
+        fetchAllTrainingRequest,
+        "Model Training submitted",
+        (training) => {setEntity(training)}
+    );
 
     const kibanaEnabled = (config.data.common?.externalUrls?.map((i) => i.name == 'Kibana').indexOf(true) == -1) ? false : true;
  
