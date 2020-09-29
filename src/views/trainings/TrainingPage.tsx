@@ -1,5 +1,5 @@
-import React from 'react';
-import {useParams} from "react-router-dom";
+import React, {useState} from 'react';
+import {Redirect, useParams, useLocation, useHistory} from "react-router-dom";
 import {Editor} from "../../components/Editor";
 import {ViewPage} from "../../components/ViewPage";
 import {SaveButtonClick} from "../../components/actions";
@@ -19,19 +19,25 @@ import {createLogsURL, LogsDashboard} from "../../components/Dashboard";
 import {useSelector} from "react-redux";
 import {ApplicationState} from "../../store";
 import {ConfigurationState} from "../../store/configuration/types";
+import {TrainingURLs} from "./urls";
 
 const tabHeaders = ["View", "Edit", "YAML", "Logs", "Dashboard"];
 
 export const TrainingPage: React.FC = () => {
     const config = useSelector<ApplicationState, ConfigurationState>(state => state.configuration);
     const {id} = useParams();
-
     const {entity, loading, notFound, setEntity} = useFetchingEntity(id as string, fetchTrainingRequest);
+    const baseUrl = `${TrainingURLs.Page}/${id}`
+    const history = useHistory();
+
     const editableSaveButtonClick = new SaveButtonClick<ModelTraining>(
         editTrainingRequest,
         fetchAllTrainingRequest,
         "Model Training submitted",
-        (training) => {setEntity(training)}
+        (training) => {
+            setEntity(training)
+            history.push(baseUrl)
+        }
     );
 
     const kibanaEnabled = (config.data.common?.externalUrls?.map((i) => i.name == 'Kibana').indexOf(true) == -1) ? false : true;
@@ -55,6 +61,7 @@ export const TrainingPage: React.FC = () => {
             loading={loading}
             notFound={notFound}
             tabHeaders={tabHeaders}
+            baseUrl={baseUrl}
             tabValues={[
                 <TrainingView
                     key="view"

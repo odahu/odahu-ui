@@ -187,7 +187,6 @@ export interface Fields<T> {
 
 export interface EditPageProps<T> {
     entity: T;
-    redirectURL: string;
     title: string;
     schemas: Schemas;
     fields: Fields<T>;
@@ -212,7 +211,6 @@ export const FieldsOptionsContext = React.createContext<FieldsOptions>({
 export function EditablePage<T extends { id?: string }>(props: EditPageProps<T>): React.ReactElement {
     const {
         entity,
-        redirectURL,
         title,
         fields,
         schemas,
@@ -233,8 +231,6 @@ export function EditablePage<T extends { id?: string }>(props: EditPageProps<T>)
         setActiveStep(prevActiveStep => prevActiveStep - 1);
     };
 
-    const [isRedirect, setRedirect] = React.useState<boolean>(false);
-
     const [metadataFieldOptions, setMetadataFieldOptions] = React.useState<FieldsOptions>({
         isValidatorActivated: false,
     });
@@ -242,10 +238,6 @@ export function EditablePage<T extends { id?: string }>(props: EditPageProps<T>)
     const [specFieldOptions, setSpecFieldOptions] = React.useState<FieldsOptions>({
         isValidatorActivated: false,
     });
-
-    if (isRedirect) {
-        return <Redirect push to={`${redirectURL}/${entityID}`}/>
-    }
 
     return (
         <div className={classes.root}>
@@ -260,7 +252,7 @@ export function EditablePage<T extends { id?: string }>(props: EditPageProps<T>)
                             values = processBeforeSubmit(values);
                         }
 
-                        saveButtonClick.handle(values, dispatch, setRedirect);
+                        saveButtonClick.handle(values, dispatch);
                     }}
                 >
                     {

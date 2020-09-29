@@ -2,6 +2,9 @@ import React from 'react';
 import {AppBar, Box, makeStyles, Tab, Tabs, Theme, Typography} from "@material-ui/core";
 import {NotFoundPage} from "./NotFoundView";
 import {LoadingPage} from "./LoadingPage";
+import {Link, Switch, Route, useLocation, Redirect} from "react-router-dom";
+import {string} from "yup";
+import {DashboardURLPrefix} from "../views/dashboard/Dashbord";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -13,21 +16,19 @@ interface TabPanelProps {
     children?: React.ReactNode;
     dir?: string;
     index: any;
-    value: any;
 }
 
 function TabPanel(props: TabPanelProps) {
-    const {children, value, index, ...other} = props;
+    const {children, index, ...other} = props;
 
     return (
         <Typography
             component="div"
             role="tabpanel"
-            hidden={value !== index}
             aria-labelledby={`full-width-tab-${index}`}
             {...other}
         >
-            {value === index && <Box height="100%" p={3}>{children}</Box>}
+            <Box height="100%" p={3}>{children}</Box>
         </Typography>
     );
 }
@@ -37,13 +38,17 @@ export interface ViewPageProps {
     notFound: boolean;
     tabHeaders: string[];
     tabValues: React.ReactElement[];
+    baseUrl?: string;
 }
 
 export const ViewPage: React.FC<ViewPageProps> = (props) => {
     const classes = useStyles();
 
+    const baseUrl = props.baseUrl as string;
+    const location = useLocation();
+
     // Tab switcher logic
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(1);
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
     };
@@ -60,7 +65,7 @@ export const ViewPage: React.FC<ViewPageProps> = (props) => {
         <div className={classes.root}>
             <AppBar position="static" color="default">
                 <Tabs
-                    value={value}
+                    value={location.pathname}
                     onChange={handleChange}
                     indicatorColor="primary"
                     textColor="primary"
@@ -73,22 +78,31 @@ export const ViewPage: React.FC<ViewPageProps> = (props) => {
                             <Tab
                                 key={header}
                                 label={header}
+                                value={`${baseUrl}/${header}`}
+                                component={Link}
+                                to={`${baseUrl}/${header}`}
                             />
                         ))
                     }
                 </Tabs>
             </AppBar>
-            {
-                props.tabValues.map((tab, index) => (
-                    <TabPanel
-                        value={value}
-                        index={index}
-                        key={index}
-                    >
-                        {tab}
-                    </TabPanel>
-                ))
-            }
+            <Switch>
+                <Route exact path={baseUrl}>
+                    <Redirect to={`${baseUrl}/${props.tabHeaders[0]}`}/>
+                </Route>
+                {
+                    props.tabValues.map((tab, index) => (
+                        <Route path={`${baseUrl}/${props.tabHeaders[index]}`}>
+                            <TabPanel
+                                index={index}
+                                key={index}
+                            >
+                                {tab}
+                            </TabPanel>
+                        </Route>
+                    ))
+                }
+            </Switch>
         </div>
     )
 };

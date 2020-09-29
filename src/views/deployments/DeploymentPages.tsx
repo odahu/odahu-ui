@@ -11,16 +11,16 @@ import {DeploymentView} from "./DeploymentView";
 import {SpecElements} from "./editable/SpecElements";
 import {MetadataElements} from "./editable/MetadataElements";
 import {DeploymentMetaSchema, DeploymentSchema} from "./editable/schemas";
-import {DeploymentURLs} from "./urls";
 import {ModelDeploymentSpec} from "../../models/odahuflow/ModelDeploymentSpec";
 import {FetchingEntity} from "../../components/EntitiyFetching";
 import {addSuffixToID, merge} from "../../utils/enities";
 import {useSelector} from "react-redux";
 import {ApplicationState} from "../../store";
 import {ConfigurationState} from "../../store/configuration/types";
+import { useHistory } from 'react-router-dom';
+import {DeploymentURLs} from "./urls";
 
 const defaultFields = {
-    redirectURL: DeploymentURLs.Page,
     schemas: {
         metadata: DeploymentMetaSchema,
         spec: DeploymentSchema,
@@ -82,9 +82,19 @@ export const EditableDeploymentPage: React.FC<EditableDeploymentPageProps> = ({d
 export const NewDeploymentPage: React.FC = () => {
     const config = useSelector<ApplicationState, ConfigurationState>(state => state.configuration);
 
+    const history = useHistory()
+    const btn = new SaveButtonClick<ModelDeployment>(
+        createDeploymentRequest, fetchAllDeploymentRequest, "Model Deployment was created",
+        (entity) => {
+            const redirectTo = `${DeploymentURLs.Page}/${entity.id}`
+            history.push(redirectTo)
+        }
+    )
+
     return (
         <EditablePage
             {...defaultFields}
+            saveButtonClick={btn}
             title="New Deployment"
             entity={{
                 id: '',
@@ -98,6 +108,16 @@ export const NewDeploymentPage: React.FC = () => {
 };
 
 export const CloneDeploymentPage: React.FC = () => {
+
+    const history = useHistory()
+    const btn = new SaveButtonClick<ModelDeployment>(
+        createDeploymentRequest, fetchAllDeploymentRequest, "Model Deployment was created",
+        (entity) => {
+            const redirectTo = `${DeploymentURLs.Page}/${entity.id}`
+            history.push(redirectTo)
+        }
+    )
+
     return (
         <FetchingEntity
             fetchAction={fetchDeploymentRequest}
@@ -106,6 +126,7 @@ export const CloneDeploymentPage: React.FC = () => {
                 (deployment: ModelDeployment) => (
                     <EditablePage
                         {...defaultFields}
+                        saveButtonClick={btn}
                         title="Clone Deployment"
                         entity={{
                             id: addSuffixToID(deployment.id as string, '-clone'),

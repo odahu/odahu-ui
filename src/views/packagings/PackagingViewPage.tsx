@@ -1,5 +1,5 @@
 import React from "react";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {SaveButtonClick} from "../../components/actions";
 import {ModelPackaging} from "../../models/odahuflow/ModelPackaging";
 import {ViewPage} from "../../components/ViewPage";
@@ -19,6 +19,7 @@ import {createLogsURL, LogsDashboard} from "../../components/Dashboard";
 import {useSelector} from "react-redux";
 import {ApplicationState} from "../../store";
 import {ConfigurationState} from "../../store/configuration/types";
+import {PackagingURLs} from "./urls";
 
 
 export const PackagingViewPage: React.FC = () => {
@@ -27,12 +28,17 @@ export const PackagingViewPage: React.FC = () => {
     const kibanaEnabled = (config.data.common?.externalUrls?.map((i) => i.name == 'Kibana').indexOf(true) == -1) ? false : true;
 
     const {entity, loading, notFound, setEntity} = useFetchingEntity(id as string, fetchPackagingRequest);
+    const baseUrl = `${PackagingURLs.Page}/${id}`
+    const history = useHistory();
 
     const saveButtonClick = new SaveButtonClick<ModelPackaging>(
         editPackagingRequest,
         fetchAllPackagingRequest,
         "Model Packaging submitted",
-        (pack) => {setEntity(pack)}
+        (pack) => {
+            setEntity(pack)
+            history.push(baseUrl)
+        }
     );
 
     const logsView = (kibanaEnabled == false) ? <LogsView
@@ -54,6 +60,7 @@ export const PackagingViewPage: React.FC = () => {
             loading={loading}
             notFound={notFound}
             tabHeaders={["View", "Edit", "YAML", "Logs", "Dashboard"]}
+            baseUrl={baseUrl}
             tabValues={[
                 <PackagingView
                     key="view"

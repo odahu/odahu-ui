@@ -18,6 +18,8 @@ import {extractZeroElement} from "../../utils";
 import {addSuffixToID, deepCopy, merge} from "../../utils/enities";
 import {FetchingEntity} from "../../components/EntitiyFetching";
 import {ConfigurationState} from "../../store/configuration/types";
+import {useHistory} from "react-router-dom";
+import {ConnectionURLs} from "../connections/urls";
 
 function defaultTrainingSpec(mts?: ModelTrainingSpec): ModelTrainingSpec {
     return merge({
@@ -80,7 +82,6 @@ export function isHyperParameter(value: any): value is HyperParameter {
 }
 
 const defaultFields = {
-    redirectURL: TrainingURLs.Page,
     schemas: {
         metadata: TrainingMetaSchema,
         spec: TrainingSchema,
@@ -130,9 +131,21 @@ export const NewTrainingPage: React.FC = () => {
 
     const config = useSelector<ApplicationState, ConfigurationState>(state => state.configuration);
 
+    const history = useHistory()
+    const btn = new SaveButtonClick<ModelTraining>(
+        createTrainingRequest,
+        fetchAllTrainingRequest,
+        "Training was created",
+        (entity) => {
+            const redirectTo = `${TrainingURLs.Page}/${entity.id}`
+            history.push(redirectTo)
+        }
+    )
+
     return (
         <EditablePage
             {...defaultFields}
+            saveButtonClick={btn}
             title="New Training"
             entity={{
                 id: '',
@@ -148,6 +161,9 @@ export const NewTrainingPage: React.FC = () => {
 };
 
 export const NewCloneTrainingPage: React.FC = () => {
+
+    const history = useHistory()
+
     return (
         <FetchingEntity
             fetchAction={fetchTrainingRequest}
@@ -161,6 +177,10 @@ export const NewCloneTrainingPage: React.FC = () => {
                             createTrainingRequest,
                             fetchAllTrainingRequest,
                             "Model Training was submitted",
+                            (entity) => {
+                                const redirectTo = `${TrainingURLs.Page}/${entity.id}`
+                                history.push(redirectTo)
+                            }
                         )}
                         entity={{
                             id: addSuffixToID(training.id as string, '-clone'),
