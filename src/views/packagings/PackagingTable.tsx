@@ -28,6 +28,13 @@ const extractRow = (packaging: ModelPackaging) => [
     humanDate(packaging.createdAt),
     humanDate(packaging.updatedAt)
 ];
+const extractRowValues = (packaging: ModelPackaging) => [
+    packaging.spec?.integrationName,
+    packaging.spec?.artifactName,
+    packaging.status?.state,
+    humanDate(packaging.createdAt),
+    humanDate(packaging.updatedAt)
+];
 
 export const PackagingTable: React.FC = () => {
     const packagingState = useSelector<ApplicationState, ModelPackagingState>(state => state.packagings);
@@ -55,6 +62,7 @@ export const PackagingTable: React.FC = () => {
             onRefreshButtonClick={onRefreshButtonClick}
             onDeleteButtonClick={onDeleteButtonClick}
             extractRow={extractRow}
+            extractRowValues={extractRowValues}
             newUrlPrefix={PackagingURLs.New}
             pageUrlPrefix={PackagingURLs.Page}
             cloneUrlPrefix={PackagingURLs.Clone}

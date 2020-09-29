@@ -11,6 +11,18 @@ import {humanDate} from "../../utils/date";
 const ToolchainEnhancedTable = (props: EnhancedReadonlyTableProps<ToolchainIntegration>) => <EnhancedTable {...props}/>;
 
 const headers = ['Default Docker Image', 'Entrypoint', 'Created at', 'Updated at'];
+const extractRow = (toolchain: ToolchainIntegration) => [
+    toolchain.spec?.defaultImage,
+    toolchain.spec?.entrypoint,
+    humanDate(toolchain.status?.createdAt),
+    humanDate(toolchain.status?.updatedAt)
+];
+const extractRowValues = (toolchain: ToolchainIntegration) => [
+    toolchain.spec?.defaultImage,
+    toolchain.spec?.entrypoint,
+    humanDate(toolchain.status?.createdAt),
+    humanDate(toolchain.status?.updatedAt)
+];
 
 export const ToolchainTable: React.FC = () => {
     const toolchainState = useSelector<ApplicationState, ToolchainState>(state => state.toolchains);
@@ -19,12 +31,6 @@ export const ToolchainTable: React.FC = () => {
     const onRefreshButtonClick = () => {
         dispatch(fetchAllToolchainRequest());
     };
-    const extractRow = (toolchain: ToolchainIntegration) => [
-        toolchain.spec?.defaultImage,
-        toolchain.spec?.entrypoint,
-        humanDate(toolchain.status?.createdAt),
-        humanDate(toolchain.status?.updatedAt)
-    ];
 
     return (
         <ToolchainEnhancedTable
@@ -35,6 +41,7 @@ export const ToolchainTable: React.FC = () => {
             length={toolchainState.length}
             onRefreshButtonClick={onRefreshButtonClick}
             extractRow={extractRow}
+            extractRowValues={extractRowValues}
             pageUrlPrefix={ToolchainURLs.Page}
         />
     );
