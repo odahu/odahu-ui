@@ -10,5 +10,5 @@ export interface ConfigurationState {
 
 export const createKibanaEnabledSelector = () => (state: ApplicationState): boolean =>
     state.configuration.data.common?.externalUrls
-        ?.map((i) => i.name == 'Kibana')
-        .indexOf(true) != -1
+        ?.map((i) => i.name === 'Kibana')
+        .indexOf(true) !== -1

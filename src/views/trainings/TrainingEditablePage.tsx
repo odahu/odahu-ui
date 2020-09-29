@@ -19,7 +19,6 @@ import {addSuffixToID, deepCopy, merge} from "../../utils/enities";
 import {FetchingEntity} from "../../components/EntitiyFetching";
 import {ConfigurationState} from "../../store/configuration/types";
 import {useHistory} from "react-router-dom";
-import {ConnectionURLs} from "../connections/urls";
 
 function defaultTrainingSpec(mts?: ModelTrainingSpec): ModelTrainingSpec {
     return merge({

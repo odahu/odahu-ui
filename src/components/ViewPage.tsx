@@ -3,8 +3,6 @@ import {AppBar, Box, makeStyles, Tab, Tabs, Theme, Typography} from "@material-u
 import {NotFoundPage} from "./NotFoundView";
 import {LoadingPage} from "./LoadingPage";
 import {Link, Switch, Route, useLocation, Redirect} from "react-router-dom";
-import {string} from "yup";
-import {DashboardURLPrefix} from "../views/dashboard/Dashbord";
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
@@ -47,11 +45,6 @@ export const ViewPage: React.FC<ViewPageProps> = (props) => {
     const baseUrl = props.baseUrl as string;
     const location = useLocation();
 
-    // Tab switcher logic
-    const [value, setValue] = React.useState(1);
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-        setValue(newValue);
-    };
 
     if (props.loading) {
         return <LoadingPage/>
@@ -66,7 +59,6 @@ export const ViewPage: React.FC<ViewPageProps> = (props) => {
             <AppBar position="static" color="default">
                 <Tabs
                     value={location.pathname}
-                    onChange={handleChange}
                     indicatorColor="primary"
                     textColor="primary"
                     variant="fullWidth"
@@ -92,10 +84,9 @@ export const ViewPage: React.FC<ViewPageProps> = (props) => {
                 </Route>
                 {
                     props.tabValues.map((tab, index) => (
-                        <Route path={`${baseUrl}/${props.tabHeaders[index]}`}>
+                        <Route key={props.tabHeaders[index]} path={`${baseUrl}/${props.tabHeaders[index]}`}>
                             <TabPanel
                                 index={index}
-                                key={index}
                             >
                                 {tab}
                             </TabPanel>

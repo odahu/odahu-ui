@@ -17,7 +17,6 @@ import {addSuffixToID, deepCopy, merge} from "../../utils/enities";
 import {FetchingEntity} from "../../components/EntitiyFetching";
 import {ConfigurationState} from "../../store/configuration/types";
 import {useHistory} from "react-router-dom";
-import {TrainingURLs} from "../trainings/urls";
 
 function defaultPackagingSpec(mps?: ModelPackagingSpec): ModelPackagingSpec {
     return merge({
