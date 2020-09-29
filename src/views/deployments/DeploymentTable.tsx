@@ -29,6 +29,14 @@ const extractRow = (md: ModelDeployment) => [
     humanDate(md.createdAt),
     humanDate(md.updatedAt)
 ];
+const extractRowValues = (md: ModelDeployment) => [
+    md.spec?.imagePullConnID,
+    md.spec?.image,
+    `${md.spec?.minReplicas}/${md.status?.availableReplicas}/${md.spec?.maxReplicas}`,
+    md.status?.state,
+    humanDate(md.createdAt),
+    humanDate(md.updatedAt)
+];
 
 export const DeploymentTable: React.FC = () => {
     const deploymentState = useSelector<ApplicationState, ModelDeploymentState>(state => state.deployments);
@@ -56,6 +64,7 @@ export const DeploymentTable: React.FC = () => {
             onRefreshButtonClick={onRefreshButtonClick}
             onDeleteButtonClick={onDeleteButtonClick}
             extractRow={extractRow}
+            extractRowValues={extractRowValues}
             newUrlPrefix={DeploymentURLs.New}
             pageUrlPrefix={DeploymentURLs.Page}
             cloneUrlPrefix={DeploymentURLs.Clone}

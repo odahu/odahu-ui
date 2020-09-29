@@ -13,6 +13,7 @@ export interface EnhancedTableBodyProps<T> {
     setSelected: Dispatch<string[]>;
     data: Record<string, T extends { id?: string } ? T : never>;
     extractRow: (entity: T) => any[];
+    extractRowValues: (entity: T) => any[];
     pageUrlPrefix: string;
     page: number;
     rowsPerPage: number;
@@ -90,7 +91,10 @@ export function EnhancedTableBody<T>(props: EnhancedTableBodyProps<T>): React.Re
 
     return (
         <TableBody>
-            {stableSort(Object.keys(props.data).map(key => props.data[key]), getComparator(props.order, props.orderBy, props.extractRow))
+            {stableSort(
+                Object.keys(props.data).map(key => props.data[key]),
+                getComparator(props.order, props.orderBy, props.extractRowValues)
+            )
                 .slice(props.page * props.rowsPerPage, props.page * props.rowsPerPage + props.rowsPerPage)
                 .map((row, index) => {
                     const isItemSelected = isSelected(String(row.id));
