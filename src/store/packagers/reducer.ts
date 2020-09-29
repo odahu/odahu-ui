@@ -31,12 +31,14 @@ export const packagerReducer: Reducer<PackagerState, actionType> = (state = init
             return {...state, error: action.error, loading: false}
         }
         case PackagerActionTypes.FETCH_SUCCESS: {
+            const data = {
+                ...state.data,
+                [action.payload.packager.id as string]: action.payload.packager,
+            }
             return {
-                data: {
-                    [action.payload.packager.id as string]: action.payload.packager,
-                    ...state.data,
-                },
                 ...state,
+                data: data,
+                length: Object.keys(data).length,
             }
         }
         default:

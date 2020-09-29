@@ -14,16 +14,16 @@ import {EditableDeploymentPage} from "./DeploymentPages";
 import {useFetchingEntity} from "../../components/EntitiyFetching";
 import {createDashboardURL, GrafanaDashboard} from "../../components/Dashboard";
 
-const saveButtonClick = new SaveButtonClick<ModelDeployment>(
-    editDeploymentRequest,
-    fetchAllDeploymentRequest,
-    "Model Deployment submitted",
-);
-
 export const DeploymentViewPage: React.FC = () => {
     const {id} = useParams();
+    const {entity, loading, notFound, setEntity} = useFetchingEntity(id as string, fetchDeploymentRequest);
 
-    const {entity, loading, notFound} = useFetchingEntity(id as string, fetchDeploymentRequest);
+    const saveButtonClick = new SaveButtonClick<ModelDeployment>(
+        editDeploymentRequest,
+        fetchAllDeploymentRequest,
+        "Model Deployment submitted",
+        (md) => {setEntity(md)}
+    );
 
     return (
         <ViewPage

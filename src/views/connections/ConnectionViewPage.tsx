@@ -14,16 +14,18 @@ import {ConnectionView} from "./ConnectionView";
 import {useFetchingEntity} from "../../components/EntitiyFetching";
 
 const tabHeaders = ["View", "Edit", "YAML"];
-const editButtonClick = new SaveButtonClick<Connection>(
-    editConnectionRequest,
-    fetchAllConnectionRequest,
-    "Connection submitted",
-);
 
 export const ConnectionViewPage: React.FC = () => {
     const {id} = useParams();
 
-    const {entity, loading, notFound} = useFetchingEntity(id as string, fetchConnectionRequest);
+    const {entity, loading, notFound, setEntity} = useFetchingEntity(id as string, fetchConnectionRequest);
+
+    const editButtonClick = new SaveButtonClick<Connection>(
+        editConnectionRequest,
+        fetchAllConnectionRequest,
+        "Connection submitted",
+        (conn) => {setEntity(conn)}
+    );
 
     return (
         <ViewPage

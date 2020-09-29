@@ -9,18 +9,23 @@ export class SaveButtonClick<T> {
     private createAction: (entity: T) => AsyncAction<Promise<T>>;
     private fetchAllAction: () => AsyncAction;
     private successMessage: string;
+    private successCallback?: (entity: T) => void;
 
     /**
      * @param modifyAction - redux action that allows creating or editing of Odahu entity
      * @param fetchAllAction - redux action that fetch a type of Odahu entities from API server
      * @param successMessage - a message that appears after successful modifyAction
+     * @param successCallback - a function that will be called after successful processing of update logic
      */
     constructor(modifyAction: (entity: T) => AsyncAction<Promise<T>>,
                 fetchAllAction: () => AsyncAction,
-                successMessage: string) {
+                successMessage: string,
+                successCallback?: (entity: T) => void
+                ) {
         this.createAction = modifyAction;
         this.fetchAllAction = fetchAllAction;
         this.successMessage = successMessage;
+        this.successCallback = successCallback;
     }
 
     /**
@@ -37,10 +42,12 @@ export class SaveButtonClick<T> {
         dispatch(this.createAction(entity)).then(() => {
             return dispatch(showSuccessAlert('Success', this.successMessage));
         }).then(() => {
-            return dispatch(this.fetchAllAction());
-        }).then(() => {
             if (setRedirect) {
                 setRedirect(true);
+            }
+        }).then(() => {
+            if(this.successCallback) {
+                this.successCallback(entity)
             }
         }).catch((err: string) => {
             dispatch(showErrorAlert("Error", String(err)));

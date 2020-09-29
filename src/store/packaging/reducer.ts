@@ -31,12 +31,14 @@ export const packagingReducer: Reducer<ModelPackagingState, actionType> = (state
             return {...state, error: action.error, loading: false}
         }
         case PackagingActionTypes.FETCH_SUCCESS: {
+            const data = {
+                ...state.data,
+                [action.payload.packaging.id as string]: action.payload.packaging,
+            }
             return {
-                data: {
-                    [action.payload.packaging.id as string]: action.payload.packaging,
-                    ...state.data,
-                },
                 ...state,
+                data: data,
+                length: Object.keys(data).length,
             }
         }
         default:
