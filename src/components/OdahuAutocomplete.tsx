@@ -59,7 +59,7 @@ export const OdahuAutocomplete: React.FC<OdahuAutocompleteProps> = (
             freeSolo
             className={className ?? classes.fields}
             onChange={(event, newValue) => {
-                formik.setFieldValue(name, newValue);
+                formik.setFieldValue(name, newValue ?? "");
             }}
             value={value}
             options={options}
