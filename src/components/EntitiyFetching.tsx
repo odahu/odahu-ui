@@ -8,6 +8,7 @@ import {useParams} from "react-router-dom";
 
 export interface FetchHookOutput<T> {
     loading: boolean;
+    setEntity: (value: T) => void;
     notFound: boolean;
     entity: T;
 }
@@ -16,11 +17,11 @@ export function useFetchingEntity<T>(id: string, fetchAction: (id: string) => As
     const dispatch: any = useDispatch();
     const [loading, setLoading] = useState<boolean>(true);
     const [notFound, setNotFound] = useState<boolean>(false);
-    const [entity, seEntity] = useState<T>({} as T);
+    const [entity, setEntity] = useState<T>({} as T);
 
     if (loading) {
         dispatch(fetchAction(id)).then((entity: T) => {
-            seEntity(entity);
+            setEntity(entity);
         }).catch((err: any) => {
             dispatch(showErrorAlert("Error", String(err)));
             setNotFound(true);
@@ -29,7 +30,7 @@ export function useFetchingEntity<T>(id: string, fetchAction: (id: string) => As
         });
     }
 
-    return {loading, notFound, entity};
+    return {loading, notFound, entity, setEntity: setEntity};
 }
 
 export type FetchingEntityProps<T> = {

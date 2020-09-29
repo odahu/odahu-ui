@@ -20,18 +20,20 @@ import {useSelector} from "react-redux";
 import {ApplicationState} from "../../store";
 import {ConfigurationState} from "../../store/configuration/types";
 
-const saveButtonClick = new SaveButtonClick<ModelPackaging>(
-    editPackagingRequest,
-    fetchAllPackagingRequest,
-    "Model Packaging submitted",
-);
 
 export const PackagingViewPage: React.FC = () => {
     const config = useSelector<ApplicationState, ConfigurationState>(state => state.configuration);
     const {id} = useParams();
     const kibanaEnabled = (config.data.common?.externalUrls?.map((i) => i.name == 'Kibana').indexOf(true) == -1) ? false : true;
 
-    const {entity, loading, notFound} = useFetchingEntity(id as string, fetchPackagingRequest);
+    const {entity, loading, notFound, setEntity} = useFetchingEntity(id as string, fetchPackagingRequest);
+
+    const saveButtonClick = new SaveButtonClick<ModelPackaging>(
+        editPackagingRequest,
+        fetchAllPackagingRequest,
+        "Model Packaging submitted",
+        (pack) => {setEntity(pack)}
+    );
 
     const logsView = (kibanaEnabled == false) ? <LogsView
                                                  key="logs"
