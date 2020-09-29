@@ -18,14 +18,13 @@ import {createDashboardURL, GrafanaDashboard} from "../../components/Dashboard";
 import {createLogsURL, LogsDashboard} from "../../components/Dashboard";
 import {useSelector} from "react-redux";
 import {ApplicationState} from "../../store";
-import {ConfigurationState} from "../../store/configuration/types";
+import {createKibanaEnabledSelector} from "../../store/configuration/types";
 import {PackagingURLs} from "./urls";
 
 
 export const PackagingViewPage: React.FC = () => {
-    const config = useSelector<ApplicationState, ConfigurationState>(state => state.configuration);
     const {id} = useParams();
-    const kibanaEnabled = (config.data.common?.externalUrls?.map((i) => i.name == 'Kibana').indexOf(true) == -1) ? false : true;
+    const kibanaEnabled = useSelector<ApplicationState, boolean>(createKibanaEnabledSelector())
 
     const {entity, loading, notFound, setEntity} = useFetchingEntity(id as string, fetchPackagingRequest);
     const baseUrl = `${PackagingURLs.Page}/${id}`
@@ -41,7 +40,7 @@ export const PackagingViewPage: React.FC = () => {
         }
     );
 
-    const logsView = (kibanaEnabled == false) ? <LogsView
+    const logsView = !kibanaEnabled ? <LogsView
                                                  key="logs"
                                                  entity={entity}
                                                  fileName={`${id}.logs.packaging.odahuflow.txt`}
