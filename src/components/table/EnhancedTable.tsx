@@ -47,6 +47,13 @@ export function EnhancedTable<T>(props: EnhancedTableProps<T> | EnhancedReadonly
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<string|number>('id');
 
+
+    const selectedAndExisted = selected.filter((value) => value in props.data)
+    if (selected.length > selectedAndExisted.length) {
+        // Means that some selected rows were deleted in Redux store
+        setSelected(selectedAndExisted)
+    }
+
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: string | number) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
