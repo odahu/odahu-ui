@@ -1,8 +1,7 @@
 import React from "react";
 import {EditablePage} from "../../components/EditablePage";
 import {useSelector} from "react-redux";
-import {ApplicationState} from "../../store";
-import {PackagerState} from "../../store/packagers/types";
+import {packagerIDsSelector} from "../../store/packagers/types";
 import {ModelPackaging} from "../../models/odahuflow/ModelPackaging";
 import {SaveButtonClick} from "../../components/actions";
 import {PackagingView} from "./PackagingView";
@@ -11,34 +10,18 @@ import {PackagingMetaSchema, PackagingSchema} from "./editable/schemas";
 import {Argument, SpecElements} from "./editable/SpecElements";
 import {MetadataElements} from "./editable/MetadataElements";
 import {PackagingURLs} from "./urls";
-import {ModelPackagingSpec} from "../../models/odahuflow/ModelPackagingSpec";
 import {extractLastElement} from "../../utils";
-import {addSuffixToID, deepCopy, merge} from "../../utils/enities";
+import {addSuffixToID, deepCopy} from "../../utils/enities";
 import {FetchingEntity} from "../../components/EntitiyFetching";
-import {ConfigurationState} from "../../store/configuration/types";
+import {
+    defaultPackagingOutputConnection,
+    defaultPackagingResourcesSelector
+} from "../../store/configuration/types";
 import {useHistory} from "react-router-dom";
-
-function defaultPackagingSpec(mps?: ModelPackagingSpec): ModelPackagingSpec {
-    return merge({
-        artifactName: "",
-        integrationName: "",
-        outputConnection: "",
-        targets: [],
-        arguments: [],
-        resources: {
-            requests: {
-                cpu: '',
-                gpu: '',
-                memory: '',
-            },
-            limits: {
-                cpu: '',
-                gpu: '',
-                memory: '',
-            },
-        }
-    }, mps ?? {})
-}
+import {ModelTraining} from "../../models/odahuflow/ModelTraining";
+import {fetchTrainingRequest} from "../../store/trainings/actions";
+import {createPackagingSpecFromTraining} from "../../utils/basedCreating";
+import {defaultPackagingSpec} from "../../utils/defaultEntities";
 
 function processArgumentsBeforeSubmit(packaging: ModelPackaging): ModelPackaging {
     // Deep copy
@@ -116,10 +99,11 @@ export const EditablePackagingPage: React.FC<EditablePackagingPageProps> = ({pac
 };
 
 export const NewPackagingPage: React.FC = () => {
-    const packagerState = useSelector<ApplicationState, PackagerState>(state => state.packagers);
-    const packagerIDs = Object.values(packagerState.data).map(packager => packager.id);
 
-    const config = useSelector<ApplicationState, ConfigurationState>(state => state.configuration);
+    const packagerIDs = useSelector(packagerIDsSelector);
+    const outputConnection = useSelector(defaultPackagingOutputConnection);
+    const defaultResources = useSelector(defaultPackagingResourcesSelector);
+
 
     const history = useHistory()
     const btn = new SaveButtonClick<ModelPackaging>(
@@ -141,8 +125,8 @@ export const NewPackagingPage: React.FC = () => {
                 id: '',
                 spec: defaultPackagingSpec({
                     integrationName: extractLastElement(packagerIDs, ''),
-                    resources: config.data.packaging?.defaultResources,
-                    outputConnection: config.data.packaging?.outputConnectionID,
+                    resources: defaultResources,
+                    outputConnection: outputConnection,
                 })
             }}
         />
@@ -179,6 +163,35 @@ export const ClonePackagingPage: React.FC = () => {
                         }}
                     />
                 )
+            }
+        </FetchingEntity>
+    );
+};
+
+export const CreateFromTrainingPage: React.FC = () => {
+
+    const packagerIDs = useSelector(packagerIDsSelector);
+    const defaultResources = useSelector(defaultPackagingResourcesSelector);
+
+    return (
+        <FetchingEntity
+            fetchAction={fetchTrainingRequest}
+        >
+            {
+                (training: ModelTraining) => {
+                    return <EditablePage
+                        {...defaultFields}
+                        title="Create from Training"
+                        entity={{
+                            id: `${training.id}-pack`,
+                            spec: {
+                                ...createPackagingSpecFromTraining(training),
+                                resources: defaultResources,
+                                integrationName: extractLastElement(packagerIDs, ''),
+                            }
+                        } as ModelPackaging}
+                    />
+                }
             }
         </FetchingEntity>
     );
