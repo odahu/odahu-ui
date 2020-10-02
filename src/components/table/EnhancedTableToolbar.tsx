@@ -7,6 +7,7 @@ import RefreshIcon from "@material-ui/icons/Refresh";
 import {Button, Divider} from "@material-ui/core";
 import React from "react";
 import FileCopyIcon from '@material-ui/icons/FileCopy';
+import {SvgIconProps} from "@material-ui/core/SvgIcon/SvgIcon";
 
 const useToolbarStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -28,14 +29,21 @@ const useToolbarStyles = makeStyles((theme: Theme) =>
     }),
 );
 
+export interface ExtraToolbarButton {
+    onClick: () => void;
+    text: string;
+    icon: (props: SvgIconProps) => JSX.Element;
+}
+
 interface SelectedTableToolbarProps {
     numSelected: number;
     onDeleteButtonClick: () => void;
     onNewCloneButtonClick: () => void;
+    extraButtons?: ExtraToolbarButton[];
 }
 
 const SelectedTableToolbar: React.FC<SelectedTableToolbarProps> = (
-    {numSelected, onDeleteButtonClick, onNewCloneButtonClick}
+    {numSelected, onDeleteButtonClick, onNewCloneButtonClick, extraButtons}
 ) => {
     const classes = useToolbarStyles();
 
@@ -59,6 +67,23 @@ const SelectedTableToolbar: React.FC<SelectedTableToolbarProps> = (
                     Clone
                 </Button>
             )}
+            {(extraButtons ?? [])
+                .map(v => {
+                    return <Button
+                        className={classes.button}
+                        variant="outlined"
+                        onClick={v.onClick}
+                        aria-label="new"
+                        key={v.text}
+                    >
+                        {React.createElement(
+                            v.icon,
+                            {className: classes.buttonIcon}
+                        )}
+                        {v.text}
+                    </Button>
+                })
+            }
             <Button
                 className={classes.button}
                 variant="outlined"
