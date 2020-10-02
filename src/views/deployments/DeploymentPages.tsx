@@ -15,16 +15,13 @@ import {ModelDeploymentSpec} from "../../models/odahuflow/ModelDeploymentSpec";
 import {FetchingEntity} from "../../components/EntitiyFetching";
 import {addSuffixToID, merge} from "../../utils/enities";
 import {useSelector} from "react-redux";
-import {ApplicationState} from "../../store";
 import {
-    ConfigurationState,
     defaultDeploymentImagePullConnSelector,
     defaultDeploymentResourcesSelector
 } from "../../store/configuration/types";
 import { useHistory } from 'react-router-dom';
 import {DeploymentURLs} from "./urls";
 import {ModelPackaging} from "../../models/odahuflow/ModelPackaging";
-import {fetchPackagerRequest} from "../../store/packagers/actions";
 import {createDeploymentSpecFromPackaging} from "../../utils/basedCreating";
 import {fetchPackagingRequest} from "../../store/packaging/actions";
 
