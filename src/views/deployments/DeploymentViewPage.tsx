@@ -1,5 +1,5 @@
 import React from 'react';
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {Editor} from "../../components/Editor";
 import {ViewPage} from "../../components/ViewPage";
 import {SaveButtonClick} from "../../components/actions";
@@ -13,16 +13,21 @@ import {DeploymentView} from "./DeploymentView";
 import {EditableDeploymentPage} from "./DeploymentPages";
 import {useFetchingEntity} from "../../components/EntitiyFetching";
 import {createDashboardURL, GrafanaDashboard} from "../../components/Dashboard";
+import {DeploymentURLs} from "./urls";
 
 export const DeploymentViewPage: React.FC = () => {
     const {id} = useParams();
     const {entity, loading, notFound, setEntity} = useFetchingEntity(id as string, fetchDeploymentRequest);
-
+    const baseUrl = `${DeploymentURLs.Page}/${id}`
+    const history = useHistory();
     const saveButtonClick = new SaveButtonClick<ModelDeployment>(
         editDeploymentRequest,
         fetchAllDeploymentRequest,
         "Model Deployment submitted",
-        (md) => {setEntity(md)}
+        (md) => {
+            setEntity(md)
+            history.push(baseUrl)
+        }
     );
 
     return (
@@ -30,6 +35,7 @@ export const DeploymentViewPage: React.FC = () => {
             loading={loading}
             notFound={notFound}
             tabHeaders={["View", "Edit", "YAML", "Dashboard"]}
+            baseUrl={baseUrl}
             tabValues={[
                 <DeploymentView
                     key="view"

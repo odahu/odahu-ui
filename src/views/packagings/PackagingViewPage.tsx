@@ -1,5 +1,5 @@
 import React from "react";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {SaveButtonClick} from "../../components/actions";
 import {ModelPackaging} from "../../models/odahuflow/ModelPackaging";
 import {ViewPage} from "../../components/ViewPage";
@@ -18,24 +18,29 @@ import {createDashboardURL, GrafanaDashboard} from "../../components/Dashboard";
 import {createLogsURL, LogsDashboard} from "../../components/Dashboard";
 import {useSelector} from "react-redux";
 import {ApplicationState} from "../../store";
-import {ConfigurationState} from "../../store/configuration/types";
+import {createKibanaEnabledSelector} from "../../store/configuration/types";
+import {PackagingURLs} from "./urls";
 
 
 export const PackagingViewPage: React.FC = () => {
-    const config = useSelector<ApplicationState, ConfigurationState>(state => state.configuration);
     const {id} = useParams();
-    const kibanaEnabled = (config.data.common?.externalUrls?.map((i) => i.name == 'Kibana').indexOf(true) == -1) ? false : true;
+    const kibanaEnabled = useSelector<ApplicationState, boolean>(createKibanaEnabledSelector())
 
     const {entity, loading, notFound, setEntity} = useFetchingEntity(id as string, fetchPackagingRequest);
+    const baseUrl = `${PackagingURLs.Page}/${id}`
+    const history = useHistory();
 
     const saveButtonClick = new SaveButtonClick<ModelPackaging>(
         editPackagingRequest,
         fetchAllPackagingRequest,
         "Model Packaging submitted",
-        (pack) => {setEntity(pack)}
+        (pack) => {
+            setEntity(pack)
+            history.push(baseUrl)
+        }
     );
 
-    const logsView = (kibanaEnabled == false) ? <LogsView
+    const logsView = !kibanaEnabled ? <LogsView
                                                  key="logs"
                                                  entity={entity}
                                                  fileName={`${id}.logs.packaging.odahuflow.txt`}
@@ -54,6 +59,7 @@ export const PackagingViewPage: React.FC = () => {
             loading={loading}
             notFound={notFound}
             tabHeaders={["View", "Edit", "YAML", "Logs", "Dashboard"]}
+            baseUrl={baseUrl}
             tabValues={[
                 <PackagingView
                     key="view"
