@@ -5,11 +5,14 @@ import {EnhancedTable, EnhancedTableProps} from "../../components/table/Enhanced
 import {ModelPackaging} from "../../models/odahuflow/ModelPackaging";
 import {ModelPackagingState} from "../../store/packaging/types";
 import {deletePackagingRequest, fetchAllPackagingRequest} from "../../store/packaging/actions";
-import {Link as RouterLink} from "react-router-dom";
+import {showInfoAlert} from "../../store/alert/actions";
+import {Link as RouterLink, Redirect} from "react-router-dom";
 import {join} from "path";
 import {PackagerURLs} from "../packagers/urls";
 import {PackagingURLs} from "./urls";
 import {humanDate} from "../../utils/date";
+import CloudIcon from '@material-ui/icons/Cloud';
+import {DeploymentURLs} from "../deployments/urls";
 
 const PackagingEnhancedTable = (props: EnhancedTableProps<ModelPackaging>) => <EnhancedTable {...props}/>;
 
@@ -37,6 +40,11 @@ const extractRowValues = (packaging: ModelPackaging) => [
 ];
 
 export const PackagingTable: React.FC = () => {
+
+    const deployableIntegrations = ["docker-rest"]
+
+    const [redirectTo, setRedirect] = React.useState<string>("")
+
     const packagingState = useSelector<ApplicationState, ModelPackagingState>(state => state.packagings);
     const dispatch = useDispatch();
 
@@ -52,6 +60,10 @@ export const PackagingTable: React.FC = () => {
         dispatch(fetchAllPackagingRequest());
     };
 
+    if (redirectTo) {
+        return <Redirect push to={`${DeploymentURLs.Table}`}/>
+    }
+
     return (
         <PackagingEnhancedTable
             readonly={false}
@@ -66,6 +78,23 @@ export const PackagingTable: React.FC = () => {
             newUrlPrefix={PackagingURLs.New}
             pageUrlPrefix={PackagingURLs.Page}
             cloneUrlPrefix={PackagingURLs.Clone}
+            oneRowSelectedButtons={[
+                {
+                    onClick: (id: string) => {
+                        const selectedIntegration = packagingState.data[id].spec?.integrationName ?? ""
+                        if (deployableIntegrations.includes(selectedIntegration)) {
+                            setRedirect(id)
+                        } else {
+                            dispatch(showInfoAlert(
+                                "Not available for deploy",
+                                `Only images build on integrations next are available for deploy: ${deployableIntegrations}`
+                            ))
+                        }
+                    },
+                    text: "Deploy",
+                    icon: CloudIcon
+                }
+            ]}
         />
     );
 };

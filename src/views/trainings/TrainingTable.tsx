@@ -12,7 +12,7 @@ import {ConnectionURLs} from "../connections/urls";
 import {ToolchainURLs} from "../toolchains/urls";
 import {humanDate} from "../../utils/date";
 import {PackagingURLs} from "../packagings/urls";
-import SkipNextIcon from '@material-ui/icons/SkipNext';
+import WorkIcon from '@material-ui/icons/Work';
 
 const TrainingEnhancedTable = (props: EnhancedTableProps<ModelTraining>) => <EnhancedTable {...props}/>;
 
@@ -86,7 +86,7 @@ export const TrainingTable: React.FC = () => {
                 {
                     onClick: (id: string) => {setRedirect(id)},
                     text: "Pack",
-                    icon: SkipNextIcon
+                    icon: WorkIcon
                 }
             ]}
         />
