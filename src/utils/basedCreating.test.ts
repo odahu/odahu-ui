@@ -73,5 +73,5 @@ test("If there is more than one docker-push target in packaging then we don't co
             ]
         }
     })
-    expect(deploymentSpec.imagePullConnID).toEqual("last-image")
+    expect(deploymentSpec.imagePullConnID).toEqual("")
 })
