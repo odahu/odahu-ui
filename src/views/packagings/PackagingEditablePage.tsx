@@ -133,7 +133,6 @@ export const NewPackagingPage: React.FC = () => {
     );
 };
 
-
 export const ClonePackagingPage: React.FC = () => {
 
     const history = useHistory()
@@ -173,6 +172,17 @@ export const CreateFromTrainingPage: React.FC = () => {
     const packagerIDs = useSelector(packagerIDsSelector);
     const defaultResources = useSelector(defaultPackagingResourcesSelector);
 
+    const history = useHistory()
+    const btn = new SaveButtonClick<ModelPackaging>(
+        createPackagingRequest,
+        fetchAllPackagingRequest,
+        "Packaging was created from training",
+        (entity) => {
+            const redirectTo = `${PackagingURLs.Page}/${entity.id}`
+            history.push(redirectTo)
+        }
+    )
+
     return (
         <FetchingEntity
             fetchAction={fetchTrainingRequest}
@@ -182,6 +192,7 @@ export const CreateFromTrainingPage: React.FC = () => {
                     return <EditablePage
                         {...defaultFields}
                         title="Create from Training"
+                        saveButtonClick={btn}
                         entity={{
                             id: `${training.id}-pack`,
                             spec: {

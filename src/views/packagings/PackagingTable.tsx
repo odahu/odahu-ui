@@ -61,7 +61,7 @@ export const PackagingTable: React.FC = () => {
     };
 
     if (redirectTo) {
-        return <Redirect push to={`${DeploymentURLs.Table}`}/>
+        return <Redirect push to={`${DeploymentURLs.FromPackaging}/${redirectTo}`}/>
     }
 
     return (

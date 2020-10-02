@@ -153,6 +153,15 @@ export const CreateFromPackagingPage: React.FC = () => {
     const defaultResources = useSelector(defaultDeploymentResourcesSelector);
     const defaultDockerPullConnName = useSelector(defaultDeploymentImagePullConnSelector);
 
+    const history = useHistory()
+    const btn = new SaveButtonClick<ModelDeployment>(
+        createDeploymentRequest, fetchAllDeploymentRequest, "Model Deployment was created from packaging",
+        (entity) => {
+            const redirectTo = `${DeploymentURLs.Page}/${entity.id}`
+            history.push(redirectTo)
+        }
+    )
+
     return (
         <FetchingEntity
             fetchAction={fetchPackagingRequest}
@@ -162,6 +171,7 @@ export const CreateFromPackagingPage: React.FC = () => {
                     const deployment = createDeploymentSpecFromPackaging(packaging)
                     return <EditablePage
                         {...defaultFields}
+                        saveButtonClick={btn}
                         title="Create from Packaging"
                         entity={{
                             id: `${packaging.id}-deploy`,
