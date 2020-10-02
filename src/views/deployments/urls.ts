@@ -3,4 +3,5 @@ export enum DeploymentURLs {
     New = '/deployments/new',
     Page = '/deployments/item',
     Clone = '/deployments/clone',
+    FromPackaging = '/deployments/from-packaging',
 }

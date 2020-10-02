@@ -18,3 +18,9 @@ export const defaultPackagingResourcesSelector = (state: ApplicationState) =>
 
 export const defaultPackagingOutputConnection = (state: ApplicationState) =>
     state.configuration.data.packaging?.outputConnectionID
+
+export const defaultDeploymentResourcesSelector = (state: ApplicationState) =>
+    state.configuration.data.deployment?.defaultResources
+
+export const defaultDeploymentImagePullConnSelector = (state: ApplicationState) =>
+    state.configuration.data.deployment?.defaultDockerPullConnName
