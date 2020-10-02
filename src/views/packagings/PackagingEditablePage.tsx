@@ -16,6 +16,7 @@ import {extractLastElement} from "../../utils";
 import {addSuffixToID, deepCopy, merge} from "../../utils/enities";
 import {FetchingEntity} from "../../components/EntitiyFetching";
 import {ConfigurationState} from "../../store/configuration/types";
+import {useHistory} from "react-router-dom";
 
 function defaultPackagingSpec(mps?: ModelPackagingSpec): ModelPackagingSpec {
     return merge({
@@ -80,7 +81,6 @@ export interface EditablePackagingPageProps {
 }
 
 const defaultFields = {
-    redirectURL: PackagingURLs.Page,
     schemas: {
         metadata: PackagingMetaSchema,
         spec: PackagingSchema,
@@ -121,9 +121,21 @@ export const NewPackagingPage: React.FC = () => {
 
     const config = useSelector<ApplicationState, ConfigurationState>(state => state.configuration);
 
+    const history = useHistory()
+    const btn = new SaveButtonClick<ModelPackaging>(
+        createPackagingRequest,
+        fetchAllPackagingRequest,
+        "Packaging was created",
+        (entity) => {
+            const redirectTo = `${PackagingURLs.Page}/${entity.id}`
+            history.push(redirectTo)
+        }
+    )
+
     return (
         <EditablePage
             {...defaultFields}
+            saveButtonClick={btn}
             title="New Packaging"
             entity={{
                 id: '',
@@ -139,6 +151,18 @@ export const NewPackagingPage: React.FC = () => {
 
 
 export const ClonePackagingPage: React.FC = () => {
+
+    const history = useHistory()
+    const btn = new SaveButtonClick<ModelPackaging>(
+        createPackagingRequest,
+        fetchAllPackagingRequest,
+        "Packaging was created",
+        (entity) => {
+            const redirectTo = `${PackagingURLs.Page}/${entity.id}`
+            history.push(redirectTo)
+        }
+    )
+
     return (
         <FetchingEntity
             fetchAction={fetchPackagingRequest}
@@ -147,6 +171,7 @@ export const ClonePackagingPage: React.FC = () => {
                 (packaging: ModelPackaging) => (
                     <EditablePage
                         {...defaultFields}
+                        saveButtonClick={btn}
                         title="Clone Packaging"
                         entity={{
                             id: addSuffixToID(packaging.id as string, '-clone'),

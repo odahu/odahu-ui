@@ -19,6 +19,7 @@ import {connectionPluginsMapping} from "./plugins";
 import {ConnectionURLs} from "./urls";
 import {FetchingEntity} from "../../components/EntitiyFetching";
 import {addSuffixToID} from "../../utils/enities";
+import {useHistory} from "react-router-dom";
 
 const allConnectionTypes = Object.values(ConnectionTypes);
 
@@ -42,7 +43,6 @@ const ConnectionSchema = Yup.object().shape({
 });
 
 const defaultFields = {
-    redirectURL: ConnectionURLs.Page,
     schemas: {
         metadata: ConnectionMetaSchema,
         spec: ConnectionSchema,
@@ -134,9 +134,22 @@ export const EditableConnectionPage: React.FC<EditableConnectionPageProps> = ({c
 };
 
 export const NewConnectionPage: React.FC = () => {
+
+    const history = useHistory()
+    const btn = new SaveButtonClick<Connection>(
+        createConnectionRequest,
+        fetchAllConnectionRequest,
+        "Connection was created",
+        (entity) => {
+            const redirectTo = `${ConnectionURLs.Page}/${entity.id}`
+            history.push(redirectTo)
+        }
+    )
+
     return (
         <EditablePage
             {...defaultFields}
+            saveButtonClick={btn}
             title="New Connection"
             entity={{id: '', spec: {type: ConnectionTypes.GIT}}}
         />
@@ -144,6 +157,18 @@ export const NewConnectionPage: React.FC = () => {
 };
 
 export const NewCloneConnectionPage: React.FC = () => {
+
+    const history = useHistory()
+    const btn = new SaveButtonClick<Connection>(
+        createConnectionRequest,
+        fetchAllConnectionRequest,
+        "Connection was created",
+        (entity) => {
+            const redirectTo = `${ConnectionURLs.Page}/${entity.id}`
+            history.push(redirectTo)
+        }
+    )
+
     return (
         <FetchingEntity
             fetchAction={fetchConnectionRequest}
@@ -152,6 +177,7 @@ export const NewCloneConnectionPage: React.FC = () => {
                 (connection: Connection) => (
                     <EditablePage
                         {...defaultFields}
+                        saveButtonClick={btn}
                         title="Clone Connection"
                         entity={{
                             id: addSuffixToID(connection.id as string, '-clone'),

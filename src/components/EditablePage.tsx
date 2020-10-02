@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -7,7 +7,6 @@ import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import {Paper} from "@material-ui/core";
 import Typography from '@material-ui/core/Typography';
-import {Redirect} from "react-router-dom";
 import {Formik, useFormikContext} from "formik";
 import {ObjectSchema} from "yup";
 import {useDispatch} from "react-redux";
@@ -187,7 +186,6 @@ export interface Fields<T> {
 
 export interface EditPageProps<T> {
     entity: T;
-    redirectURL: string;
     title: string;
     schemas: Schemas;
     fields: Fields<T>;
@@ -212,7 +210,6 @@ export const FieldsOptionsContext = React.createContext<FieldsOptions>({
 export function EditablePage<T extends { id?: string }>(props: EditPageProps<T>): React.ReactElement {
     const {
         entity,
-        redirectURL,
         title,
         fields,
         schemas,
@@ -223,8 +220,6 @@ export function EditablePage<T extends { id?: string }>(props: EditPageProps<T>)
     // TODO: fix typing
     const dispatch: any = useDispatch();
 
-    const [entityID, setEntityID] = useState(entity.id);
-
     const [activeStep, setActiveStep] = React.useState<number>(0);
     const handleNext = () => {
         setActiveStep(prevActiveStep => prevActiveStep + 1);
@@ -232,8 +227,6 @@ export function EditablePage<T extends { id?: string }>(props: EditPageProps<T>)
     const handleBack = () => {
         setActiveStep(prevActiveStep => prevActiveStep - 1);
     };
-
-    const [isRedirect, setRedirect] = React.useState<boolean>(false);
 
     const [metadataFieldOptions, setMetadataFieldOptions] = React.useState<FieldsOptions>({
         isValidatorActivated: false,
@@ -243,10 +236,6 @@ export function EditablePage<T extends { id?: string }>(props: EditPageProps<T>)
         isValidatorActivated: false,
     });
 
-    if (isRedirect) {
-        return <Redirect push to={`${redirectURL}/${entityID}`}/>
-    }
-
     return (
         <div className={classes.root}>
             <Paper>
@@ -254,13 +243,12 @@ export function EditablePage<T extends { id?: string }>(props: EditPageProps<T>)
                     initialValues={entity}
                     validationSchema={schemas.spec}
                     onSubmit={values => {
-                        setEntityID(values.id);
 
                         if (processBeforeSubmit) {
                             values = processBeforeSubmit(values);
                         }
 
-                        saveButtonClick.handle(values, dispatch, setRedirect);
+                        saveButtonClick.handle(values, dispatch);
                     }}
                 >
                     {
