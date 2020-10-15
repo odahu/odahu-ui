@@ -4,10 +4,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
 import {Redirect} from 'react-router-dom';
-import {EnhancedTableToolbar} from "./EnhancedTableToolbar";
+import {EnhancedTableToolbar, ExtraToolbarButton} from "./EnhancedTableToolbar";
 import {EnhancedTableHead} from "./EnhancedTableHead";
 import {EnhancedTableBody} from "./EnhancedTableBody";
 import {Order, useTableStyles} from "./commons";
+import {SvgIconProps} from "@material-ui/core/SvgIcon/SvgIcon";
 
 
 export interface EnhancedReadonlyTableProps<T> {
@@ -20,6 +21,12 @@ export interface EnhancedReadonlyTableProps<T> {
     extractRow: (entity: T) => any[];
     extractRowValues: (entity: T) => any[];
     pageUrlPrefix: string;
+}
+
+interface SingleSelectedButton {
+    onClick: (id: string) => void;
+    text: string;
+    icon: (props: SvgIconProps) => JSX.Element;
 }
 
 export interface EnhancedTableProps<T> {
@@ -35,6 +42,7 @@ export interface EnhancedTableProps<T> {
     newUrlPrefix: string;
     pageUrlPrefix: string;
     cloneUrlPrefix?: string;
+    oneRowSelectedButtons?: SingleSelectedButton[];
 }
 
 export function EnhancedTable<T>(props: EnhancedTableProps<T> | EnhancedReadonlyTableProps<T>): React.ReactElement {
@@ -91,10 +99,24 @@ export function EnhancedTable<T>(props: EnhancedTableProps<T> | EnhancedReadonly
         return <Redirect push to={props.newUrlPrefix}/>
     }
 
-
-    // Redirect to the page where mew resource will be created
+    // Redirect to the page where new resource will be created
     if (!props.readonly && newCloneClicked) {
         return <Redirect push to={props.cloneUrlPrefix ? `${props.cloneUrlPrefix}/${selected[0]}` : ''}/>
+    }
+
+    // bind selected IDs to event handlers
+    let extraButtons: ExtraToolbarButton[] = [];
+    if (!props.readonly && selected.length === 1) {
+        const oneRowButtons: ExtraToolbarButton[] = (props.oneRowSelectedButtons ?? []).map(
+            v => {
+                return {
+                    ...v,
+                    onClick: () => {
+                        v.onClick(selected[0])
+                    }
+                }
+            })
+        extraButtons = extraButtons.concat(oneRowButtons)
     }
 
     return (
@@ -119,6 +141,7 @@ export function EnhancedTable<T>(props: EnhancedTableProps<T> | EnhancedReadonly
                                 props.onDeleteButtonClick(selected);
                                 setSelected([]);
                             }}
+                            extraButtons={extraButtons}
                         />
                     )
                 }

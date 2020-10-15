@@ -15,10 +15,15 @@ import {ModelDeploymentSpec} from "../../models/odahuflow/ModelDeploymentSpec";
 import {FetchingEntity} from "../../components/EntitiyFetching";
 import {addSuffixToID, merge} from "../../utils/enities";
 import {useSelector} from "react-redux";
-import {ApplicationState} from "../../store";
-import {ConfigurationState} from "../../store/configuration/types";
+import {
+    defaultDeploymentImagePullConnSelector,
+    defaultDeploymentResourcesSelector
+} from "../../store/configuration/types";
 import { useHistory } from 'react-router-dom';
 import {DeploymentURLs} from "./urls";
+import {ModelPackaging} from "../../models/odahuflow/ModelPackaging";
+import {createDeploymentSpecFromPackaging} from "../../utils/basedCreating";
+import {fetchPackagingRequest} from "../../store/packaging/actions";
 
 const defaultFields = {
     schemas: {
@@ -80,7 +85,8 @@ export const EditableDeploymentPage: React.FC<EditableDeploymentPageProps> = ({d
 };
 
 export const NewDeploymentPage: React.FC = () => {
-    const config = useSelector<ApplicationState, ConfigurationState>(state => state.configuration);
+    const defaultResources = useSelector(defaultDeploymentResourcesSelector);
+    const defaultDockerPullConnName = useSelector(defaultDeploymentImagePullConnSelector);
 
     const history = useHistory()
     const btn = new SaveButtonClick<ModelDeployment>(
@@ -99,8 +105,8 @@ export const NewDeploymentPage: React.FC = () => {
             entity={{
                 id: '',
                 spec: defaultDeploymentSpec({
-                    resources: config.data.deployment?.defaultResources,
-                    imagePullConnID: config.data.deployment?.defaultDockerPullConnName,
+                    resources: defaultResources,
+                    imagePullConnID: defaultDockerPullConnName,
                 })
             }}
         />
@@ -134,6 +140,46 @@ export const CloneDeploymentPage: React.FC = () => {
                         }}
                     />
                 )
+            }
+        </FetchingEntity>
+    );
+};
+
+export const CreateFromPackagingPage: React.FC = () => {
+
+    const defaultResources = useSelector(defaultDeploymentResourcesSelector);
+    const defaultDockerPullConnName = useSelector(defaultDeploymentImagePullConnSelector);
+
+    const history = useHistory()
+    const btn = new SaveButtonClick<ModelDeployment>(
+        createDeploymentRequest, fetchAllDeploymentRequest, "Model Deployment was created from packaging",
+        (entity) => {
+            const redirectTo = `${DeploymentURLs.Page}/${entity.id}`
+            history.push(redirectTo)
+        }
+    )
+
+    return (
+        <FetchingEntity
+            fetchAction={fetchPackagingRequest}
+        >
+            {
+                (packaging: ModelPackaging) => {
+                    const deployment = createDeploymentSpecFromPackaging(packaging)
+                    return <EditablePage
+                        {...defaultFields}
+                        saveButtonClick={btn}
+                        title="Create from Packaging"
+                        entity={{
+                            id: `${packaging.id}-deploy`,
+                            spec: {
+                                ...deployment,
+                                resources: defaultResources,
+                                imagePullConnID: deployment.imagePullConnID ?? defaultDockerPullConnName,
+                            }
+                        } as ModelDeployment}
+                    />
+                }
             }
         </FetchingEntity>
     );

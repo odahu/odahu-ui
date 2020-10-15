@@ -5,12 +5,14 @@ import {EnhancedTable, EnhancedTableProps} from "../../components/table/Enhanced
 import {ModelTraining} from "../../models/odahuflow/ModelTraining";
 import {ModelTrainingState} from "../../store/trainings/types";
 import {deleteTrainingRequest, fetchAllTrainingRequest} from "../../store/trainings/actions";
-import {Link as RouterLink} from "react-router-dom";
+import {Link as RouterLink, Redirect} from "react-router-dom";
 import {TrainingURLs} from "./urls";
 import {join} from "path";
 import {ConnectionURLs} from "../connections/urls";
 import {ToolchainURLs} from "../toolchains/urls";
 import {humanDate} from "../../utils/date";
+import {PackagingURLs} from "../packagings/urls";
+import WorkIcon from '@material-ui/icons/Work';
 
 const TrainingEnhancedTable = (props: EnhancedTableProps<ModelTraining>) => <EnhancedTable {...props}/>;
 
@@ -44,6 +46,9 @@ const extractRowValues = (mt: ModelTraining) => [
 ];
 
 export const TrainingTable: React.FC = () => {
+
+    const [redirectTo, setRedirect] = React.useState<string>("")
+
     const trainingState = useSelector<ApplicationState, ModelTrainingState>(state => state.trainings);
     const dispatch = useDispatch();
 
@@ -59,6 +64,10 @@ export const TrainingTable: React.FC = () => {
         dispatch(fetchAllTrainingRequest());
     };
 
+    if (redirectTo) {
+        return <Redirect push to={`${PackagingURLs.FromTraining}/${redirectTo}`}/>
+    }
+
     return (
         <TrainingEnhancedTable
             readonly={false}
@@ -73,6 +82,13 @@ export const TrainingTable: React.FC = () => {
             newUrlPrefix={TrainingURLs.New}
             pageUrlPrefix={TrainingURLs.Page}
             cloneUrlPrefix={TrainingURLs.Clone}
+            oneRowSelectedButtons={[
+                {
+                    onClick: (id: string) => {setRedirect(id)},
+                    text: "Pack",
+                    icon: WorkIcon
+                }
+            ]}
         />
     );
 };

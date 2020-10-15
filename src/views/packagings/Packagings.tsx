@@ -1,7 +1,7 @@
 import React from "react";
 import {Route, Switch} from "react-router-dom";
 import {PackagingTable} from "./PackagingTable";
-import {ClonePackagingPage, NewPackagingPage} from "./PackagingEditablePage";
+import {ClonePackagingPage, CreateFromTrainingPage, NewPackagingPage} from "./PackagingEditablePage";
 import {PackagingViewPage} from "./PackagingViewPage";
 import {PackagingURLs} from "./urls";
 import {join} from "path";
@@ -26,6 +26,9 @@ export const Packagings: React.FC = () => {
                 </Route>
                 <Route path={join(PackagingURLs.Clone, ':id')}>
                     <ClonePackagingPage/>
+                </Route>
+                <Route path={join(PackagingURLs.FromTraining, ':id')}>
+                    <CreateFromTrainingPage/>
                 </Route>
             </Switch>
         </div>
