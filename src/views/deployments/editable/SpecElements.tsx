@@ -44,6 +44,12 @@ export const SpecElements: React.FC = () => {
             />
             <OdahuTextField
                 className={classes.editorField}
+                name="spec.roleName"
+                label="Role"
+                description="Optional role to access model"
+            />
+            <OdahuTextField
+                className={classes.editorField}
                 name="spec.livenessProbeInitialDelay"
                 label="Liveness probe initial delay"
                 type="number"

@@ -26,6 +26,7 @@ export const DeploymentView: React.FC<DeploymentViewProps> = ({deployment, statu
         {name: "Image pull connection ID", elem: deployment.spec?.imagePullConnID},
         {name: "Minimum replicas", elem: deployment.spec?.minReplicas},
         {name: "Maximum replicas", elem: deployment.spec?.maxReplicas},
+        {name: "Role", elem: deployment.spec?.roleName},
         {name: "Memory requests", elem: deployment.spec?.resources?.requests?.memory},
         {name: "Memory limits", elem: deployment.spec?.resources?.limits?.memory},
         {name: "CPU requests", elem: deployment.spec?.resources?.requests?.cpu},
