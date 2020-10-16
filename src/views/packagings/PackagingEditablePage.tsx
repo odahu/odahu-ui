@@ -194,7 +194,7 @@ export const CreateFromTrainingPage: React.FC = () => {
                         title="Create from Training"
                         saveButtonClick={btn}
                         entity={{
-                            id: `${training.id}-pack`,
+                            id: addSuffixToID(training.id as string, "-pack"),
                             spec: {
                                 ...createPackagingSpecFromTraining(training),
                                 resources: defaultResources,

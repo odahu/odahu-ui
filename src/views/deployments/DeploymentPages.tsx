@@ -171,7 +171,7 @@ export const CreateFromPackagingPage: React.FC = () => {
                         saveButtonClick={btn}
                         title="Create from Packaging"
                         entity={{
-                            id: `${packaging.id}-deploy`,
+                            id: addSuffixToID(packaging.id as string, "-deploy"),
                             spec: {
                                 ...deployment,
                                 resources: defaultResources,
