@@ -7,14 +7,14 @@ import {ConnectionSpecPlugin, ConnectionTypes} from "./index";
 import {OdahuTextField} from "../../../components/OdahuTextField";
 import {FormikOdahuAutocomplete} from "../../../components/OdahuAutocomplete";
 import {useFieldsStyles} from "../../../components/fields";
-import {hide} from "../../../utils/sensitive";
+import {hidingSequence} from "../../../utils/sensitive";
 
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
     return [
         {name: "Region", elem: conn.spec?.region},
         {name: "Access Key ID", elem: conn.spec?.keyID},
-        {name: "Access Key Secret", elem: hide(conn.spec?.keySecret)}
+        {name: "Access Key Secret", elem: hidingSequence}
     ];
 }
 
