@@ -1,7 +1,4 @@
 
 
 export const hidingSymbol = "•"
-
-export function hide(plainString = ""): string {
-    return hidingSymbol.repeat(plainString.length)
-}
+export const hidingSequence = hidingSymbol.repeat(10)
