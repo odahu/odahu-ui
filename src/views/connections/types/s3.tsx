@@ -13,7 +13,7 @@ import {hidingSequence} from "../../../utils/sensitive";
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
     return [
         {name: "Region", elem: conn.spec?.region},
-        {name: "Access Key ID", elem: conn.spec?.keyID},
+        {name: "Access Key ID", elem: hidingSequence},
         {name: "Access Key Secret", elem: hidingSequence}
     ];
 }
