@@ -21,10 +21,10 @@ const extractRow = (conn: Connection) => [
     humanDate(conn.status?.updatedAt),
 ];
 const extractRowValues = (conn: Connection) => [
-    conn.spec?.type,
-    conn.spec?.uri,
-    conn.spec?.description,
-    conn.spec?.webUILink,
+    conn.spec?.type ?? "",
+    conn.spec?.uri ?? "",
+    conn.spec?.description ?? "",
+    conn.spec?.webUILink ?? "",
     humanDate(conn.status?.createdAt),
     humanDate(conn.status?.updatedAt),
 ];
