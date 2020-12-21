@@ -44,6 +44,11 @@ export interface ModelDeploymentSpec {
     minReplicas?: number;
 
     /**
+     * Node selector for specifying a node pool
+     */
+    nodeSelector?: { [key: string]: string; };
+
+    /**
      * Initial delay for readiness probe of model pod
      */
     readinessProbeInitialDelay?: number;

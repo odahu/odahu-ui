@@ -13,6 +13,39 @@
 import * as models from './models';
 
 export interface ServiceCatalog {
+    /**
+     * Auth configures connection parameters to ODAHU API Server
+     */
+    auth?: models.AuthConfig;
+
+    /**
+     * BaseURL is a prefix to service catalog web server endpoints
+     */
     baseUrl?: string;
+
+    /**
+     * enabled Debug increase logger verbosity and format. Default: false
+     */
+    debug?: boolean;
+
+    /**
+     * ServiceCatalog set EdgeHost as Host header in requests to ML servers
+     */
+    edgeHost?: string;
+
+    /**
+     * ServiceCatalog uses EdgeURL to call MLServer by adding ModelRoute prefix to EdgeURL path
+     */
+    edgeURL?: string;
+
+    /**
+     * FetchTimeout configures how often new events will be fetched. Default 5 seconds.
+     */
+    fetchTimeout?: number;
+
+    /**
+     * WorkersCount configures how many workers will process events. Default: 4
+     */
+    workersCount?: number;
 
 }
