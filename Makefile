@@ -9,8 +9,14 @@ DOCKER_REGISTRY=
 HELM_ADDITIONAL_PARAMS=
 # Specify gcp auth keys
 MOCKS_DIR=target/mocks
+# Specify where swagger spec for odahu-flow-api application is located
 SWAGGER_FILE=
+# Specify where swagger spec for service-catalog application is located
+SWAGGER_FILE_CATALOG=
+# Specify target folder for generated models for odahu-flow-api
 TS_MODEL_DIR=src/models/odahuflow
+# Specify target folder for generated models for service-catalog
+TS_CATALOG_MODEL_DIR=src/models/service-catalog
 SWAGGER_CODEGEN_BIN=java -jar swagger-codegen-cli.jar
 
 -include .env
@@ -49,6 +55,7 @@ lint:
 
 ## generate-ts-client: Generate typescript models
 generate-ts-client:
+	# odahu-flow-api models
 	mkdir -p ${MOCKS_DIR}
 	rm -rf ${MOCKS_DIR}/ts
 	$(SWAGGER_CODEGEN_BIN) generate \
@@ -61,6 +68,21 @@ generate-ts-client:
 	mkdir -p ${TS_MODEL_DIR}
 	cp -r ${MOCKS_DIR}/ts/odahuflow/* ${TS_MODEL_DIR}
 	git add ${TS_MODEL_DIR}
+	rm -rf ${MOCKS_DIR}
+
+	# service-catalog models
+	mkdir -p ${MOCKS_DIR}
+	rm -rf ${MOCKS_DIR}/ts
+	$(SWAGGER_CODEGEN_BIN) generate \
+		-i ${SWAGGER_FILE_CATALOG} \
+		-l typescript-jquery \
+		-o ${MOCKS_DIR}/ts \
+		--model-package odahuflow
+
+	rm -rf ${TS_CATALOG_MODEL_DIR}
+	mkdir -p ${TS_CATALOG_MODEL_DIR}
+	cp -r ${MOCKS_DIR}/ts/odahuflow/* ${TS_CATALOG_MODEL_DIR}
+	git add ${TS_CATALOG_MODEL_DIR}
 	rm -rf ${MOCKS_DIR}
 
 ## unittests: Run unit tests
