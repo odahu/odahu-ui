@@ -9,89 +9,19 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 // @ts-ignore
 import SwaggerUI from "swagger-ui-react"
 import "swagger-ui-react/swagger-ui.css"
+import {getServices} from "../configureStore";
+import {DeployedModel} from "../models/service-catalog/DeployedModel";
+import {ModelDeployment} from "../models/odahuflow/ModelDeployment";
+import {showErrorAlert} from "../store/alert/actions";
+import {useDispatch} from "react-redux";
+import {NotFoundPage} from "./NotFoundView";
 
 
-export type ModelOpenAPI = Record<string, any>
+export interface PlayModelProps {
+    deployment: ModelDeployment;
 
-export interface ModelMetadata  {
-    modelName: string,
-    modelVersion: string,
-    modelDescription: string,
-    modelServer: string,
-    others: Record<string, string>
 }
-
-export interface ModelInfo {
-    metadata: ModelMetadata,
-    openAPI: ModelOpenAPI
-}
-
-const spec = {
-    "swagger": "2.0",
-    "info": {
-        "description": "Wine Model REST API",
-    },
-    "schemes": [
-        "http",
-    ],
-    "host": "",
-    "basePath": "",
-    "paths": {
-        "/model/wine/api/model/info": {
-            "get": {
-                "consumes": [],
-                "description": "Return a swagger info about model",
-                "produces": ["application/json"],
-                "responses": {"200": {"description": "Info", "type": "object"}},
-                "summary": "Info",
-                "tags": ["/model/wine, weight: 100%, mirror: False"]
-            }
-        },
-        "/model/wine/api/model/invoke": {
-            "post": {
-                "consumes": ["application/json"],
-                "description": "Execute prediction",
-                "parameters": [{
-                    "in": "body",
-                    "name": "PredictionParameters",
-                    "required": true,
-                    "schema": {
-                        "properties": {
-                            "columns": {
-                                "example": ["fixed acidity", "volatile acidity", "citric acid", "residual sugar", "chlorides", "free sulfur dioxide", "total sulfur dioxide", "density", "pH", "sulphates", "alcohol"],
-                                "items": {"type": "string"},
-                                "type": "array"
-                            },
-                            "data": {
-                                "example": [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],
-                                "items": {"items": {"type": "number"}, "type": "array"},
-                                "type": "array"
-                            }
-                        }, "type": "object"
-                    }
-                }],
-                "produces": ["application/json"],
-                "responses": {
-                    "200": {
-                        "description": "Results of prediction",
-                        "name": "PredictionResponse",
-                        "properties": {
-                            "columns": {
-                                "example": ["quality"],
-                                "items": {"type": "string"},
-                                "type": "array"
-                            }, "prediction": {"example": [[0]], "items": {"type": "number"}, "type": "array"}
-                        }
-                    }, "type": "object"
-                },
-                "summary": "Prediction",
-                "tags": ["/model/wine, weight: 100%, mirror: False"]
-            }
-        },
-    }
-}
-
-export const PlayModel: React.FC = (props) => {
+export const PlayModel: React.FC<PlayModelProps> = (props: PlayModelProps) => {
 
     const useStyles = makeStyles((theme: Theme) => ({
         root: {
@@ -100,31 +30,41 @@ export const PlayModel: React.FC = (props) => {
     }));
     const classes = useStyles()
 
-    const [loading, setLoading] = React.useState(false)
-    const [modelInfo, setModelInfo] = React.useState<ModelInfo | null>(null)
+    const [loading, setLoading] = React.useState(true)
+    const [notFound, setNotFound] = React.useState(false)
+    const [model, setModel] = React.useState<DeployedModel | null>(null)
 
-    if (modelInfo === null && !loading) {
-        setLoading(true)
-        setTimeout(() => {
-            setModelInfo({
-                metadata: {
-                    modelName: "wine",
-                    modelVersion: "1.0",
-                    modelDescription: "Some descr",
-                    modelServer: "Custom Image",
-                    others: {
-                        "MLFlow Url": "https://mlflow.org",
-                        "OpenAPI Specification URL": "/api/model/info",
-                    }
-                },
-                openAPI: spec
-            })
+    const dispatch: any = useDispatch();
+    const modelService = getServices().modelService
+
+    if (loading) {
+        modelService.getInfo("simple2").then(value => {
+            setModel(value)
+        }).catch(err => {
+            dispatch(showErrorAlert("Unable to get model information. Try later", String(err)));
+            setNotFound(true)
+        }).finally(() => {
             setLoading(false)
-        }, 2000)
+        })
     }
 
     if (loading) {
         return <LoadingPage />
+    }
+    if (notFound) {
+        return <NotFoundPage/>
+    }
+
+    // Parse swagger spec
+    let swaggerRaw = atob(model?.servedModel?.swagger2?.Raw ?? "")
+    let swaggerSpec = null
+    if (swaggerRaw !== "") {
+        try {
+            swaggerSpec = JSON.parse(swaggerRaw)
+        }
+        catch (err) {
+            dispatch(showErrorAlert("Error while parsing swagger specification", String(err)));
+        }
     }
 
     return <Box>
@@ -134,37 +74,25 @@ export const PlayModel: React.FC = (props) => {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
             >
-                <Typography>Model Metadata</Typography>
+                <Typography>Model Information</Typography>
             </AccordionSummary>
             <AccordionDetails>
                 <List dense={true}>
-                    <ListItem>
+                    <ListItem key='deploymentID'>
                         <ListItemText
-                            primary={"Model Name"}
-                            secondary={modelInfo?.metadata.modelName}
+                            primary={"Model Deployment ID"}
+                            secondary={model?.deploymentID}
                         />
                     </ListItem>
-                    <ListItem>
+                    <ListItem key='MLServer'>
                         <ListItemText
-                            primary={"Model Version"}
-                            secondary={modelInfo?.metadata.modelVersion}
-                        />
-                    </ListItem>
-                    <ListItem>
-                        <ListItemText
-                            primary={"Model Description"}
-                            secondary={modelInfo?.metadata.modelDescription}
-                        />
-                    </ListItem>
-                    <ListItem>
-                        <ListItemText
-                            primary={"Model Server"}
-                            secondary={modelInfo?.metadata.modelServer}
+                            primary={"ML Server"}
+                            secondary={model?.servedModel?.mlServer}
                         />
                     </ListItem>
                     {
-                        Object.entries(modelInfo?.metadata.others ?? {}).map (
-                        ([key, value]) => <ListItem>
+                        Object.entries(model?.servedModel?.metadata?.others ?? {}).map (
+                        ([key, value]) => <ListItem key={`others.${key}`}>
                                 <ListItemText
                                     primary={key}
                                     secondary={value}
@@ -175,7 +103,8 @@ export const PlayModel: React.FC = (props) => {
                 </List>
             </AccordionDetails>
         </Accordion>
-        <Accordion>
+
+        {swaggerSpec && <Accordion defaultExpanded={true}>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon/>}
                 aria-controls="panel1a-content"
@@ -183,10 +112,10 @@ export const PlayModel: React.FC = (props) => {
             >
                 <Typography>OpenAPI</Typography>
             </AccordionSummary>
-            <AccordionDetails classes={classes}>
-                <SwaggerUI spec={modelInfo?.openAPI}/>
+             <AccordionDetails classes={classes}>
+                <SwaggerUI spec={swaggerSpec}/>
             </AccordionDetails>
-        </Accordion>
+        </Accordion>}
     </Box>
 
 

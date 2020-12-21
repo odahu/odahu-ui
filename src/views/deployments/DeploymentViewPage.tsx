@@ -77,6 +77,7 @@ export const DeploymentViewPage: React.FC = () => {
                 />,
                 <PlayModel
                     key="play"
+                    deployment={entity}
                 />
             ]}
         />

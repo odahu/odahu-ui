@@ -6,6 +6,7 @@ import {PackagingIntegration} from "../models/odahuflow/PackagingIntegration";
 import {ModelTraining} from "../models/odahuflow/ModelTraining";
 import {ToolchainIntegration} from "../models/odahuflow/ToolchainIntegration";
 import {UserService} from "./user";
+import {ModelService} from "./models";
 
 interface ErrorMessage {
     message: string;
@@ -133,4 +134,5 @@ export interface Services {
     trainingService: LoggingService<ModelTraining>;
     toolchainService: Service<ToolchainIntegration>;
     userService: UserService;
+    modelService: ModelService;
 }

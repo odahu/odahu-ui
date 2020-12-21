@@ -16,6 +16,6 @@ export interface Metadata {
     /**
      * Optional metadata key, value
      */
-    others?: any;
+    others?: { [key: string]: string; };
 
 }

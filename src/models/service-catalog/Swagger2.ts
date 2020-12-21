@@ -16,6 +16,6 @@ export interface Swagger2 {
     /**
      * Base64 encoded OpenAPI 2.0 definition of MLServer API
      */
-    raw?: Array<number>;
+    raw?: string;
 
 }
