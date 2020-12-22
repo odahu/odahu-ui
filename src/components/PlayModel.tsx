@@ -38,10 +38,10 @@ export const PlayModel: React.FC<PlayModelProps> = (props: PlayModelProps) => {
     const modelService = getServices().modelService
 
     if (loading) {
-        modelService.getInfo("simple2").then(value => {
+        modelService.getInfo(props.deployment?.id as string).then(value => {
             setModel(value)
         }).catch(err => {
-            dispatch(showErrorAlert("Unable to get model information. Try later", String(err)));
+            dispatch(showErrorAlert("Unable to fetch model info", String(err)));
             setNotFound(true)
         }).finally(() => {
             setLoading(false)
@@ -56,11 +56,14 @@ export const PlayModel: React.FC<PlayModelProps> = (props: PlayModelProps) => {
     }
 
     // Parse swagger spec
-    let swaggerRaw = atob(model?.servedModel?.swagger2?.Raw ?? "")
+    let swaggerRaw = atob(model?.servedModel?.swagger2?.raw ?? "")
     let swaggerSpec = null
     if (swaggerRaw !== "") {
         try {
             swaggerSpec = JSON.parse(swaggerRaw)
+            if (process.env.NODE_ENV === "development") {
+                swaggerSpec.schemes = ["http"]
+            }
         }
         catch (err) {
             dispatch(showErrorAlert("Error while parsing swagger specification", String(err)));

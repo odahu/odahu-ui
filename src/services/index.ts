@@ -43,6 +43,9 @@ export function extractEntity(resp: Response): Promise<any> {
         }
 
         return entity;
+    }).catch(() => {
+        // If error while parsing JSON then raise error without entity.message
+        throw new Error(`${resp.status} ${resp.statusText}`)
     })
 }
 
