@@ -8,7 +8,6 @@ import Typography from "@material-ui/core/Typography";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 // @ts-ignore
 import SwaggerUI from "swagger-ui-react"
-import "swagger-ui-react/swagger-ui.css"
 import {getServices} from "../configureStore";
 import {DeployedModel} from "../models/service-catalog/DeployedModel";
 import {ModelDeployment} from "../models/odahuflow/ModelDeployment";
