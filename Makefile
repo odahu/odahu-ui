@@ -45,6 +45,11 @@ docker-build-all:  docker-build-ui
 docker-run-ui:
 	docker run -it --rm -p 80:80 odahu/odahu-ui:${BUILD_TAG}
 
+## docker-push-ui: Push ui docker image
+docker-push-ui:
+	docker tag odahu/odahu-ui:${BUILD_TAG} ${DOCKER_REGISTRY}/odahu/odahu-ui:${TAG}
+	docker push ${DOCKER_REGISTRY}/odahu/odahu-ui:${TAG}
+
 ## install-dependencies: Install all package dependencies
 install-dependencies:
 	npm install
