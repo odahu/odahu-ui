@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useHistory, useParams} from "react-router-dom";
 import {Editor} from "../../components/Editor";
 import {ViewPage} from "../../components/ViewPage";
@@ -14,18 +14,6 @@ import {EditableDeploymentPage} from "./DeploymentPages";
 import {useFetchingEntity} from "../../components/EntitiyFetching";
 import {createDashboardURL, GrafanaDashboard} from "../../components/Dashboard";
 import {DeploymentURLs} from "./urls";
-import {
-    Box,
-    List,
-    ListItem,
-    ListItemText, makeStyles,
-    Paper, Theme
-} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
 import {PlayModel} from "../../components/PlayModel";
 
 export const DeploymentViewPage: React.FC = () => {

@@ -1,18 +1,19 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
+/* eslint-disable */
 
-let apiServerURL = process.env.API_SERVER_URL ?? 'http://localhost:5000'
-let serviceCatalogURL = process.env.SERVICE_CATALOG_URL ?? 'http://localhost:5001'
-let modelProxyURL = process.env.MODEL_PROXY_URL ?? 'http://localhost:5002'
-let token = process.env.AUTHORIZATION_TOKEN ?? ''
-let host = process.env.HOST_HEADER ?? 'localhost'
+import createProxyMiddleware from 'http-proxy-middleware'
+
+const apiServerURL = process.env.API_SERVER_URL ?? 'http://localhost:5000'
+const serviceCatalogURL = process.env.SERVICE_CATALOG_URL ?? 'http://localhost:5001'
+const modelProxyURL = process.env.MODEL_PROXY_URL ?? 'http://localhost:5002'
+const token = process.env.AUTHORIZATION_TOKEN ?? ''
+const host = process.env.HOST_HEADER ?? 'localhost'
 
 
-let onProxyReqAuthorizationSetter = (proxyReq, req, res) => {
+const onProxyReqAuthorizationSetter = (proxyReq) => {
     proxyReq.setHeader('Authorization', 'Bearer ' + token);
     proxyReq.setHeader('Host', host);
 }
 
-console.log(modelProxyURL)
 module.exports = function(app) {
     app.use(  // kubectl port-forward svc/odahu-flow-api 5000:5000 -n odahu-flow
         '/api',

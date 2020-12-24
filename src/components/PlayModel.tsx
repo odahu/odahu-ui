@@ -1,11 +1,12 @@
 import React from "react";
 import {LoadingPage} from "./LoadingPage";
-import {Box, List, ListItem, ListItemText, makeStyles, Theme} from "@material-ui/core";
+import {Box, List, ListItem, ListItemText, makeStyles} from "@material-ui/core";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Typography from "@material-ui/core/Typography";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
+/* eslint-disable */
 // @ts-ignore
 import SwaggerUI from "swagger-ui-react";
 import "swagger-ui-react/swagger-ui.css";
@@ -23,7 +24,7 @@ export interface PlayModelProps {
 }
 export const PlayModel: React.FC<PlayModelProps> = (props: PlayModelProps) => {
 
-    const useStyles = makeStyles((theme: Theme) => ({
+    const useStyles = makeStyles(() => ({
         root: {
             display: "block",
         },
@@ -56,7 +57,7 @@ export const PlayModel: React.FC<PlayModelProps> = (props: PlayModelProps) => {
     }
 
     // Parse swagger spec
-    let swaggerRaw = atob(model?.servedModel?.swagger2?.raw ?? "")
+    const swaggerRaw = atob(model?.servedModel?.swagger2?.raw ?? "")
     let swaggerSpec = null
     if (swaggerRaw !== "") {
         try {

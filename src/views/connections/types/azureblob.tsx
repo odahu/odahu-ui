@@ -1,5 +1,4 @@
 import React from "react";
-import {Connection} from "../../../models/odahuflow/Connection";
 import {ViewParam} from "../../../components/ParametersView";
 import * as Yup from "yup";
 import {FormikSecretTextField} from "../../../components/SecretTextField";
@@ -9,7 +8,7 @@ import {useFieldsStyles} from "../../../components/fields";
 import {hidingSequence} from "../../../utils/sensitive";
 
 
-function extractViewParameters(conn: Connection): Array<ViewParam> {
+function extractViewParameters(): Array<ViewParam> {
     return [
         {name: "Shared Access Signature URL", elem: hidingSequence}
     ];
