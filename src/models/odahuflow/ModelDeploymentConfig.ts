@@ -38,9 +38,9 @@ export interface ModelDeploymentConfig {
     namespace?: string;
 
     /**
-     * Kubernetes node selector for model deployments
+     * Node pools to run deployments
      */
-    nodeSelector?: { [key: string]: string; };
+    nodePools?: Array<models.NodePool>;
 
     security?: models.ModelDeploymentSecurityConfig;
 

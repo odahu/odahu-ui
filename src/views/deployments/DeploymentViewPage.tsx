@@ -14,6 +14,7 @@ import {EditableDeploymentPage} from "./DeploymentPages";
 import {useFetchingEntity} from "../../components/EntitiyFetching";
 import {createDashboardURL, GrafanaDashboard} from "../../components/Dashboard";
 import {DeploymentURLs} from "./urls";
+import {PlayModel} from "../../components/PlayModel";
 
 export const DeploymentViewPage: React.FC = () => {
     const {id} = useParams();
@@ -30,11 +31,12 @@ export const DeploymentViewPage: React.FC = () => {
         }
     );
 
+
     return (
         <ViewPage
             loading={loading}
             notFound={notFound}
-            tabHeaders={["View", "Edit", "YAML", "Dashboard"]}
+            tabHeaders={["View", "Edit", "YAML", "Dashboard", "Play"]}
             baseUrl={baseUrl}
             tabValues={[
                 <DeploymentView
@@ -60,6 +62,10 @@ export const DeploymentViewPage: React.FC = () => {
                         "/grafana/d/AdyEtcSZk/model-deployments",
                         {workload: entity.status?.deployment}
                     )}
+                />,
+                <PlayModel
+                    key="play"
+                    deployment={entity}
                 />
             ]}
         />

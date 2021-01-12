@@ -14,6 +14,16 @@ import * as models from './models';
 
 export interface ModelRoute {
     /**
+     * CreatedAt
+     */
+    createdAt?: string;
+
+    /**
+     * Default routes cannot be deleted by  They are managed by system One ModelDeployment has exactly one default Route that gives 100% traffic to the model
+     */
+    _default?: boolean;
+
+    /**
      * Model route id
      */
     id?: string;
@@ -27,5 +37,10 @@ export interface ModelRoute {
      * Model route status
      */
     status?: models.ModelRouteStatus;
+
+    /**
+     * UpdatedAt
+     */
+    updatedAt?: string;
 
 }

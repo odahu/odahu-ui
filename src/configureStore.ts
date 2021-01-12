@@ -11,7 +11,27 @@ import {PackagerIntegrationService} from "./services/packager";
 import {TrainingService} from "./services/trainings";
 import {TrainingToolchainService} from "./services/toolchain";
 import {UserService} from "./services/user";
+import {ModelService} from "./services/models";
 
+let services: Services;
+
+export function getServices(): Services {
+    if (services !== undefined) {
+        return services
+    }
+    services = {
+        connectionService: new ConnectionService(),
+        configurationService: new ConfigurationService(),
+        userService: new UserService(),
+        deploymentService: new DeploymentService(),
+        packagingService: new PackagingService(),
+        packagerService: new PackagerIntegrationService(),
+        trainingService: new TrainingService(),
+        toolchainService: new TrainingToolchainService(),
+        modelService: new ModelService()
+    }
+    return services
+}
 
 export function configureStore(): Store<ApplicationState> {
 
@@ -23,19 +43,12 @@ export function configureStore(): Store<ApplicationState> {
     }
     const composeEnhancers = composeWithDevTools(opts)
 
+    services = getServices()
+
     return createStore(
         createRootReducer,
         composeEnhancers(
-            applyMiddleware(thunk.withExtraArgument<Services>({
-                connectionService: new ConnectionService(),
-                configurationService: new ConfigurationService(),
-                userService: new UserService(),
-                deploymentService: new DeploymentService(),
-                packagingService: new PackagingService(),
-                packagerService: new PackagerIntegrationService(),
-                trainingService: new TrainingService(),
-                toolchainService: new TrainingToolchainService(),
-            }))
+            applyMiddleware(thunk.withExtraArgument<Services>(services))
         )
     );
 }

@@ -42,3 +42,24 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+## Development How-To
+
+UI Application communicates with next backends
+- All /api/* requests are handled by API Server 
+- All /service-catalog/* requests are handled by service catalog
+- All /model/* requests are handled by Istio (istio-ingress in particular)
+
+In production all required routing are managed by reverse-proxy server.
+
+But in development after `npm start` your development server can handle only static files.
+So that development server starts with a proxy middleware and plays role of reverse proxy by itself.
+Proxy rules are described in `./src/setupProxy.js`. You should provide required backends 
+according the rules in that file. If you have deployed ODAHU system in kubernetes cluster 
+then simplest way to do that:
+```shell
+# Example for API Server
+kubectl port-forward svc/odahu-flow-api 5000:80 -n odahu-flow
+```
+
