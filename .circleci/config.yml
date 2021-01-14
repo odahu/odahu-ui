@@ -1,7 +1,59 @@
 version: 2.1
-orbs:
-  node: circleci/node@3.0.0
+
+jobs:
+  security-check:
+    docker:
+      - circleci/node:12.13.1
+    steps:
+      - checkout
+      - run:
+          name: Setup
+          command: sudo make install-vulnerabilities-checker
+      - run:
+          name: Setup
+          command: make check-vulnerabilities
+  lint:
+    docker:
+      - circleci/node:12.13.1
+    steps:
+      - checkout
+      - run:
+          name: Setup
+          command: make install-dependencies
+      - run:
+          name: Lint
+          command: make lint
+  test:
+    docker:
+      - circleci/node:12.13.1
+    steps:
+      - checkout
+      - run:
+          name: Setup
+          command: make install-dependencies
+      - run:
+          name: Test
+          command: make unittests
+  build:
+    machine:
+      image: ubuntu-2004:202010-01
+    steps:
+      - checkout
+      - run: make docker-build-ui
+
 workflows:
-  node-tests:
+  main:
     jobs:
-      - node/test
+      - security-check
+      - lint
+          requires:
+            - security-check
+      - test
+          requires:
+            - lint
+      - build
+          context:
+            - hub.docker.com
+          requires:
+            - test
+
