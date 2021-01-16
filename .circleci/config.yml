@@ -45,15 +45,14 @@ workflows:
   main:
     jobs:
       - security-check
-      - lint
+      - lint:
           requires:
             - security-check
-      - test
+      - test:
           requires:
             - lint
-      - build
+      - build:
           context:
             - hub.docker.com
           requires:
             - test
-
