@@ -55,7 +55,7 @@ export const DeploymentViewPage: React.FC = () => {
               />,
               <LogsDashboard
                  key="logs"
-                 logsURL={createLogsURL(
+                 logsURL={createDeploymentLogsURL(
                    "/kibana/app/kibana#/dashboard/7390fea0-437c-11eb-8a96-eb5403b48b6c",
                    {"ModelName": id}
                  )}
