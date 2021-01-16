@@ -12,7 +12,7 @@ jobs:
       - run:
           name: Setup
           command: make check-vulnerabilities
-  test:
+  lint-n-test:
     docker:
       - image: circleci/node:12.13.1
     steps:
@@ -37,11 +37,11 @@ workflows:
   main:
     jobs:
       - security-check
-      - test:
+      - lint-n-test:
           requires:
-            - lint
+            - security-check
       - build:
           context:
             - hub.docker.com
           requires:
-            - test
+            - lint-n-test
