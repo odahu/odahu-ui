@@ -13,7 +13,7 @@ import {DeploymentView} from "./DeploymentView";
 import {EditableDeploymentPage} from "./DeploymentPages";
 import {useFetchingEntity} from "../../components/EntitiyFetching";
 import {createDashboardURL, GrafanaDashboard} from "../../components/Dashboard";
-import {createLogsURL, LogsDashboard} from "../../components/Dashboard";
+import {createDeploymentLogsURL, LogsDashboard} from "../../components/Dashboard";
 import {useSelector} from "react-redux";
 import {ApplicationState} from "../../store";
 import {DeploymentURLs} from "./urls";
