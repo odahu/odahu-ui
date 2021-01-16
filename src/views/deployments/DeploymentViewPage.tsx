@@ -57,7 +57,7 @@ export const DeploymentViewPage: React.FC = () => {
                  key="logs"
                  logsURL={createLogsURL(
                    "/kibana/app/kibana#/dashboard/7390fea0-437c-11eb-8a96-eb5403b48b6c",
-                   {"ModelName": entity.id}
+                   {"ModelName": id}
                  )}
               />,
               <GrafanaDashboard
