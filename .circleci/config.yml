@@ -1,0 +1,47 @@
+version: 2.1
+
+jobs:
+  security-check:
+    docker:
+      - image: circleci/node:12.13.1
+    steps:
+      - checkout
+      - run:
+          name: Setup
+          command: sudo make install-vulnerabilities-checker
+      - run:
+          name: Setup
+          command: make check-vulnerabilities
+  lint-n-test:
+    docker:
+      - image: circleci/node:12.13.1
+    steps:
+      - checkout
+      - run:
+          name: Setup
+          command: make install-dependencies
+      - run:
+          name: Lint
+          command: make lint
+      - run:
+          name: Test
+          command: make unittests
+  build:
+    machine:
+      image: ubuntu-2004:202010-01
+    steps:
+      - checkout
+      - run: make docker-build-ui
+
+workflows:
+  main:
+    jobs:
+      - security-check
+      - lint-n-test:
+          requires:
+            - security-check
+      - build:
+          context:
+            - hub.docker.com
+          requires:
+            - lint-n-test
