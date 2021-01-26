@@ -13,6 +13,7 @@ import {PackagingURLs} from "./urls";
 import {humanDate} from "../../utils/date";
 import CloudIcon from '@material-ui/icons/Cloud';
 import {DeploymentURLs} from "../deployments/urls";
+import {deployableIntegrations} from "../../utils/enums"
 
 const PackagingEnhancedTable = (props: EnhancedTableProps<ModelPackaging>) => <EnhancedTable {...props}/>;
 
@@ -40,8 +41,6 @@ const extractRowValues = (packaging: ModelPackaging) => [
 ];
 
 export const PackagingTable: React.FC = () => {
-
-    const deployableIntegrations = ["docker-rest"]
 
     const [redirectTo, setRedirect] = React.useState<string>("")
 
@@ -87,7 +86,7 @@ export const PackagingTable: React.FC = () => {
                         } else {
                             dispatch(showInfoAlert(
                                 "Not available for deploy",
-                                `Only images build on integrations next are available for deploy: ${deployableIntegrations}`
+                                `Only images built on integrations next are available for deploy: ${deployableIntegrations}`
                             ))
                         }
                     },

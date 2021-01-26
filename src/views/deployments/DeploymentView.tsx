@@ -22,6 +22,7 @@ export const DeploymentView: React.FC<DeploymentViewProps> = ({deployment, statu
     }
 
     parameters.push(
+        {name: "Predictor", elem: deployment.spec?.predictor},
         {name: "Docker image", elem: deployment.spec?.image},
         {name: "Image pull connection ID", elem: deployment.spec?.imagePullConnID},
         {name: "Minimum replicas", elem: deployment.spec?.minReplicas},

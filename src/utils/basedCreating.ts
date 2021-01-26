@@ -13,6 +13,7 @@ import {defaultDeploymentSpec, defaultPackagingSpec} from "./defaultEntities"
 import {ModelPackagingSpec} from "../models/odahuflow/ModelPackagingSpec";
 import {ModelPackaging} from "../models/odahuflow/ModelPackaging";
 import {ModelDeploymentSpec} from "../models/odahuflow/ModelDeploymentSpec";
+import {predictorOdahu, predictorTriton, integrationDockerTriton, integrationDockerRest} from "../utils/enums"
 
 export const createPackagingSpecFromTraining = (mt: ModelTraining): ModelPackagingSpec => {
 
@@ -53,8 +54,16 @@ export const createDeploymentSpecFromPackaging = (mp: ModelPackaging): ModelDepl
         imagePullConnectionID = pushTargets[0]
     }
 
+    let predictor = ""
+    if (mp.spec?.integrationName === integrationDockerRest) {
+        predictor = predictorOdahu
+    } else if (mp.spec?.integrationName === integrationDockerTriton) {
+        predictor = predictorTriton
+    }
+
     return defaultDeploymentSpec({
         image: image,
-        imagePullConnID: imagePullConnectionID
+        imagePullConnID: imagePullConnectionID,
+        predictor: predictor
     })
 }

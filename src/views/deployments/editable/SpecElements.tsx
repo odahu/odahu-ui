@@ -6,6 +6,9 @@ import {FormikOdahuAutocomplete} from "../../../components/OdahuAutocomplete";
 import {OdahuTextField} from "../../../components/OdahuTextField";
 import {ResourcesSpecElements} from "../../../components/ResourceSpecElements";
 import {useFieldsStyles} from "../../../components/fields";
+import {FormikOdahuSelect} from "../../../components/OdahuSelect";
+import {predictors, predictorOdahu} from "../../../utils/enums"
+
 
 export const SpecElements: React.FC = () => {
     const classes = useFieldsStyles();
@@ -21,6 +24,14 @@ export const SpecElements: React.FC = () => {
 
     return (
         <>
+            <FormikOdahuSelect
+                className={classes.editorField}
+                label="Predictor"
+                name="spec.predictor"
+                options={predictors}
+                defaultValue={predictorOdahu}
+                description="Predictor set ML Server that will serve model as a web service"
+            />
             <FormikOdahuAutocomplete
                 className={classes.editorField}
                 name="spec.image"
