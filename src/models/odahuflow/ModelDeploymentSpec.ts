@@ -49,6 +49,11 @@ export interface ModelDeploymentSpec {
     nodeSelector?: { [key: string]: string; };
 
     /**
+     * ID of Predictor to use
+     */
+    predictor?: string;
+
+    /**
      * Initial delay for readiness probe of model pod
      */
     readinessProbeInitialDelay?: number;

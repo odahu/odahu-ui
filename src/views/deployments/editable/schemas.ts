@@ -13,6 +13,7 @@ export const DeploymentSchema = Yup.object().shape({
         maxReplicas: Yup.number()
             .test('>=', 'Maximum replicas number must be greater than 0', value => value >= 1),
         resources: ResourceRequirementsSchema,
+        predictor: Yup.string().required('Predictor is required field'),
     }),
 });
 
