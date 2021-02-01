@@ -88,12 +88,6 @@ export const PlayModel: React.FC<PlayModelProps> = (props: PlayModelProps) => {
                             secondary={model?.deploymentID}
                         />
                     </ListItem>
-                    <ListItem key='MLServer'>
-                        <ListItemText
-                            primary={"ML Server"}
-                            secondary={model?.servedModel?.mlServer}
-                        />
-                    </ListItem>
                     {
                         Object.entries(model?.servedModel?.metadata?.others ?? {}).map (
                         ([key, value]) => <ListItem key={`others.${key}`}>
