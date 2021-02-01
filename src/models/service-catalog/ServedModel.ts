@@ -14,6 +14,7 @@ import * as models from './models';
 
 export interface ServedModel {
     metadata?: models.Metadata;
+
     swagger2?: models.Swagger2;
 
 }
