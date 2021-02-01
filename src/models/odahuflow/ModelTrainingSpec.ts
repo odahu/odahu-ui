@@ -33,7 +33,7 @@ export interface ModelTrainingSpec {
     /**
      * Model training hyperParameters in parameter:value format
      */
-    hyperParameters?: any;
+    hyperParameters?: { [key: string]: string; };
 
     /**
      * Train image
