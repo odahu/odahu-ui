@@ -6,8 +6,8 @@ export const DeploymentSchema = Yup.object().shape({
     id: IDSchema,
     spec: Yup.object().shape({
         image: Yup.string().nullable().required('Image is a required field'),
-        livenessProbeInitialDelay: Yup.number().moreThan(0),
-        readinessProbeInitialDelay: Yup.number().moreThan(0),
+        livenessProbeInitialDelay: Yup.number().min(0),
+        readinessProbeInitialDelay: Yup.number().min(0),
         minReplicas: Yup.number()
             .test('>=', 'Minimum replicas number must not be lower than 0', value => value >= 0),
         maxReplicas: Yup.number()

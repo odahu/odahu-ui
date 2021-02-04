@@ -44,8 +44,8 @@ const defaultFields = {
 
 function defaultDeploymentSpec(mds?: ModelDeploymentSpec): ModelDeploymentSpec {
     return merge({
-        livenessProbeInitialDelay: 10,
-        readinessProbeInitialDelay: 10,
+        livenessProbeInitialDelay: 2,
+        readinessProbeInitialDelay: 2,
         minReplicas: 0,
         maxReplicas: 1,
         resources: {
