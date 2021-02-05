@@ -15,11 +15,6 @@ import * as models from './models';
 export interface ServedModel {
     metadata?: models.Metadata;
 
-    /**
-     * MLServer name that serves a model Possible values: ODAHU, Triton
-     */
-    mlServer?: string;
-
     swagger2?: models.Swagger2;
 
 }
