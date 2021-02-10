@@ -46,7 +46,6 @@ export const MetadataElements: React.FC<MetadataElementsProps> = ({readonlyID = 
                 name="spec.integrationName"
                 label="Integration"
                 options={packagerIDs}
-                defaultValue={packagerIDs[0]}
                 description='Type of a packager'
             />
         </>

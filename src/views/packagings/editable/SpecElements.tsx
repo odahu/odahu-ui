@@ -48,13 +48,11 @@ const Targets: React.FC = () => {
                                 <FormikOdahuSelect
                                     name={`spec.targets[${index}].name`}
                                     label="Name"
-                                    defaultValue={targetNames[0]}
                                     options={targetNames}
                                 />
                                 <FormikOdahuSelect
                                     name={`spec.targets[${index}].connectionName`}
                                     label="Connection ID"
-                                    defaultValue={connectionIDs[0]}
                                     options={connectionIDs}
                                 />
                             </ItemInputParametersView>

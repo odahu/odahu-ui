@@ -86,7 +86,6 @@ const MetadataElements: React.FC<MetadataElementsPros> = ({readonlyID}) => {
                 className={classes.editorField}
                 name='spec.type'
                 label="Type"
-                defaultValue={ConnectionTypes.AZUREBLOB}
                 options={allConnectionTypes}
             />
             <OdahuTextField

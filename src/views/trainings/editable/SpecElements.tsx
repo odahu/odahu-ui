@@ -124,7 +124,6 @@ const DataSection: React.FC = () => {
                                 <FormikOdahuSelect
                                     name={`spec.data.${index}.connName`}
                                     label="Connection ID"
-                                    defaultValue={connectionIDs[0]}
                                     options={connectionIDs}
                                 />
                             </ItemInputParametersView>

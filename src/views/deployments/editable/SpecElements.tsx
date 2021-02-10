@@ -29,7 +29,6 @@ export const SpecElements: React.FC = () => {
                 label="Predictor"
                 name="spec.predictor"
                 options={predictors}
-                defaultValue={predictorOdahu}
                 description="Predictor set ML Server that will serve model as a web service"
             />
             <FormikOdahuAutocomplete
