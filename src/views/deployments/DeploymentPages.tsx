@@ -24,6 +24,7 @@ import {DeploymentURLs} from "./urls";
 import {ModelPackaging} from "../../models/odahuflow/ModelPackaging";
 import {createDeploymentSpecFromPackaging} from "../../utils/basedCreating";
 import {fetchPackagingRequest} from "../../store/packaging/actions";
+import {predictorOdahu} from "../../utils/enums";
 
 const defaultFields = {
     schemas: {
@@ -107,6 +108,7 @@ export const NewDeploymentPage: React.FC = () => {
                 spec: defaultDeploymentSpec({
                     resources: defaultResources,
                     imagePullConnID: defaultDockerPullConnName,
+                    predictor: predictorOdahu,
                 })
             }}
         />

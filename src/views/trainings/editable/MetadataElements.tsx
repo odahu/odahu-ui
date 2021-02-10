@@ -50,7 +50,6 @@ export const MetadataElements: React.FC<MetadataElementsProps> = ({readonlyID = 
                 className={classes.editorField}
                 name="spec.toolchain"
                 label="Toolchain"
-                defaultValue={toolchainIDs[0]}
                 options={toolchainIDs}
             />
             <FormikOdahuSelect
