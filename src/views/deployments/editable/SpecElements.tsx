@@ -7,7 +7,7 @@ import {OdahuTextField} from "../../../components/OdahuTextField";
 import {ResourcesSpecElements} from "../../../components/ResourceSpecElements";
 import {useFieldsStyles} from "../../../components/fields";
 import {FormikOdahuSelect} from "../../../components/OdahuSelect";
-import {predictors, predictorOdahu} from "../../../utils/enums"
+import {predictors, predictorOdahu, deployableIntegrations} from "../../../utils/enums"
 
 
 export const SpecElements: React.FC = () => {
@@ -16,7 +16,7 @@ export const SpecElements: React.FC = () => {
     const packagerState = useSelector<ApplicationState, ModelPackagingState>(state => state.packagings);
     const packagingImages = Object.values(packagerState.data)
         // TODO: fix the hardcoded intergration name
-        .filter(mp => mp.spec?.integrationName === "docker-rest")
+        .filter(mp => mp.spec?.integrationName && deployableIntegrations.includes(mp.spec.integrationName))
         .filter(mp => mp.status?.state === "succeeded")
         .filter(mp => mp.status?.results)
         .flatMap(mp => mp.status?.results)
