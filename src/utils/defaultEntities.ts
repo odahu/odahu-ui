@@ -28,8 +28,8 @@ export function defaultPackagingSpec(mps?: ModelPackagingSpec): ModelPackagingSp
 export function defaultDeploymentSpec(mds?: ModelDeploymentSpec): ModelDeploymentSpec {
     return merge({
         predictor: predictorOdahu,
-        livenessProbeInitialDelay: 10,
-        readinessProbeInitialDelay: 10,
+        livenessProbeInitialDelay: 2,
+        readinessProbeInitialDelay: 2,
         minReplicas: 0,
         maxReplicas: 1,
         resources: {
