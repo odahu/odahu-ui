@@ -16,7 +16,6 @@ export const FormikOdahuSelect: React.FC<FormikOdahuSelectProps> = (
     }
 ) => {
     const formik = useFormikContext();
-    console.log(formik)
     const fieldsOptions = useContext<FieldsOptions>(FieldsOptionsContext);
 
     return (
