@@ -63,7 +63,7 @@ export const DeploymentViewPage: React.FC = () => {
               <GrafanaDashboard
                   key="grafana"
                   dashboardURL={createDashboardURL(
-                      "/grafana/d/AdyEtcSZk/model-deployments",
+                      "/grafana/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?var-namespace=odahu-flow-deployment&var-type=deployment",
                       {workload: entity.status?.deployment}
                   )}
               />,
@@ -91,7 +91,7 @@ export const DeploymentViewPage: React.FC = () => {
               <GrafanaDashboard
                   key="grafana"
                   dashboardURL={createDashboardURL(
-                      "/grafana/d/AdyEtcSZk/model-deployments",
+                      "/grafana/d/a164a7f0339f99e89cea5cb47e9be617/kubernetes-compute-resources-workload?var-namespace=odahu-flow-deployment&var-type=deployment",
                       {workload: entity.status?.deployment}
                   )}
               />,

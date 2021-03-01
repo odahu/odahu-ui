@@ -82,7 +82,7 @@ export const PackagingViewPage: React.FC = () => {
                 <GrafanaDashboard
                     key="grafana"
                     dashboardURL={createDashboardURL(
-                        "/grafana/d/ab4f13a9892a76a4d21ce8c2445bf4ea/pods",
+                        "/grafana/d/6581e46e4e5c7ba40a07646395ef7b23/kubernetes-compute-resources-pod",
                         {namespace: "odahu-flow-packaging", pod: entity.status?.podName}
                     )}
                 />

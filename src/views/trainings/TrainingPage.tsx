@@ -84,7 +84,7 @@ export const TrainingPage: React.FC = () => {
                     key="grafana"
                     dashboardURL={createDashboardURL(
                         // This hardcode
-                        "/grafana/d/ab4f13a9892a76a4d21ce8c2445bf4ea/pods",
+                        "/grafana/d/6581e46e4e5c7ba40a07646395ef7b23/kubernetes-compute-resources-pod",
                         {namespace: "odahu-flow-training", pod: entity.status?.podName}
                     )}
                 />
