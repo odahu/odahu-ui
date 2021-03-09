@@ -14,6 +14,11 @@ import * as models from './models';
 
 export interface K8sTrainer {
     /**
+     * Connection for source code
+     */
+    algorithmSource?: models.AlgorithmSource;
+
+    /**
      * Connection for training data
      */
     inputData?: Array<models.InputDataBindingDir>;
@@ -32,10 +37,5 @@ export interface K8sTrainer {
      * Toolchain integration
      */
     toolchainIntegration?: models.ToolchainIntegration;
-
-    /**
-     * Connection for source code
-     */
-    vcs?: models.Connection;
 
 }

@@ -13,6 +13,11 @@
 import * as models from './models';
 
 export interface ModelTrainingSpec {
+    /**
+     * AlgorithmSource for training
+     */
+    algorithmSource?: models.AlgorithmSource;
+
     args?: Array<string>;
 
     /**
@@ -33,7 +38,7 @@ export interface ModelTrainingSpec {
     /**
      * Model training hyperParameters in parameter:value format
      */
-    hyperParameters?: any;
+    hyperParameters?: { [key: string]: string; };
 
     /**
      * Train image
@@ -56,11 +61,6 @@ export interface ModelTrainingSpec {
     outputConnection?: string;
 
     /**
-     * VCS Reference
-     */
-    reference?: string;
-
-    /**
      * Resources for model container The same format like k8s uses for pod resources.
      */
     resources?: models.ResourceRequirements;
@@ -69,11 +69,6 @@ export interface ModelTrainingSpec {
      * IntegrationName of toolchain
      */
     toolchain?: string;
-
-    /**
-     * Name of Connection resource. Must exists
-     */
-    vcsName?: string;
 
     /**
      * Directory with model scripts/files in a git repository
