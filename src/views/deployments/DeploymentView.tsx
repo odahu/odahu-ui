@@ -38,7 +38,6 @@ export const DeploymentView: React.FC<DeploymentViewProps> = ({deployment, statu
 
     if (status) {
         parameters.push(
-            {name: "Model URL", elem: deployment.status?.serviceURL},
             {name: "Available replicas", elem: deployment.status?.availableReplicas},
         )
     }
