@@ -16,7 +16,7 @@ export interface K8sTrainer {
     /**
      * Connection for source code
      */
-    algorithmSource?: models.AlgorithmSource;
+    algorithmSourceConnection?: models.AlgorithmSourceConnection;
 
     /**
      * Connection for training data

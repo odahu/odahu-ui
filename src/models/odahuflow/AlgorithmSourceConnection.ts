@@ -12,14 +12,14 @@
 
 import * as models from './models';
 
-export interface ObjectStorage {
+export interface AlgorithmSourceConnection {
     /**
-     * Connection name for training model source
+     * Connection specific for Algorithm
      */
-    connection?: string;
+    conn?: models.Connection;
 
     /**
-     * Remote path in ObjectStorage
+     * Remote path for object storage
      */
     path?: string;
 

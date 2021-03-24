@@ -13,8 +13,14 @@
 import * as models from './models';
 
 export interface VCS {
-    connName?: string;
+    /**
+     * Connection name for training model source
+     */
+    connection?: string;
 
+    /**
+     * VCS Reference
+     */
     reference?: string;
 
 }
