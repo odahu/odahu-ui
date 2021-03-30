@@ -16,7 +16,7 @@ export interface DataBindingDir {
     /**
      * Connection name for data
      */
-    connName?: string;
+    connection?: string;
 
     /**
      * Local training path
