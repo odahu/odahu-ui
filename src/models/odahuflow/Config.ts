@@ -15,6 +15,8 @@ import * as models from './models';
 export interface Config {
     api?: models.APIConfig;
 
+    batch?: models.BatchConfig;
+
     common?: models.CommonConfig;
 
     connection?: models.ConnectionConfig;

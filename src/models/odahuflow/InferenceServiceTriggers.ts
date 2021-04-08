@@ -1,6 +1,6 @@
 /**
- * Service Catalog
- * Service catalog serves information about deployed models
+ * API Gateway
+ * This is an API Gateway webServer.
  *
  * OpenAPI spec version: 1.0
  * 
@@ -12,14 +12,10 @@
 
 import * as models from './models';
 
-export interface Metadata {
-    modelName?: string;
-
-    modelVersion?: string;
-
+export interface InferenceServiceTriggers {
     /**
-     * Optional metadata key, value
+     * Webhook provides a REST API to execute InferenceJob that correspond to this service
      */
-    others?: { [key: string]: string; };
+    webhook?: models.PredictorWebhookTrigger;
 
 }

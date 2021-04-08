@@ -1,6 +1,6 @@
 /**
- * Service Catalog
- * Service catalog serves information about deployed models
+ * API Gateway
+ * This is an API Gateway webServer.
  *
  * OpenAPI spec version: 1.0
  * 
@@ -12,14 +12,10 @@
 
 import * as models from './models';
 
-export interface Metadata {
-    modelName?: string;
-
-    modelVersion?: string;
-
+export interface PredictorWebhookTrigger {
     /**
-     * Optional metadata key, value
+     * Enabled. If True then it possible to run InferenceJob by creating it using REST API
      */
-    others?: { [key: string]: string; };
+    enabled?: boolean;
 
 }
