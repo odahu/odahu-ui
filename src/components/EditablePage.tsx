@@ -244,8 +244,8 @@ export function EditablePage<T extends { id?: string }>(props: EditPageProps<T>)
                     validationSchema={schemas.spec}
                     onSubmit={values => {
 
-                        // cast() is supposed to happen automatically
-                        // as per https://github.com/formium/formik/issues/473
+                        // cast() is supposed to happen automatically in Formik + Yup,
+                        // but it doens't happen for some reason: https://github.com/formium/formik/issues/473
                         values = schemas.spec.cast(values) as T
                         console.log(values)
 
