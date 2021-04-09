@@ -18,9 +18,9 @@ export function extractViewParameters(conn: Connection): Array<ViewParam> {
 }
 
 export const Schema = {
-    uri: Yup.string().required('GIT URL is a required field'),
-    keySecret: Yup.string().required('SSH private key is a required field'),
-    reference: Yup.string(),
+    uri: Yup.string().trim().required('GIT URL is a required field'),
+    keySecret: Yup.string().trim().required('SSH private key is a required field'),
+    reference: Yup.string().trim(),
 };
 
 const MOST_POPULAR_GIT_BRANCHES = ["master", "develop"];

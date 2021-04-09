@@ -18,10 +18,10 @@ export function extractViewParameters(conn: Connection): Array<ViewParam> {
 }
 
 export const Schema = {
-    uri: Yup.string().required('URI is a required field'),
-    keySecret: Yup.string().required('Access Key Secret is a required field'),
-    keyID: Yup.string().required('Access Key ID is a required field'),
-    region: Yup.string(),
+    uri: Yup.string().trim().required('URI is a required field'),
+    keySecret: Yup.string().trim().required('Access Key Secret is a required field'),
+    keyID: Yup.string().trim().required('Access Key ID is a required field'),
+    region: Yup.string().trim(),
 };
 
 export const EditableFields: React.FC = () => {

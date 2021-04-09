@@ -247,8 +247,10 @@ export function EditablePage<T extends { id?: string }>(props: EditPageProps<T>)
                         if (processBeforeSubmit) {
                             values = processBeforeSubmit(values);
                         }
-
-                        saveButtonClick.handle(values, dispatch);
+                        // cast() is supposed to happen automatically
+                        // as per https://github.com/formium/formik/issues/473
+                        const castValues: T = schemas.spec.cast(values) as T
+                        saveButtonClick.handle(castValues, dispatch);
                     }}
                 >
                     {

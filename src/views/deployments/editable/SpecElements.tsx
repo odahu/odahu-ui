@@ -15,7 +15,6 @@ export const SpecElements: React.FC = () => {
 
     const packagerState = useSelector<ApplicationState, ModelPackagingState>(state => state.packagings);
     const packagingImages = Object.values(packagerState.data)
-        // TODO: fix the hardcoded intergration name
         .filter(mp => mp.spec?.integrationName && deployableIntegrations.includes(mp.spec.integrationName))
         .filter(mp => mp.status?.state === "succeeded")
         .filter(mp => mp.status?.results)

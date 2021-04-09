@@ -15,8 +15,8 @@ function extractViewParameters(): Array<ViewParam> {
 }
 
 const Schema = {
-    uri: Yup.string().required('Shared Access Signature URL is a required field'),
-    keySecret: Yup.string().required('Shared Access Token is a required field'),
+    uri: Yup.string().trim().required('Shared Access Signature URL is a required field'),
+    keySecret: Yup.string().trim().required('Shared Access Token is a required field'),
 };
 
 const EditableFields: React.FC = () => {
