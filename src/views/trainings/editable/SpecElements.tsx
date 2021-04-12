@@ -44,7 +44,7 @@ const GitSpecElements: React.FC = () => {
         const vcsName = getIn(formik.values, 'spec.algorithmSource.vcs.connection');
         const reference = getIn(formik.values, 'spec.algorithmSource.vcs.reference');
         if (!!vcsName && !reference ){
-            const defaultReference = connectionsState.data[vcsName]?.spec?.algorithmSource?.vcs?.reference ?? 'develop';
+            const defaultReference = connectionsState.data[vcsName]?.spec?.reference ?? 'develop';
             formik.setFieldValue('spec.algorithmSource.vcs.reference', defaultReference);
         }
     })
