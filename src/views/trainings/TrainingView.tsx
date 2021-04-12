@@ -49,8 +49,8 @@ export const TrainingView: React.FC<TrainingViewProps> = ({training, status}) =>
 
     params.push(
         {name: "Output Connection", elem: training.spec?.outputConnection},
-        {name: "VCS Connection ID", elem: training.spec?.vcsName},
-        {name: "Reference", elem: training.spec?.reference},
+        {name: "VCS Connection ID", elem: training.spec?.algorithmSource?.vcs?.connection},
+        {name: "Reference", elem: training.spec?.algorithmSource?.vcs?.reference},
         {name: "Working directory", elem: training.spec?.workDir},
         {name: "Memory requests", elem: training.spec?.resources?.requests?.memory},
         {name: "Memory limits", elem: training.spec?.resources?.limits?.memory},
@@ -84,7 +84,7 @@ export const TrainingView: React.FC<TrainingViewProps> = ({training, status}) =>
                     style={{maxWidth: '40%'}}
                     headers={["Connection ID", "Target path", "Source path"]}
                     values={training.spec?.data?.map(data => [
-                        data.connName, data.localPath, data.remotePath,
+                        data.connection, data.localPath, data.remotePath,
                     ])}
                 />
             )

@@ -31,9 +31,9 @@ const extractRow = (mt: ModelTraining) => [
     (
         <RouterLink
             key="vcs"
-            to={join(ConnectionURLs.Page, mt.spec?.vcsName ?? '')}
+            to={join(ConnectionURLs.Page, mt.spec?.algorithmSource?.vcs?.connection ?? '')}
         >
-            {mt.spec?.vcsName}
+            {mt.spec?.algorithmSource?.vcs?.connection}
         </RouterLink>
     ),
     mt.status?.state,
@@ -42,7 +42,7 @@ const extractRow = (mt: ModelTraining) => [
 ];
 const extractRowValues = (mt: ModelTraining) => [
     mt.spec?.toolchain, mt.spec?.model?.name, mt.spec?.model?.version,
-    mt.spec?.vcsName, mt.status?.state, humanDate(mt.createdAt), humanDate(mt.updatedAt)
+    mt.spec?.algorithmSource?.vcs?.connection, mt.status?.state, humanDate(mt.createdAt), humanDate(mt.updatedAt)
 ];
 
 export const TrainingTable: React.FC = () => {

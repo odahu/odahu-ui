@@ -27,7 +27,11 @@ export const TrainingSchema = Yup.object().shape({
                 .test('spec.model.version', "Model version is not valid", isValidLabel),
         }),
         entrypoint: Yup.string().trim().required('Entrypoint is a required field'),
-        vcsName: Yup.string().trim().required('VCS ID is a required field'),
+        algorithmSource: Yup.object().shape({
+            vcs: Yup.object().shape({
+                connection: Yup.string().trim().required('VCS ID is a required field')
+            })
+        }),
         toolchain: Yup.string().trim().required('Toolchain is a required field'),
         envs: Yup.array().of(
             Yup.object().shape({
@@ -37,7 +41,7 @@ export const TrainingSchema = Yup.object().shape({
         ),
         data: Yup.array().of(
             Yup.object().shape({
-                connName: Yup.string().trim().required('Connection ID is a required field'),
+                connection: Yup.string().trim().required('Connection ID is a required field'),
                 localPath: Yup.string().trim().required('Target path is a required field'),
                 remotePath: Yup.string().trim()
             }),

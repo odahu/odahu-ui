@@ -41,11 +41,11 @@ const GitSpecElements: React.FC = () => {
     // If vcs reference is not selected then fill by default reference from selected vcs connection
     // or set "develop" in case if default reference in VCS is not filled
     useEffect(() => {
-        const vcsName = getIn(formik.values, 'spec.vcsName');
-        const reference = getIn(formik.values, 'spec.reference');
+        const vcsName = getIn(formik.values, 'spec.algorithmSource.vcs.connection');
+        const reference = getIn(formik.values, 'spec.algorithmSource.vcs.reference');
         if (!!vcsName && !reference ){
-            const defaultReference = connectionsState.data[vcsName]?.spec?.reference ?? 'develop';
-            formik.setFieldValue('spec.reference', defaultReference);
+            const defaultReference = connectionsState.data[vcsName]?.spec?.algorithmSource?.vcs?.reference ?? 'develop';
+            formik.setFieldValue('spec.algorithmSource.vcs.reference', defaultReference);
         }
     })
 
@@ -56,19 +56,19 @@ const GitSpecElements: React.FC = () => {
             <Divider/>
             <div className={trainClasses.gitContent}>
                 <FormikOdahuSelect
-                    name="spec.vcsName"
+                    name="spec.algorithmSource.vcs.connection"
                     label="VCS ID"
                     options={vcsConnectionIDs}
                     description='A connection which describes credentials to a GIT repository'
                     onChange={ (e: any) => {
                         e.persist();
                         formik.handleChange(e);
-                        formik.setFieldTouched("spec.vcsName", true, false);
-                        formik.setFieldValue('spec.reference', '');
+                        formik.setFieldTouched("spec.algorithmSource.vcs.connection", true, false);
+                        formik.setFieldValue('spec.algorithmSource.vcs.reference', '');
                     }}
                 />
                 <OdahuTextField
-                    name="spec.reference"
+                    name="spec.algorithmSource.vcs.reference"
                     label='Reference'
                     description='a branch, tag, or commit'
                 />
@@ -104,7 +104,7 @@ const DataSection: React.FC = () => {
                     arrayHelpers={arrayHelpers}
                     createNewElem={() => {
                         return {
-                            connName: connectionIDs[0],
+                            connection: connectionIDs[0],
                             locaPath: '',
                             remotePath: ''
                         }
@@ -122,7 +122,7 @@ const DataSection: React.FC = () => {
                                     label='Source Path'
                                 />
                                 <FormikOdahuSelect
-                                    name={`spec.data.${index}.connName`}
+                                    name={`spec.data.${index}.connection`}
                                     label="Connection ID"
                                     options={connectionIDs}
                                 />

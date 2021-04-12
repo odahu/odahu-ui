@@ -27,8 +27,12 @@ function defaultTrainingSpec(mts?: ModelTrainingSpec): ModelTrainingSpec {
         data: [],
         envs: [],
         model: {name: '', version: ''},
-        vcsName: '',
-        reference: '',
+        algorithmSource: {
+            vcs: {
+                connection: '',
+                reference: '',
+            }
+        },
         workDir: './',
         outputConnection: '',
         resources: {
@@ -150,7 +154,7 @@ export const NewTrainingPage: React.FC = () => {
                 id: '',
                 spec: defaultTrainingSpec({
                     toolchain: extractZeroElement(toolchainIDs, ''),
-                    vcsName: extractZeroElement(vcsConnectionID, ''),
+                    algorithmSource: config.data.training?.algorithmSource,
                     outputConnection: config.data.training?.outputConnectionID,
                     resources: config.data.training?.defaultResources,
                 })
