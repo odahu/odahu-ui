@@ -47,7 +47,6 @@ export const EditableFields: React.FC = () => {
                 name="spec.keySecret"
                 label="SSH private key"
                 description='base64 encoded SSH private key'
-                multiline={true}
             />
         </>
     )
