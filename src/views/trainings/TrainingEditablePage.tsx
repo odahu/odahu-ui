@@ -154,7 +154,11 @@ export const NewTrainingPage: React.FC = () => {
                 id: '',
                 spec: defaultTrainingSpec({
                     toolchain: extractZeroElement(toolchainIDs, ''),
-                    algorithmSource: config.data.training?.algorithmSource,
+                    algorithmSource: {
+                        vcs: {
+                            connection: extractZeroElement(vcsConnectionID, '')
+                        }
+                    },
                     outputConnection: config.data.training?.outputConnectionID,
                     resources: config.data.training?.defaultResources,
                 })
