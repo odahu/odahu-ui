@@ -16,9 +16,9 @@ export function extractViewParameters(conn: Connection): Array<ViewParam> {
 }
 
 export const Schema = {
-    uri: Yup.string().required('URI is a required field'),
-    region: Yup.string().required('Project is a required field'),
-    keySecret: Yup.string().required('Service account key is a required field'),
+    uri: Yup.string().trim().required('URI is a required field'),
+    region: Yup.string().trim().required('Project is a required field'),
+    keySecret: Yup.string().trim().required('Service account key is a required field'),
 };
 
 

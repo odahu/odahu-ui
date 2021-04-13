@@ -50,9 +50,12 @@ function processArguments(packaging: ModelPackaging): ModelPackaging {
     packaging = deepCopy(packaging);
 
     if (packaging.spec?.arguments && typeof packaging.spec.arguments === "object") {
+        console.log("argument is object:")
+        console.log(packaging.spec.arguments)
         packaging.spec.arguments = Object.entries(packaging.spec.arguments).map(([name, value]) => {
             return {name, value}
         });
+        console.log(packaging.spec.arguments)
     }
 
     return packaging;

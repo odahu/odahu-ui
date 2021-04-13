@@ -17,9 +17,9 @@ export function extractViewParameters(conn: Connection): Array<ViewParam> {
 }
 
 export const Schema = {
-    uri: Yup.string().required('URI is a required field'),
-    username: Yup.string().required('Username is a required field'),
-    password: Yup.string().required('Password is a required field')
+    uri: Yup.string().trim().required('URI is a required field'),
+    username: Yup.string().trim().required('Username is a required field'),
+    password: Yup.string().trim().required('Password is a required field')
 };
 
 export const EditableFields: React.FC = () => {
