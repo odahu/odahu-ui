@@ -29,7 +29,12 @@ export const TrainingSchema = Yup.object().shape({
         entrypoint: Yup.string().trim().required('Entrypoint is a required field'),
         algorithmSource: Yup.object().shape({
             vcs: Yup.object().shape({
-                connection: Yup.string().trim().required('VCS ID is a required field')
+                connection: Yup.string().trim().required('VCS ID is a required field'),
+                reference: Yup.string().trim()
+            }),
+            objectStorage: Yup.object().shape({
+                connection: Yup.string(),
+                path: Yup.string()
             })
         }),
         toolchain: Yup.string().trim().required('Toolchain is a required field'),

@@ -16,7 +16,7 @@ import WorkIcon from '@material-ui/icons/Work';
 
 const TrainingEnhancedTable = (props: EnhancedTableProps<ModelTraining>) => <EnhancedTable {...props}/>;
 
-const headers = ['Toolchain', 'Model Name', 'Model Version', 'VCS ID', 'State', 'Created at', 'Updated at'];
+const headers = ['Toolchain', 'Model Name', 'Model Version', 'Algorithm Source Connection', 'State', 'Created at', 'Updated at'];
 const extractRow = (mt: ModelTraining) => [
     (
         <RouterLink
@@ -30,10 +30,10 @@ const extractRow = (mt: ModelTraining) => [
     mt.spec?.model?.version,
     (
         <RouterLink
-            key="vcs"
-            to={join(ConnectionURLs.Page, mt.spec?.algorithmSource?.vcs?.connection ?? '')}
+            key="algorithmSource"
+            to={join(ConnectionURLs.Page, mt.spec?.algorithmSource?.vcs?.connection ?? mt.spec?.algorithmSource?.objectStorage?.connection ?? '')}
         >
-            {mt.spec?.algorithmSource?.vcs?.connection}
+            {mt.spec?.algorithmSource?.vcs?.connection ?? mt.spec?.algorithmSource?.objectStorage?.connection}
         </RouterLink>
     ),
     mt.status?.state,
@@ -42,7 +42,8 @@ const extractRow = (mt: ModelTraining) => [
 ];
 const extractRowValues = (mt: ModelTraining) => [
     mt.spec?.toolchain, mt.spec?.model?.name, mt.spec?.model?.version,
-    mt.spec?.algorithmSource?.vcs?.connection, mt.status?.state, humanDate(mt.createdAt), humanDate(mt.updatedAt)
+    mt.spec?.algorithmSource?.vcs?.connection ?? mt.spec?.algorithmSource?.objectStorage?.connection,
+    mt.status?.state, humanDate(mt.createdAt), humanDate(mt.updatedAt)
 ];
 
 export const TrainingTable: React.FC = () => {

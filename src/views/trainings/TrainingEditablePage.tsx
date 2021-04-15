@@ -31,6 +31,10 @@ function defaultTrainingSpec(mts?: ModelTrainingSpec): ModelTrainingSpec {
             vcs: {
                 connection: '',
                 reference: '',
+            },
+            objectStorage: {
+                connection: '',
+                path: ''
             }
         },
         workDir: './',
@@ -132,6 +136,12 @@ export const NewTrainingPage: React.FC = () => {
         .filter(conn => conn.spec?.type === ConnectionTypes.GIT)
         .map(conn => conn.id);
 
+    const objectStorageConnectionIDs = Object.values(connectionsState.data)
+        .filter(conn => conn.spec?.type === ConnectionTypes.S3 ||
+            conn.spec?.type === ConnectionTypes.GCS ||
+            conn.spec?.type === ConnectionTypes.AZUREBLOB)
+        .map(conn => conn.id);
+
     const config = useSelector<ApplicationState, ConfigurationState>(state => state.configuration);
 
     const history = useHistory()
@@ -157,6 +167,9 @@ export const NewTrainingPage: React.FC = () => {
                     algorithmSource: {
                         vcs: {
                             connection: extractZeroElement(vcsConnectionID, '')
+                        },
+                        objectStorage: {
+                            connection: extractZeroElement(objectStorageConnectionIDs, '')
                         }
                     },
                     outputConnection: config.data.training?.outputConnectionID,
