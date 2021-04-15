@@ -2,7 +2,6 @@ export * from './APIBackendConfig';
 export * from './APIConfig';
 export * from './APILocalBackendConfig';
 export * from './AlgorithmSource';
-export * from './AlgorithmSourceConnection';
 export * from './AuthConfig';
 export * from './BatchConfig';
 export * from './Claims';
