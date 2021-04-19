@@ -24,13 +24,13 @@ Where? – What is the webpage?
 <!-- 1. See error -->
 
 **Actual result**
-<!-- A clear and concise description of what really happened.
+<!-- A clear and concise description of what really happened. -->
 
 **Expected result**
-<!-- A clear and concise description of what you expected to happen.
+<!-- A clear and concise description of what you expected to happen. -->
 
 **Attachments**
-<!-- If applicable, add attachments to help explain your problem.
+<!-- If applicable, add attachments to help explain your problem. -->
 
 **Environment**
 <!-- Example: OS: macOS BigSur, 11.2.3 version; Browser: Firefox, version 87.0 (64-bit) -->
