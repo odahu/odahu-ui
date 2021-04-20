@@ -11,7 +11,6 @@ import {Formik, useFormikContext} from "formik";
 import {ObjectSchema} from "yup";
 import {useDispatch} from "react-redux";
 import {SaveButtonClick} from "./actions";
-import {formLabelsTheme} from "./fields";
 
 const specificationTitle = 'Specification';
 const metadataTitle = 'Metadata';
