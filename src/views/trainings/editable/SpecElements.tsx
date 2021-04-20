@@ -130,7 +130,6 @@ const DataSection: React.FC = () => {
                             </ItemInputParametersView>
                         )
                     )}
-                    <div>{formik.errors.spec?["data"]:1}</div>
                 </InputParametersView>
             )}
         />
