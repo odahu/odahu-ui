@@ -56,6 +56,7 @@ const GitSpecElements: React.FC = () => {
             <Divider/>
             <div className={trainClasses.gitContent}>
                 <FormikOdahuSelect
+                    required
                     name="spec.vcsName"
                     label="VCS ID"
                     options={vcsConnectionIDs}
@@ -129,6 +130,7 @@ const DataSection: React.FC = () => {
                             </ItemInputParametersView>
                         )
                     )}
+                    <div>{formik.errors.spec?["data"]:1}</div>
                 </InputParametersView>
             )}
         />
@@ -217,6 +219,7 @@ export const SpecElements: React.FC = () => {
     return (
         <>
             <OdahuTextField
+                required
                 className={classes.editorField}
                 name="spec.entrypoint"
                 label='Entrypoint'

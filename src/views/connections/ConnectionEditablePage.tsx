@@ -76,6 +76,7 @@ const MetadataElements: React.FC<MetadataElementsPros> = ({readonlyID}) => {
     return (
         <>
             <OdahuTextField
+                required
                 className={classes.editorField}
                 disabled={readonlyID}
                 name="id"
@@ -83,6 +84,7 @@ const MetadataElements: React.FC<MetadataElementsPros> = ({readonlyID}) => {
                 description="Unique value among all connections"
             />
             <FormikOdahuSelect
+                required
                 className={classes.editorField}
                 name='spec.type'
                 label="Type"

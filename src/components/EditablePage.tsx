@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
+import {createStyles, makeStyles, MuiThemeProvider, Theme} from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -11,6 +11,7 @@ import {Formik, useFormikContext} from "formik";
 import {ObjectSchema} from "yup";
 import {useDispatch} from "react-redux";
 import {SaveButtonClick} from "./actions";
+import {formLabelsTheme} from "./fields";
 
 const specificationTitle = 'Specification';
 const metadataTitle = 'Metadata';
@@ -258,57 +259,59 @@ export function EditablePage<T extends { id?: string }>(props: EditPageProps<T>)
                 >
                     {
                         (formik) => (
-                            <form onSubmit={formik.handleSubmit}>
-                                <Typography
-                                    style={{padding: "15px"}}
-                                    variant="h6"
-                                >
-                                    {title}
-                                </Typography>
-                                <Stepper
-                                    activeStep={activeStep}
-                                    orientation="vertical"
-                                >
-                                    <Step key={metadataTitle}>
-                                        <StepLabel>{metadataTitle}</StepLabel>
-                                        <StepContent>
-                                            <FieldsOptionsContext.Provider value={metadataFieldOptions}>
-                                                <MetadataStep
-                                                    handleNext={handleNext}
-                                                    fields={fields.metadata()}
-                                                    schema={schemas.metadata}
-                                                    setFieldOptions={setMetadataFieldOptions}
-                                                />
-                                            </FieldsOptionsContext.Provider>
-                                        </StepContent>
-                                    </Step>
-                                    <Step key={specificationTitle}>
-                                        <StepLabel>{specificationTitle}</StepLabel>
-                                        <StepContent>
-                                            <FieldsOptionsContext.Provider value={specFieldOptions}>
-                                                <SpecStep
-                                                    schema={props.schemas.spec}
+                            <MuiThemeProvider theme={formLabelsTheme}>
+                                <form onSubmit={formik.handleSubmit}>
+                                    <Typography
+                                        style={{padding: "15px"}}
+                                        variant="h6"
+                                    >
+                                        {title}
+                                    </Typography>
+                                    <Stepper
+                                        activeStep={activeStep}
+                                        orientation="vertical"
+                                    >
+                                        <Step key={metadataTitle}>
+                                            <StepLabel>{metadataTitle}</StepLabel>
+                                            <StepContent>
+                                                <FieldsOptionsContext.Provider value={metadataFieldOptions}>
+                                                    <MetadataStep
+                                                        handleNext={handleNext}
+                                                        fields={fields.metadata()}
+                                                        schema={schemas.metadata}
+                                                        setFieldOptions={setMetadataFieldOptions}
+                                                    />
+                                                </FieldsOptionsContext.Provider>
+                                            </StepContent>
+                                        </Step>
+                                        <Step key={specificationTitle}>
+                                            <StepLabel>{specificationTitle}</StepLabel>
+                                            <StepContent>
+                                                <FieldsOptionsContext.Provider value={specFieldOptions}>
+                                                    <SpecStep
+                                                        schema={props.schemas.spec}
+                                                        handleBack={handleBack}
+                                                        handleNext={handleNext}
+                                                        fields={fields.spec()}
+                                                        setFieldOptions={setSpecFieldOptions}
+                                                    />
+                                                </FieldsOptionsContext.Provider>
+                                            </StepContent>
+                                        </Step>
+                                        <Step key={reviewTitle}>
+                                            <StepLabel>{reviewTitle}</StepLabel>
+                                            <StepContent>
+                                                <ReviewStep
+                                                    values={formik.values}
                                                     handleBack={handleBack}
-                                                    handleNext={handleNext}
-                                                    fields={fields.spec()}
-                                                    setFieldOptions={setSpecFieldOptions}
+                                                    fields={fields.review(formik.values)}
                                                 />
-                                            </FieldsOptionsContext.Provider>
-                                        </StepContent>
-                                    </Step>
-                                    <Step key={reviewTitle}>
-                                        <StepLabel>{reviewTitle}</StepLabel>
-                                        <StepContent>
-                                            <ReviewStep
-                                                values={formik.values}
-                                                handleBack={handleBack}
-                                                fields={fields.review(formik.values)}
-                                            />
-                                        </StepContent>
-                                    </Step>
-                                    <ValidateForm/>
-                                </Stepper>
-                            </form>
+                                            </StepContent>
+                                        </Step>
+                                        <ValidateForm/>
+                                    </Stepper>
+                                </form>
+                            </MuiThemeProvider>
                         )
                     }
                 </Formik>

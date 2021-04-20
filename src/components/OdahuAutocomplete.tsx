@@ -43,13 +43,14 @@ export interface OdahuAutocompleteProps {
     // Error or description text
     helperText?: string;
     className?: string;
+    required?: boolean
 }
 
 /**
  * The proxy component for material UI Autocomplete
  */
 export const OdahuAutocomplete: React.FC<OdahuAutocompleteProps> = (
-    {className, options, name, value, label,error, helperText}
+    {required, className, options, name, value, label,error, helperText}
 ) => {
     const classes = editPageStyles();
     const formik = useFormikContext();
@@ -66,6 +67,7 @@ export const OdahuAutocomplete: React.FC<OdahuAutocompleteProps> = (
             renderInput={params => (
                 <TextField {...params}
                            name={name}
+                           required={required}
                            onChange={formik.handleChange}
                            error={error}
                            helperText={helperText}

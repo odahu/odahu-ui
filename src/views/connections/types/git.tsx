@@ -30,6 +30,7 @@ export const EditableFields: React.FC = () => {
     return (
         <>
             <OdahuTextField
+                required
                 className={classes.editorField}
                 name="spec.uri"
                 label="Git SSH URL"
@@ -43,6 +44,7 @@ export const EditableFields: React.FC = () => {
                 description='a branch, tag, or commit'
             />
             <FormikSecretTextField
+                required
                 className={classes.editorField}
                 name="spec.keySecret"
                 label="SSH private key"

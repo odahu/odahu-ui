@@ -24,6 +24,7 @@ export const SpecElements: React.FC = () => {
     return (
         <>
             <FormikOdahuSelect
+                required
                 className={classes.editorField}
                 label="Predictor"
                 name="spec.predictor"
@@ -31,6 +32,7 @@ export const SpecElements: React.FC = () => {
                 description="Predictor set ML Server that will serve model as a web service"
             />
             <FormikOdahuAutocomplete
+                required
                 className={classes.editorField}
                 name="spec.image"
                 label="Docker image"

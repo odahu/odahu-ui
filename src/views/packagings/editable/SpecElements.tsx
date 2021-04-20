@@ -127,6 +127,7 @@ export const SpecElements: React.FC = () => {
     return (
         <>
             <FormikOdahuAutocomplete
+                required
                 className={classes.editorField}
                 name="spec.artifactName"
                 label='Artifact'

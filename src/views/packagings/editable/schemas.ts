@@ -14,7 +14,7 @@ export const PackagingSchema = Yup.object().shape({
     id: IDSchema,
     spec: Yup.object().shape({
         integrationName: Yup.string().trim().required('Integration name is a required field'),
-        outputConnection: Yup.string().trim(),
+        outputConnection: Yup.string().trim().required('Output Connection is a required field'),
         artifactName: Yup.string().trim().required('Artifact name is a required field'),
         targets: Yup.array().of(
             Yup.object().shape({
