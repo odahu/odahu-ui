@@ -38,6 +38,9 @@ export const useFieldsStyles = makeStyles((theme: Theme) =>
             textAlign: 'left',
             lineHeight: '1em',
             letterSpacing: '0.03333em',
+        },
+        "MuiFormLabel-asterisk": {
+            color: 'red',
         }
     }),
 );

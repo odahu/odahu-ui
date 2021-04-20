@@ -36,7 +36,10 @@ export type SecretTextFieldProps = {
     helperText?: string;
 } & InputProps;
 
-export const SecretTextField: React.FC<SecretTextFieldProps> = ({className, error, helperText, label, ...otherProps}) => {
+export const SecretTextField: React.FC<SecretTextFieldProps> = ({
+    required, className, error,
+    helperText, label, ...otherProps
+}) => {
     const classes = useFieldsStyles();
 
     const [showPassword, setShowPassword] = React.useState(false);
@@ -46,7 +49,7 @@ export const SecretTextField: React.FC<SecretTextFieldProps> = ({className, erro
     };
 
     return (
-        <FormControl className={className ?? classes.fields} error={error}>
+        <FormControl required={required} className={className ?? classes.fields} error={error}>
             <InputLabel>{label}</InputLabel>
             <Input
                 type={showPassword ? 'text' : 'password'}

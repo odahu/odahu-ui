@@ -56,6 +56,7 @@ const GitSpecElements: React.FC = () => {
             <Divider/>
             <div className={trainClasses.gitContent}>
                 <FormikOdahuSelect
+                    required
                     name="spec.vcsName"
                     label="VCS ID"
                     options={vcsConnectionIDs}
@@ -217,6 +218,7 @@ export const SpecElements: React.FC = () => {
     return (
         <>
             <OdahuTextField
+                required
                 className={classes.editorField}
                 name="spec.entrypoint"
                 label='Entrypoint'

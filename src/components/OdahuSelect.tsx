@@ -41,6 +41,7 @@ export const OdahuSelect: React.FC<OdahuSelectProps> = (
     {
         label,
         name,
+        required,
         onChange,
         value,
         defaultValue,
@@ -54,6 +55,7 @@ export const OdahuSelect: React.FC<OdahuSelectProps> = (
 
     return (
         <FormControl
+            required={required}
             className={className ?? classes.fields}
             error={error}
         >

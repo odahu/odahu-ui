@@ -28,6 +28,7 @@ export const MetadataElements: React.FC<MetadataElementsProps> = ({readonlyID = 
     return (
         <>
             <OdahuTextField
+                required
                 className={classes.editorField}
                 disabled={readonlyID}
                 name="id"
@@ -35,24 +36,28 @@ export const MetadataElements: React.FC<MetadataElementsProps> = ({readonlyID = 
                 description="Unique value among all trainings"
             />
             <OdahuTextField
+                required
                 className={classes.editorField}
                 name="spec.model.name"
                 label='Model name'
                 description='Human-readable model name'
             />
             <OdahuTextField
+                required
                 className={classes.editorField}
                 name="spec.model.version"
                 label='Model version'
                 description='Human-readable model value'
             />
             <FormikOdahuSelect
+                required
                 className={classes.editorField}
                 name="spec.toolchain"
                 label="Toolchain"
                 options={toolchainIDs}
             />
             <FormikOdahuSelect
+                required
                 className={classes.editorField}
                 name="spec.outputConnection"
                 label="Output connection"

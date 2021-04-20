@@ -25,12 +25,14 @@ const EditableFields: React.FC = () => {
     return (
         <>
             <OdahuTextField
+                required
                 className={classes.editorField}
                 name="spec.uri"
                 label="URI"
                 description="Azure storage compatible URI, for example <bucket-name>/dir1/dir2/"
             />
             <FormikSecretTextField
+                required
                 className={classes.editorField}
                 name='spec.keySecret'
                 label="SAS Token"

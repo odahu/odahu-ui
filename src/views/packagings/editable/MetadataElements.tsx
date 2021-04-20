@@ -28,6 +28,7 @@ export const MetadataElements: React.FC<MetadataElementsProps> = ({readonlyID = 
     return (
         <>
             <OdahuTextField
+                required
                 className={classes.editorField}
                 disabled={readonlyID}
                 name="id"
@@ -35,6 +36,7 @@ export const MetadataElements: React.FC<MetadataElementsProps> = ({readonlyID = 
                 description='Unique value among all packagings'
             />
             <FormikOdahuSelect
+                required
                 className={classes.editorField}
                 name="spec.outputConnection"
                 label="Output Connection ID"
@@ -42,6 +44,7 @@ export const MetadataElements: React.FC<MetadataElementsProps> = ({readonlyID = 
                 description='Bucket where the Trained Model Binary is stored'
             />
             <FormikOdahuSelect
+                required
                 className={classes.editorField}
                 name="spec.integrationName"
                 label="Integration"

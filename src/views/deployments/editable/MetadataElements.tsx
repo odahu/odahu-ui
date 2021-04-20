@@ -22,6 +22,7 @@ export const MetadataElements: React.FC<MetadataElementsProps> = ({readonlyID = 
     return (
         <>
             <OdahuTextField
+                required
                 className={classes.editorField}
                 disabled={readonlyID}
                 name="id"
@@ -29,6 +30,7 @@ export const MetadataElements: React.FC<MetadataElementsProps> = ({readonlyID = 
                 description="Unique value among all deployments"
             />
             <FormikOdahuSelect
+                required
                 className={classes.editorField}
                 label="Image pull connection ID"
                 name="spec.imagePullConnID"

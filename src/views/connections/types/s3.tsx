@@ -53,24 +53,28 @@ export const EditableFields: React.FC = () => {
     return (
         <>
             <OdahuTextField
+                required
                 className={classes.editorField}
                 name="spec.uri"
                 label="URI"
                 description='S3 compatible URI, for example s3://<bucket-name>/dir1/dir2/'
             />
             <FormikOdahuAutocomplete
+                required
                 className={classes.editorField}
                 name="spec.region"
                 label="Region"
                 options={ALL_AWS_REGIONS}
             />
             <FormikSecretTextField
+                required
                 className={classes.editorField}
                 name="spec.keyID"
                 label="Access Key ID"
                 description='Base64-encoded access key ID (for example, "QUtJQUlPU0ZPRE5ON0VYQU1QTEU=").'
             />
             <FormikSecretTextField
+                required
                 className={classes.editorField}
                 name="spec.keySecret"
                 label="Access Key Secret"

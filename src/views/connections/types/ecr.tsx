@@ -30,6 +30,7 @@ export const EditableFields: React.FC = () => {
     return (
         <>
             <OdahuTextField
+                required
                 className={classes.editorField}
                 name="spec.uri"
                 label="URI"
@@ -41,12 +42,14 @@ export const EditableFields: React.FC = () => {
                 label="Region"
             />
             <FormikSecretTextField
+                required
                 className={classes.editorField}
                 name="spec.keyID"
                 label="Access Key ID"
                 description='Base64-encoded access key ID (for example, "QUtJQUlPU0ZPRE5ON0VYQU1QTEU=").'
             />
             <FormikSecretTextField
+                required
                 className={classes.editorField}
                 name="spec.keySecret"
                 label="Access Key Secret"

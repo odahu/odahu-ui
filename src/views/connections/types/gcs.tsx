@@ -28,18 +28,21 @@ export const EditableFields: React.FC = () => {
     return (
         <>
             <OdahuTextField
+                required
                 className={classes.editorField}
                 name="spec.region"
                 label="Project"
                 description='GCP Project, where a bucket was created'
             />
             <OdahuTextField
+                required
                 className={classes.editorField}
                 name="spec.uri"
                 label="URI"
                 description='GCS compatible URI, for example gcs://<bucket-name>/dir1/dir2/'
             />
             <FormikSecretTextField
+                required
                 className={classes.editorField}
                 name="spec.keySecret"
                 label="Service account secret"

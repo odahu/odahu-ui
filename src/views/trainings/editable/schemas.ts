@@ -35,7 +35,7 @@ export const TrainingSchema = Yup.object().shape({
                 value: Yup.string().trim().required('Value is a required field'),
             })
         ),
-        data: Yup.array().of(
+        data: Yup.array().min(1, 'Add at least 1 data source').of(
             Yup.object().shape({
                 connName: Yup.string().trim().required('Connection ID is a required field'),
                 localPath: Yup.string().trim().required('Target path is a required field'),
