@@ -1,7 +1,6 @@
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import * as Yup from "yup";
 import {isValidID} from "../utils/enities";
-import {createMuiTheme} from "@material-ui/core";
 
 export const maxFieldWidth = '500px';
 export const fieldMargin = '20px';
@@ -45,19 +44,6 @@ export const useFieldsStyles = makeStyles((theme: Theme) =>
         }
     }),
 );
-
-export const formLabelsTheme = createMuiTheme({
-    overrides: {
-        MuiFormLabel: {
-            asterisk: {
-                color: '#db3131',
-                '&$error': {
-                    color: '#db3131'
-                },
-            }
-        }
-    }
-})
 
 export const IDSchema = Yup.string().required('ID is a required value')
     .test("id", "ID is not valid", isValidID);

@@ -12,5 +12,15 @@ export function configureTheme() {
                 light: 'rgb(87, 114, 137)'
             },
         },
+        overrides: {
+            MuiFormLabel: {
+                asterisk: {
+                    color: '#db3131',
+                    '&$error': {
+                        color: '#db3131'
+                    },
+                }
+            }
+        }
     });
 }

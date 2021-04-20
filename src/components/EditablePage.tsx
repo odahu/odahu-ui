@@ -259,59 +259,57 @@ export function EditablePage<T extends { id?: string }>(props: EditPageProps<T>)
                 >
                     {
                         (formik) => (
-                            <MuiThemeProvider theme={formLabelsTheme}>
-                                <form onSubmit={formik.handleSubmit}>
-                                    <Typography
-                                        style={{padding: "15px"}}
-                                        variant="h6"
-                                    >
-                                        {title}
-                                    </Typography>
-                                    <Stepper
-                                        activeStep={activeStep}
-                                        orientation="vertical"
-                                    >
-                                        <Step key={metadataTitle}>
-                                            <StepLabel>{metadataTitle}</StepLabel>
-                                            <StepContent>
-                                                <FieldsOptionsContext.Provider value={metadataFieldOptions}>
-                                                    <MetadataStep
-                                                        handleNext={handleNext}
-                                                        fields={fields.metadata()}
-                                                        schema={schemas.metadata}
-                                                        setFieldOptions={setMetadataFieldOptions}
-                                                    />
-                                                </FieldsOptionsContext.Provider>
-                                            </StepContent>
-                                        </Step>
-                                        <Step key={specificationTitle}>
-                                            <StepLabel>{specificationTitle}</StepLabel>
-                                            <StepContent>
-                                                <FieldsOptionsContext.Provider value={specFieldOptions}>
-                                                    <SpecStep
-                                                        schema={props.schemas.spec}
-                                                        handleBack={handleBack}
-                                                        handleNext={handleNext}
-                                                        fields={fields.spec()}
-                                                        setFieldOptions={setSpecFieldOptions}
-                                                    />
-                                                </FieldsOptionsContext.Provider>
-                                            </StepContent>
-                                        </Step>
-                                        <Step key={reviewTitle}>
-                                            <StepLabel>{reviewTitle}</StepLabel>
-                                            <StepContent>
-                                                <ReviewStep
-                                                    values={formik.values}
-                                                    handleBack={handleBack}
-                                                    fields={fields.review(formik.values)}
+                            <form onSubmit={formik.handleSubmit}>
+                                <Typography
+                                    style={{padding: "15px"}}
+                                    variant="h6"
+                                >
+                                    {title}
+                                </Typography>
+                                <Stepper
+                                    activeStep={activeStep}
+                                    orientation="vertical"
+                                >
+                                    <Step key={metadataTitle}>
+                                        <StepLabel>{metadataTitle}</StepLabel>
+                                        <StepContent>
+                                            <FieldsOptionsContext.Provider value={metadataFieldOptions}>
+                                                <MetadataStep
+                                                    handleNext={handleNext}
+                                                    fields={fields.metadata()}
+                                                    schema={schemas.metadata}
+                                                    setFieldOptions={setMetadataFieldOptions}
                                                 />
-                                            </StepContent>
-                                        </Step>
-                                        <ValidateForm/>
-                                    </Stepper>
-                                </form>
-                            </MuiThemeProvider>
+                                            </FieldsOptionsContext.Provider>
+                                        </StepContent>
+                                    </Step>
+                                    <Step key={specificationTitle}>
+                                        <StepLabel>{specificationTitle}</StepLabel>
+                                        <StepContent>
+                                            <FieldsOptionsContext.Provider value={specFieldOptions}>
+                                                <SpecStep
+                                                    schema={props.schemas.spec}
+                                                    handleBack={handleBack}
+                                                    handleNext={handleNext}
+                                                    fields={fields.spec()}
+                                                    setFieldOptions={setSpecFieldOptions}
+                                                />
+                                            </FieldsOptionsContext.Provider>
+                                        </StepContent>
+                                    </Step>
+                                    <Step key={reviewTitle}>
+                                        <StepLabel>{reviewTitle}</StepLabel>
+                                        <StepContent>
+                                            <ReviewStep
+                                                values={formik.values}
+                                                handleBack={handleBack}
+                                                fields={fields.review(formik.values)}
+                                            />
+                                        </StepContent>
+                                    </Step>
+                                    <ValidateForm/>
+                                </Stepper>
+                            </form>
                         )
                     }
                 </Formik>
