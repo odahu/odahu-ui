@@ -16,6 +16,9 @@ How? – What did we click/do to produce the bug?
 Where? – What is the webpage?
 -->
 
+**Preconditions**
+<!-- What steps/scenarios have to be performed before reproducing the defect? -->
+
 **Steps to Reproduce:**
 <!-- Please write the steps needed to reproduce the bug here. -->
 <!-- 1. Go to '...' -->
