@@ -58,11 +58,6 @@ export const EnhancedTableHead: React.FC<EnhancedReadonlyTableProps | EnhancedTa
                         onClick={createSortHandler("id")}
                     >
                         ID
-                        {orderBy === "id" ? (
-                            <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
-                        ) : null}
 
                     </TableSortLabel>
                 </TableCell>
@@ -79,11 +74,6 @@ export const EnhancedTableHead: React.FC<EnhancedReadonlyTableProps | EnhancedTa
                                 onClick={createSortHandler(index)}
                             >
                                 {header}
-                                {orderBy === index ? (
-                                    <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
-                                ) : null}
 
                             </TableSortLabel>
                         </TableCell>
