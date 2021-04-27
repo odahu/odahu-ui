@@ -21,7 +21,7 @@ export const ParametersView: React.FC<ParametersViewProp> = (({params}) => {
     return (
         <List dense={true}>
             {params.filter(isElementEmpty).map(({name, elem}) => (
-                <ListItem key={name}>
+                <ListItem key={name} data-param-name={name}>
                     <ListItemText
                         primary={name}
                         secondary={elem}
