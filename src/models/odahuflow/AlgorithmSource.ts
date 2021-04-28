@@ -12,20 +12,9 @@
 
 import * as models from './models';
 
-export interface DataBindingDir {
-    /**
-     * Connection name for data
-     */
-    connection?: string;
+export interface AlgorithmSource {
+    objectStorage?: models.ObjectStorage;
 
-    /**
-     * Local training path
-     */
-    localPath?: string;
-
-    /**
-     * Overwrite remote data path in connection
-     */
-    remotePath?: string;
+    vcs?: models.VCS;
 
 }

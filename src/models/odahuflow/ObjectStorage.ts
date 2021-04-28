@@ -12,20 +12,15 @@
 
 import * as models from './models';
 
-export interface DataBindingDir {
+export interface ObjectStorage {
     /**
-     * Connection name for data
+     * Connection name for training model source
      */
     connection?: string;
 
     /**
-     * Local training path
+     * Remote path in ObjectStorage
      */
-    localPath?: string;
-
-    /**
-     * Overwrite remote data path in connection
-     */
-    remotePath?: string;
+    path?: string;
 
 }

@@ -12,20 +12,15 @@
 
 import * as models from './models';
 
-export interface DataBindingDir {
+export interface VCS {
     /**
-     * Connection name for data
+     * Connection name for training model source
      */
     connection?: string;
 
     /**
-     * Local training path
+     * VCS Reference
      */
-    localPath?: string;
-
-    /**
-     * Overwrite remote data path in connection
-     */
-    remotePath?: string;
+    reference?: string;
 
 }

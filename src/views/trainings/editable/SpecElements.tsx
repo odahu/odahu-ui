@@ -24,54 +24,124 @@ export const useTrainingClasses = makeStyles(() =>
             gridColumnStart: "1",
             gridColumnEnd: "3"
         },
+        algorithmSourceSelect: {
+            margin: `${fieldMargin} !important`,
+            gridColumnStart: "1",
+            gridColumnEnd: "3"
+        },
     }),
 );
 
-const GitSpecElements: React.FC = () => {
+const AlgorithmSourceSpecElements: React.FC = () => {
     const classes = useFieldsStyles();
     const trainClasses = useTrainingClasses();
+    const vcsType = 'VCS'
+    const objectStorageType = 'Object storage'
 
     const connectionsState = useSelector<ApplicationState, ConnectionState>(state => state.connections);
     const vcsConnectionIDs = Object.values(connectionsState.data)
         .filter(conn => conn.spec?.type === ConnectionTypes.GIT)
         .map(conn => conn.id);
 
+    const objectStorageConnectionIDs = Object.values(connectionsState.data)
+        .filter(conn => conn.spec?.type === ConnectionTypes.S3 ||
+            conn.spec?.type === ConnectionTypes.GCS ||
+            conn.spec?.type === ConnectionTypes.AZUREBLOB)
+        .map(conn => conn.id);
+
     const formik = useFormikContext();
+
+    const algorithmSourceType = getIn(formik.values, 'algorithmSourceType') ?? vcsType;
 
     // If vcs reference is not selected then fill by default reference from selected vcs connection
     // or set "develop" in case if default reference in VCS is not filled
     useEffect(() => {
-        const vcsName = getIn(formik.values, 'spec.vcsName');
-        const reference = getIn(formik.values, 'spec.reference');
+        const vcsName = getIn(formik.values, 'spec.algorithmSource.vcs.connection');
+        const reference = getIn(formik.values, 'spec.algorithmSource.vcs.reference');
         if (!!vcsName && !reference ){
             const defaultReference = connectionsState.data[vcsName]?.spec?.reference ?? 'develop';
-            formik.setFieldValue('spec.reference', defaultReference);
+            formik.setFieldValue('spec.algorithmSource.vcs.reference', defaultReference);
         }
     })
 
+    function AlgorithmSourceTypeChange(e: any) {
+        e.persist();
+        formik.handleChange(e);
+        formik.setFieldTouched('algorithmSourceType', true, false);
+
+        switch (e.target.value) {
+            case vcsType: {
+                formik.setFieldValue('spec.algorithmSource.vcs.connection', vcsConnectionIDs[0] ?? '');
+                formik.setFieldValue('spec.algorithmSource.objectStorage.connection', '');
+                formik.setFieldValue('spec.algorithmSource.objectStorage.path', '');
+                break
+            }
+            case objectStorageType: {
+                formik.setFieldValue('spec.algorithmSource.objectStorage.connection', objectStorageConnectionIDs[0] ?? '');
+                formik.setFieldValue('spec.algorithmSource.vcs.connection', '');
+                formik.setFieldValue('spec.algorithmSource.vcs.reference', '');
+                break
+            }
+        }
+    }
+
     return (
         <Paper className={classes.editorField}>
-            <Typography className={classes.paperHeader}>GIT Settings</Typography>
-            <p className={classes.helperText}>Model git repository options</p>
+            <Typography className={classes.paperHeader}>Algorithm source settings</Typography>
+            <p className={classes.helperText}>Model algorithm source options</p>
             <Divider/>
             <div className={trainClasses.gitContent}>
                 <FormikOdahuSelect
-                    name="spec.vcsName"
-                    label="VCS ID"
-                    options={vcsConnectionIDs}
-                    description='A connection which describes credentials to a GIT repository'
-                    onChange={ (e: any) => {
-                        e.persist();
-                        formik.handleChange(e);
-                        formik.setFieldTouched("spec.vcsName", true, false);
-                        formik.setFieldValue('spec.reference', '');
-                    }}
+                    className={trainClasses.algorithmSourceSelect}
+                    name='algorithmSourceType'
+                    label='Algorithm Source Type'
+                    options={[vcsType, objectStorageType]}
+                    defaultValue={vcsType}
+                    description='A type of connection for algorithm source'
+                    onChange={AlgorithmSourceTypeChange}
                 />
-                <OdahuTextField
-                    name="spec.reference"
-                    label='Reference'
-                    description='a branch, tag, or commit'
-                />
+                {algorithmSourceType === vcsType && (
+                    <FormikOdahuSelect
+                        name="spec.algorithmSource.vcs.connection"
+                        label="VCS Connection"
+                        options={vcsConnectionIDs}
+                        description='A connection which describes credentials to a GIT repository'
+                        onChange={ (e: any) => {
+                            e.persist();
+                            formik.handleChange(e);
+                            formik.setFieldTouched("spec.algorithmSource.vcs.connection", true, false);
+                            formik.setFieldValue('spec.algorithmSource.vcs.reference', '');
+                        }}
+                    />
+                )}
+                {algorithmSourceType === vcsType && (
+                    <OdahuTextField
+                        name="spec.algorithmSource.vcs.reference"
+                        label='Reference'
+                        description='a branch, tag, or commit'
+                    />
+                )}
+                {algorithmSourceType === objectStorageType && (
+                    <FormikOdahuSelect
+                        name="spec.algorithmSource.objectStorage.connection"
+                        label="Object Storage Connection"
+                        options={objectStorageConnectionIDs}
+                        description='A connection which describes credentials to a bucket'
+                        onChange={ (e: any) => {
+                            e.persist();
+                            formik.handleChange(e);
+                            formik.setFieldTouched("spec.algorithmSource.objectStorage.connection", true, false);
+                            formik.setFieldValue('spec.algorithmSource.objectStorage.path', '');
+                        }}
+                    />
+                )}
+                {algorithmSourceType === objectStorageType && (
+                    <OdahuTextField
+                        name="spec.algorithmSource.objectStorage.path"
+                        label='Path'
+                        description='remote path in the bucket'
+                    />
+                )}
                 <OdahuTextField
                     className={trainClasses.gitWorkDir}
                     name="spec.workDir"
@@ -104,8 +174,8 @@ const DataSection: React.FC = () => {
                     arrayHelpers={arrayHelpers}
                     createNewElem={() => {
                         return {
-                            connName: connectionIDs[0],
-                            locaPath: '',
+                            connection: connectionIDs[0],
+                            localPath: '',
                             remotePath: ''
                         }
                     }}
@@ -122,7 +192,7 @@ const DataSection: React.FC = () => {
                                     label='Source Path'
                                 />
                                 <FormikOdahuSelect
-                                    name={`spec.data.${index}.connName`}
+                                    name={`spec.data.${index}.connection`}
                                     label="Connection ID"
                                     options={connectionIDs}
                                 />
@@ -223,7 +293,7 @@ export const SpecElements: React.FC = () => {
                 description='Mlflow MLProject file can contains the list of entrypoints. You must choose one of these.'
             />
             <EnvironmentVariablesSection/>
-            <GitSpecElements/>
+            <AlgorithmSourceSpecElements/>
             <HyperParametersSection/>
             <DataSection/>
             <ResourcesSpecElements gpu/>

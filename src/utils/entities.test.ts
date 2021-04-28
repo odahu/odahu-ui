@@ -159,7 +159,11 @@ test('merge three elements', () => {
     const mt1: ModelTrainingSpec = {
         entrypoint: "main",
         image: "image:123",
-        vcsName: "vcs",
+        algorithmSource: {
+            vcs: {
+                connection: "vcs"
+            }
+        },
         resources: {
             limits: {
                 cpu: "1", gpu: "2", memory: "33"
@@ -188,7 +192,11 @@ test('merge three elements', () => {
     expect(merge(mt1, mt2, mt3)).toEqual({
         entrypoint: "new_entrypoint",
         image: "new_image",
-        vcsName: "vcs",
+        algorithmSource: {
+            vcs: {
+                connection: "vcs"
+            }
+        },
         resources: {
             limits: {
                 cpu: "new_cpu", gpu: "new_gpu", memory: "33"
