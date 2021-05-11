@@ -37,15 +37,21 @@ export function extractEntity(resp: Response): Promise<any> {
         })
     }
 
+    let responseErrorMessage = '';
+
     return resp.json().then(entity => {
         if (isErrorMessage(resp, entity)) {
-            throw new Error(entity.message);
+            responseErrorMessage = entity.message;
         }
 
         return entity;
     }).catch(() => {
         // If error while parsing JSON then raise error without entity.message
-        throw new Error(`${resp.status} ${resp.statusText}`)
+        responseErrorMessage = `${resp.status} ${resp.statusText}`;
+    }).finally(() => {
+        if (responseErrorMessage) {
+            throw new Error(responseErrorMessage);
+        }
     })
 }
 
