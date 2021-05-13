@@ -33,8 +33,8 @@ export const TrainingSchema = Yup.object().shape({
                 reference: Yup.string().trim()
             }),
             objectStorage: Yup.object().shape({
-                connection: Yup.string(),
-                path: Yup.string()
+                connection: Yup.string().trim(),
+                path: Yup.string().trim()
             })
         }),
         toolchain: Yup.string().trim().required('Toolchain is a required field'),
