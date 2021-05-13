@@ -86,7 +86,7 @@ export const PackagingTable: React.FC = () => {
                         } else {
                             dispatch(showInfoAlert(
                                 "Not available for deploy",
-                                `Only images built on integrations next are available for deploy: ${deployableIntegrations}`
+                                `Only images built on next integrations are available for deploy: ${deployableIntegrations}`
                             ))
                         }
                     },
