@@ -7,7 +7,7 @@ import {ConnectionTypes} from "../../connections/types";
 import {Divider, Paper, Typography} from "@material-ui/core";
 import {FormikOdahuSelect} from "../../../components/OdahuSelect";
 import {OdahuTextField} from "../../../components/OdahuTextField";
-import {FieldArray, getIn, useFormikContext} from "formik";
+import {FieldArray, getIn, setIn, useFormikContext} from "formik";
 import {ModelTraining} from "../../../models/odahuflow/ModelTraining";
 import {InputParametersView, ItemInputParametersView} from "../../../components/InputParametersView";
 import {ResourcesSpecElements} from "../../../components/ResourceSpecElements";
@@ -35,8 +35,9 @@ export const useTrainingClasses = makeStyles(() =>
 const AlgorithmSourceSpecElements: React.FC = () => {
     const classes = useFieldsStyles();
     const trainClasses = useTrainingClasses();
-    const vcsType = 'VCS'
-    const objectStorageType = 'Object storage'
+    const vcsType = 'VCS';
+    const objectStorageType = 'Object storage';
+    let algorithmSourceType = '';
 
     const connectionsState = useSelector<ApplicationState, ConnectionState>(state => state.connections);
     const vcsConnectionIDs = Object.values(connectionsState.data)
@@ -51,7 +52,13 @@ const AlgorithmSourceSpecElements: React.FC = () => {
 
     const formik = useFormikContext();
 
-    const algorithmSourceType = getIn(formik.values, 'algorithmSourceType') ?? vcsType;
+    const vcsConnection = getIn(formik.values, 'spec.algorithmSource.vcs.connection');
+    const objectStorageConnection = getIn(formik.values, 'spec.algorithmSource.objectStorage.connection');
+    if (vcsConnection) {
+        algorithmSourceType = vcsType;
+    } else {
+        algorithmSourceType = objectStorageType;
+    }
 
     // If vcs reference is not selected then fill by default reference from selected vcs connection
     // or set "develop" in case if default reference in VCS is not filled
@@ -71,15 +78,13 @@ const AlgorithmSourceSpecElements: React.FC = () => {
 
         switch (e.target.value) {
             case vcsType: {
-                formik.setFieldValue('spec.algorithmSource.vcs.connection', vcsConnectionIDs[0] ?? '');
+                formik.setFieldValue('spec.algorithmSource.vcs.connection', vcsConnection || vcsConnectionIDs[0] || '');
                 formik.setFieldValue('spec.algorithmSource.objectStorage.connection', '');
-                formik.setFieldValue('spec.algorithmSource.objectStorage.path', '');
                 break
             }
             case objectStorageType: {
-                formik.setFieldValue('spec.algorithmSource.objectStorage.connection', objectStorageConnectionIDs[0] ?? '');
+                formik.setFieldValue('spec.algorithmSource.objectStorage.connection', objectStorageConnection || objectStorageConnectionIDs[0] || '');
                 formik.setFieldValue('spec.algorithmSource.vcs.connection', '');
-                formik.setFieldValue('spec.algorithmSource.vcs.reference', '');
                 break
             }
         }
@@ -96,7 +101,7 @@ const AlgorithmSourceSpecElements: React.FC = () => {
                     name='algorithmSourceType'
                     label='Algorithm Source Type'
                     options={[vcsType, objectStorageType]}
-                    defaultValue={vcsType}
+                    defaultValue={algorithmSourceType}
                     description='A type of connection for algorithm source'
                     onChange={AlgorithmSourceTypeChange}
                 />
