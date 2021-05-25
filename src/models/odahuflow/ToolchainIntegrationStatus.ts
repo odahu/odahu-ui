@@ -13,8 +13,4 @@
 import * as models from './models';
 
 export interface ToolchainIntegrationStatus {
-    createdAt?: string;
-
-    updatedAt?: string;
-
 }

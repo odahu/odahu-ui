@@ -14,6 +14,11 @@ import * as models from './models';
 
 export interface Connection {
     /**
+     * CreatedAt
+     */
+    createdAt?: string;
+
+    /**
      * Connection id
      */
     id?: string;
@@ -27,5 +32,10 @@ export interface Connection {
      * Connection status
      */
     status?: models.ConnectionStatus;
+
+    /**
+     * UpdatedAt
+     */
+    updatedAt?: string;
 
 }
