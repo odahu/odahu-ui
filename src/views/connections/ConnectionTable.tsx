@@ -17,16 +17,16 @@ const extractRow = (conn: Connection) => [
     conn.spec?.uri,
     conn.spec?.description,
     <ExternalLink key="webUILink" url={conn.spec?.webUILink}/>,
-    humanDate(conn.status?.createdAt),
-    humanDate(conn.status?.updatedAt),
+    humanDate(conn.createdAt),
+    humanDate(conn.updatedAt),
 ];
 const extractRowValues = (conn: Connection) => [
     conn.spec?.type ?? "",
     conn.spec?.uri ?? "",
     conn.spec?.description ?? "",
     conn.spec?.webUILink ?? "",
-    humanDate(conn.status?.createdAt),
-    humanDate(conn.status?.updatedAt),
+    humanDate(conn.createdAt),
+    humanDate(conn.updatedAt),
 ];
 
 export const ConnectionTable: React.FC = () => {

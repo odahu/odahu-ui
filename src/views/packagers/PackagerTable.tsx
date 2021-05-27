@@ -14,14 +14,14 @@ const headers = ['Default Docker Image', 'Entrypoint', 'Created at', 'Updated at
 const extractRow = (packager: PackagingIntegration) => [
     packager.spec?.defaultImage,
     packager.spec?.entrypoint,
-    humanDate(packager.status?.createdAt),
-    humanDate(packager.status?.updatedAt),
+    humanDate(packager.createdAt),
+    humanDate(packager.updatedAt),
 ];
 const extractRowValues = (packager: PackagingIntegration) => [
     packager.spec?.defaultImage,
     packager.spec?.entrypoint,
-    humanDate(packager.status?.createdAt),
-    humanDate(packager.status?.updatedAt),
+    humanDate(packager.createdAt),
+    humanDate(packager.updatedAt),
 ];
 
 export const PackagerTable: React.FC = () => {

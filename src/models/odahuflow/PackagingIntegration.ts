@@ -14,6 +14,11 @@ import * as models from './models';
 
 export interface PackagingIntegration {
     /**
+     * CreatedAt
+     */
+    createdAt?: string;
+
+    /**
      * Packaging integration id
      */
     id?: string;
@@ -27,5 +32,10 @@ export interface PackagingIntegration {
      * Packaging integration status
      */
     status?: models.PackagingIntegrationStatus;
+
+    /**
+     * UpdatedAt
+     */
+    updatedAt?: string;
 
 }

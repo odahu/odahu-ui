@@ -16,8 +16,8 @@ export const ToolchainView: React.FC<ToolchainViewProps> = ({toolchain, status})
 
     if (status) {
         params.push(
-            {name: "Created at", elem: humanDate(toolchain.status?.createdAt)},
-            {name: "Updated at", elem: humanDate(toolchain.status?.updatedAt)},
+            {name: "Created at", elem: humanDate(toolchain.createdAt)},
+            {name: "Updated at", elem: humanDate(toolchain.updatedAt)},
         )
     }
 

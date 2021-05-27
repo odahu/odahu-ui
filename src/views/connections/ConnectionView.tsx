@@ -16,8 +16,8 @@ export const ConnectionView: React.FC<ConnectionViewProps> = (({connection, stat
 
     if (status) {
         parameters.push(
-            {name: "Created at", elem: humanDate(connection.status?.createdAt)},
-            {name: "Updated at", elem: humanDate(connection.status?.updatedAt)},
+            {name: "Created at", elem: humanDate(connection.createdAt)},
+            {name: "Updated at", elem: humanDate(connection.updatedAt)},
         )
     }
 

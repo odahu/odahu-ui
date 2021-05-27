@@ -14,6 +14,11 @@ import * as models from './models';
 
 export interface ToolchainIntegration {
     /**
+     * CreatedAt
+     */
+    createdAt?: string;
+
+    /**
      * Toolchain integration id
      */
     id?: string;
@@ -27,5 +32,10 @@ export interface ToolchainIntegration {
      * Toolchain integration status
      */
     status?: models.ToolchainIntegrationStatus;
+
+    /**
+     * UpdatedAt
+     */
+    updatedAt?: string;
 
 }

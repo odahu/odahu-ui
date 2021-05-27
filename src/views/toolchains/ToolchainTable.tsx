@@ -14,14 +14,14 @@ const headers = ['Default Docker Image', 'Entrypoint', 'Created at', 'Updated at
 const extractRow = (toolchain: ToolchainIntegration) => [
     toolchain.spec?.defaultImage,
     toolchain.spec?.entrypoint,
-    humanDate(toolchain.status?.createdAt),
-    humanDate(toolchain.status?.updatedAt)
+    humanDate(toolchain.createdAt),
+    humanDate(toolchain.updatedAt)
 ];
 const extractRowValues = (toolchain: ToolchainIntegration) => [
     toolchain.spec?.defaultImage,
     toolchain.spec?.entrypoint,
-    humanDate(toolchain.status?.createdAt),
-    humanDate(toolchain.status?.updatedAt)
+    humanDate(toolchain.createdAt),
+    humanDate(toolchain.updatedAt)
 ];
 
 export const ToolchainTable: React.FC = () => {

@@ -18,8 +18,6 @@ export interface ModelTrainingStatus {
      */
     artifacts?: Array<models.TrainingResult>;
 
-    createdAt?: string;
-
     /**
      * Pod exit code
      */
@@ -44,7 +42,5 @@ export interface ModelTrainingStatus {
      * Model Packaging State
      */
     state?: string;
-
-    updatedAt?: string;
 
 }

@@ -17,8 +17,8 @@ export const PackagerView: React.FC<PackagerViewProps> = ({packager, status}) =>
 
     if (status) {
         params.push(
-            {name: "Created at", elem: humanDate(packager.status?.createdAt)},
-            {name: "Updated at", elem: humanDate(packager.status?.updatedAt)},
+            {name: "Created at", elem: humanDate(packager.createdAt)},
+            {name: "Updated at", elem: humanDate(packager.updatedAt)},
         )
     }
 
