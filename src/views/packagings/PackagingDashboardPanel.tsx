@@ -21,8 +21,8 @@ export const PackagingDashboardPanel: React.FC = () => {
             return;
         }
 
-        const unknownState = "unknown";
-        const trainingStates = ["scheduling", "running", "failed", "succeeded", unknownState];
+        const unknownState = "Unknown";
+        const trainingStates = ["Scheduling", "Running", "Failed", "Succeeded", unknownState];
 
         // rewtite this shit
         const data = new Map<string, number>();
@@ -39,7 +39,7 @@ export const PackagingDashboardPanel: React.FC = () => {
                 labels: trainingStates,
                 datasets: [{
                     data: Object.values(trainingStates).map((type) => {
-                        return data.get(type) ?? 0
+                        return data.get(type.toLowerCase()) ?? 0
                     }),
                     backgroundColor: [
                         StateColors.SCHEDULING,
@@ -59,6 +59,9 @@ export const PackagingDashboardPanel: React.FC = () => {
                 }]
             },
             options: {
+                animation: {
+                    duration: 0
+                },
                 scales: {
                     yAxes: [{
                         ticks: {
@@ -77,7 +80,7 @@ export const PackagingDashboardPanel: React.FC = () => {
             header={"Packaging"}
         >
             {/*Use ref instead of ID*/}
-            <canvas ref={chartRef} width="100%" height="100%"/>
+            <canvas ref={chartRef} width="240px" height="240px"/>
         </DashboardPanel>
     )
 };

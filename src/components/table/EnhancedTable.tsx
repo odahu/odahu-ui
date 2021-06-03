@@ -55,7 +55,6 @@ export function EnhancedTable<T>(props: EnhancedTableProps<T> | EnhancedReadonly
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<string|number>('id');
 
-
     const selectedAndExisted = selected.filter((value) => value in props.data)
     if (selected.length > selectedAndExisted.length) {
         // Means that some selected rows were deleted in Redux store
@@ -186,6 +185,7 @@ export function EnhancedTable<T>(props: EnhancedTableProps<T> | EnhancedReadonly
                             rowsPerPage={rowsPerPage}
                             orderBy={orderBy}
                             order={order}
+                            tableTitle={props.tableTitle}
                         />
                     </Table>
                 </TableContainer>

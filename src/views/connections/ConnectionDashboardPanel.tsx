@@ -60,6 +60,9 @@ export const ConnectionDashboardPanel: React.FC = () => {
                 }]
             },
             options: {
+                animation: {
+                    duration: 0
+                },
                 scales: {
                     yAxes: [{
                         ticks: {
@@ -78,7 +81,7 @@ export const ConnectionDashboardPanel: React.FC = () => {
             header={"Connections"}
         >
             {/*Use ref instead of ID*/}
-            <canvas ref={chartRef} width="100%" height="100%"/>
+            <canvas ref={chartRef} width="240px" height="240px"/>
         </DashboardPanel>
     )
 };

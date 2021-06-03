@@ -113,6 +113,9 @@ export const MainLayout: React.FC = () => {
                         <Route key={DashboardURLPrefix} path={DashboardURLPrefix}>
                             <DashboardView/>
                         </Route>
+                        <Route key={"/refresh"} exact path={"/refresh"}>
+                            <Redirect to={DashboardURLPrefix} />
+                        </Route>
                         <Route key={ConnectionURLs.Table} path={ConnectionURLs.Table}>
                             <Connections/>
                         </Route>

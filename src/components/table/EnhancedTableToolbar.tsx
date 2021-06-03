@@ -5,9 +5,10 @@ import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import {Button, Divider} from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import {SvgIconProps} from "@material-ui/core/SvgIcon/SvgIcon";
+import { ConfirmationDialog } from "../ConfirmationDialog";
 
 const useToolbarStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -46,6 +47,8 @@ const SelectedTableToolbar: React.FC<SelectedTableToolbarProps> = (
     {numSelected, onDeleteButtonClick, onNewCloneButtonClick, extraButtons}
 ) => {
     const classes = useToolbarStyles();
+
+    const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
 
     return (
         <>
@@ -87,12 +90,20 @@ const SelectedTableToolbar: React.FC<SelectedTableToolbarProps> = (
             <Button
                 className={classes.button}
                 variant="outlined"
-                onClick={onDeleteButtonClick}
+                onClick={() => setConfirmOpen(true)}
                 aria-label="delete"
             >
                 <DeleteIcon className={classes.buttonIcon}/>
                 Delete
             </Button>
+            <ConfirmationDialog
+                title="Delete"
+                open={confirmOpen}
+                setOpen={setConfirmOpen}
+                onConfirm={onDeleteButtonClick}
+            >
+                Are you sure you want to delete the item(s)?
+            </ConfirmationDialog>
         </>
     );
 };
