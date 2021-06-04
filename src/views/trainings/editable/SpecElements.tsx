@@ -54,6 +54,9 @@ const AlgorithmSourceSpecElements: React.FC = () => {
 
     const vcsConnection = getIn(formik.values, 'spec.algorithmSource.vcs.connection');
     const objectStorageConnection = getIn(formik.values, 'spec.algorithmSource.objectStorage.connection');
+    const vcsReference = getIn(formik.values, 'spec.algorithmSource.vcs.reference');
+    const objectStoragePath = getIn(formik.values, 'spec.algorithmSource.objectStorage.path');
+
     if (vcsConnection) {
         algorithmSourceType = vcsType;
     } else {
@@ -79,12 +82,18 @@ const AlgorithmSourceSpecElements: React.FC = () => {
         switch (e.target.value) {
             case vcsType: {
                 formik.setFieldValue('spec.algorithmSource.vcs.connection', vcsConnection || vcsConnectionIDs[0] || '');
+                formik.setFieldValue('spec.algorithmSource.vcs.reference', vcsReference || '');
+
                 formik.setFieldValue('spec.algorithmSource.objectStorage.connection', '');
+                formik.setFieldValue('spec.algorithmSource.objectStorage.path', '');
                 break
             }
             case objectStorageType: {
                 formik.setFieldValue('spec.algorithmSource.objectStorage.connection', objectStorageConnection || objectStorageConnectionIDs[0] || '');
+                formik.setFieldValue('spec.algorithmSource.objectStorage.path', objectStoragePath || '');
+
                 formik.setFieldValue('spec.algorithmSource.vcs.connection', '');
+                formik.setFieldValue('spec.algorithmSource.vcs.reference', '');
                 break
             }
         }
