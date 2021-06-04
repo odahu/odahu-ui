@@ -32,6 +32,9 @@ export const useTrainingClasses = makeStyles(() =>
     }),
 );
 
+let objectStoragePath = ''
+let vcsReference = ''
+
 const AlgorithmSourceSpecElements: React.FC = () => {
     const classes = useFieldsStyles();
     const trainClasses = useTrainingClasses();
@@ -54,8 +57,6 @@ const AlgorithmSourceSpecElements: React.FC = () => {
 
     const vcsConnection = getIn(formik.values, 'spec.algorithmSource.vcs.connection');
     const objectStorageConnection = getIn(formik.values, 'spec.algorithmSource.objectStorage.connection');
-    const vcsReference = getIn(formik.values, 'spec.algorithmSource.vcs.reference');
-    const objectStoragePath = getIn(formik.values, 'spec.algorithmSource.objectStorage.path');
 
     if (vcsConnection) {
         algorithmSourceType = vcsType;
@@ -83,6 +84,7 @@ const AlgorithmSourceSpecElements: React.FC = () => {
             case vcsType: {
                 formik.setFieldValue('spec.algorithmSource.vcs.connection', vcsConnection || vcsConnectionIDs[0] || '');
                 formik.setFieldValue('spec.algorithmSource.vcs.reference', vcsReference || '');
+                objectStoragePath = getIn(formik.values, 'spec.algorithmSource.objectStorage.path');
 
                 formik.setFieldValue('spec.algorithmSource.objectStorage.connection', '');
                 formik.setFieldValue('spec.algorithmSource.objectStorage.path', '');
@@ -91,6 +93,7 @@ const AlgorithmSourceSpecElements: React.FC = () => {
             case objectStorageType: {
                 formik.setFieldValue('spec.algorithmSource.objectStorage.connection', objectStorageConnection || objectStorageConnectionIDs[0] || '');
                 formik.setFieldValue('spec.algorithmSource.objectStorage.path', objectStoragePath || '');
+                vcsReference = getIn(formik.values, 'spec.algorithmSource.vcs.reference');
 
                 formik.setFieldValue('spec.algorithmSource.vcs.connection', '');
                 formik.setFieldValue('spec.algorithmSource.vcs.reference', '');
