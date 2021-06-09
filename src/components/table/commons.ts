@@ -28,6 +28,9 @@ export const useTableStyles = makeStyles((theme: Theme) =>
         tableHeaderCell: {
             flexDirection: 'row-reverse'
         },
+        tableCellSize: {
+            width: '150px'
+        },
         sortInactive: {
             opacity: 0.15,
             marginLeft: '-5px'

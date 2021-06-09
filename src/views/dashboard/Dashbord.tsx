@@ -10,6 +10,12 @@ import { Redirect } from "react-router-dom";
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import { fetchAllDeploymentRequest } from "../../store/deployments/actions";
+import { fetchAllPackagingRequest } from "../../store/packaging/actions";
+import { fetchAllConnectionRequest } from "../../store/connections/actions";
+import { fetchAllTrainingRequest } from "../../store/trainings/actions";
+import { showErrorAlert } from "../../store/alert/actions";
+import { useDispatch } from "react-redux";
 
 export const DashboardURLPrefix = "/dashboard";
 
@@ -71,11 +77,24 @@ export const DashboardView: React.FC = () => {
     const classes = useStyles();
     const [refresh, setRefresh] = useState<boolean>(false);
     const [isShow, setIsShow] = useState<boolean>(false);
+    const dispatch: any = useDispatch();
     let timerId: any;
     
     const onRefresh = () => {
         setRefresh(true);
+        refreshState();
         timerId = null;
+    }
+
+    function refreshState() {
+        Promise.all([
+            dispatch(fetchAllConnectionRequest()),
+            dispatch(fetchAllDeploymentRequest()),
+            dispatch(fetchAllTrainingRequest()),
+            dispatch(fetchAllPackagingRequest()),
+        ]).catch(err => {
+            dispatch(showErrorAlert("Error", String(err)));
+        });
     }
 
     useEffect(() => {

@@ -67,11 +67,11 @@ export const EnhancedTableHead: React.FC<EnhancedReadonlyTableProps | EnhancedTa
                 </TableCell>
 
                 {
-                    props.headers.map((header, index) => (
+                    props.headers.map((header, index) => ( 
                         <TableCell
                             key={header}
                             align="left"
-                            className={classes.tableHeaderCell}
+                            className={`${classes.tableHeaderCell} ${(header === 'State' || header === 'Created at' || header === 'Updated at') && classes.tableCellSize }`}
                         >
                             <TableSortLabel
                                 classes={{
