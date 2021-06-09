@@ -80,12 +80,6 @@ export const DashboardView: React.FC = () => {
     const dispatch: any = useDispatch();
     let timerId: any;
     
-    const onRefresh = () => {
-        setRefresh(true);
-        refreshState();
-        timerId = null;
-    }
-
     function refreshState() {
         Promise.all([
             dispatch(fetchAllConnectionRequest()),
@@ -95,6 +89,12 @@ export const DashboardView: React.FC = () => {
         ]).catch(err => {
             dispatch(showErrorAlert("Error", String(err)));
         });
+    }
+
+    const onRefresh = () => {
+        setRefresh(true);
+        refreshState();
+        timerId = null;
     }
 
     useEffect(() => {
