@@ -49,13 +49,17 @@ export const EnhancedTableHead: React.FC<EnhancedReadonlyTableProps | EnhancedTa
                     )
                 }
                 <TableCell
-                    align="right"
+                    align="left"
                     key="ID"
+                    className={classes.tableHeaderCell}
                 >
                     <TableSortLabel
                         active={orderBy === "id"}
                         direction={orderBy === "id" ? order : "asc"}
                         onClick={createSortHandler("id")}
+                        classes={{
+                            icon: classes.sortInactive
+                        }}
                     >
                         ID
 
@@ -63,12 +67,16 @@ export const EnhancedTableHead: React.FC<EnhancedReadonlyTableProps | EnhancedTa
                 </TableCell>
 
                 {
-                    props.headers.map((header, index) => (
+                    props.headers.map((header, index) => ( 
                         <TableCell
                             key={header}
-                            align="right"
+                            align="left"
+                            className={`${classes.tableHeaderCell} ${(header === 'State' || header === 'Created at' || header === 'Updated at') && classes.tableCellSize }`}
                         >
                             <TableSortLabel
+                                classes={{
+                                    icon: classes.sortInactive
+                                }}
                                 active={orderBy === index}
                                 direction={orderBy === index ? order : "asc"}
                                 onClick={createSortHandler(index)}

@@ -3,8 +3,10 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
+import Tooltip from '@material-ui/core/Tooltip';
 import {Link as RouterLink} from 'react-router-dom';
-import {Order} from "./commons";
+import {Order, useTableStyles} from "./commons";
 
 
 export interface EnhancedTableBodyProps<T> {
@@ -19,6 +21,7 @@ export interface EnhancedTableBodyProps<T> {
     rowsPerPage: number;
     orderBy: string | number;
     order: Order;
+    tableTitle: string;
 }
 
 function descendingComparator<T, K>(a: any, b: any, orderBy: string | number) {
@@ -67,6 +70,7 @@ function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
 }
 
 export function EnhancedTableBody<T>(props: EnhancedTableBodyProps<T>): React.ReactElement {
+    const classes = useTableStyles();
     const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
         const selectedIndex = props.selected.indexOf(name);
         let newSelected: string[] = [];
@@ -88,6 +92,10 @@ export function EnhancedTableBody<T>(props: EnhancedTableBodyProps<T>): React.Re
     };
 
     const isSelected = (name: string) => props.selected.indexOf(name) !== -1;
+
+    const onCopyText = (elem: string) => {
+        window.navigator.clipboard.writeText(elem);
+    }
 
     return (
         <TableBody>
@@ -116,13 +124,41 @@ export function EnhancedTableBody<T>(props: EnhancedTableBodyProps<T>): React.Re
                                     />
                                 </TableCell>
                             )}
-                            <TableCell align="right">
+                            <TableCell align="left">
                                 <RouterLink to={`${props.pageUrlPrefix}/${row.id}`}>
                                     {row?.id}
                                 </RouterLink>
                             </TableCell>
                             {props.extractRow(row).map((elem, index) => (
-                                <TableCell key={index} align="right">{elem}</TableCell>
+                                props.tableTitle === 'Model Deployments' || props.tableTitle === 'Model Packagings' ? 
+                                (
+                                    <TableCell className={classes.columnCell} key={index} align="left">
+                                        {index === 1 ? 
+                                        (
+                                            <Tooltip title="Copy to clipboard" placement="top" enterDelay={0} arrow>
+                                                <FileCopyIcon color="action" fontSize="small" onClick={() => onCopyText(elem)}/>
+                                            </Tooltip>
+                                        ) : ''} {elem}
+                                    </TableCell>
+                                ) : props.tableTitle === 'Toolchains' || props.tableTitle === 'Packagers' ? 
+                                (
+                                    <TableCell className={classes.columnCell} key={index} align="left">
+                                        {index === 0 ? 
+                                        (
+                                            <Tooltip title="Copy to clipboard" placement="top" enterDelay={0} arrow>
+                                                <FileCopyIcon color="action" fontSize="small" onClick={() => onCopyText(elem)}/>
+                                            </Tooltip>
+                                        ) : ''} {elem}
+                                    </TableCell>
+                                ) : props.tableTitle === 'Connections' && index === 1 ?
+                                (
+                                    <TableCell className={classes.columnCell} key={index} align="left">
+                                        <Tooltip title="Copy to clipboard" placement="top" enterDelay={0} arrow>
+                                            <FileCopyIcon color="action" fontSize="small" onClick={() => onCopyText(elem)}/>
+                                        </Tooltip>
+                                        {elem}
+                                    </TableCell>
+                                ) : (<TableCell key={index} align="left">{elem}</TableCell>) 
                             ))}
                         </TableRow>
                     );

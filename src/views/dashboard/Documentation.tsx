@@ -1,12 +1,10 @@
 import React from "react";
 import {Link, List, ListItem, ListItemIcon, ListItemText,} from "@material-ui/core";
-import AssignmentIcon from '@material-ui/icons/Assignment';
 import SchoolIcon from '@material-ui/icons/School';
 import SettingsInputComponentIcon from '@material-ui/icons/SettingsInputComponent';
 import WorkIcon from '@material-ui/icons/Work';
 import CloudIcon from '@material-ui/icons/Cloud';
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
-import {DashboardPanel} from "../../components/DashboardPanel";
 
 interface Link {
     name: string;
@@ -44,9 +42,7 @@ const links: Link[] = [
 
 export const Documentation: React.FC = () => {
     return (
-        <DashboardPanel
-            icon={<AssignmentIcon/>}
-            header="Getting Started"
+        <div style={{backgroundColor:'#fff'}}
         >
             <List>
                 {links.map(({img, name, url}) => (
@@ -63,6 +59,6 @@ export const Documentation: React.FC = () => {
                     </Link>
                 ))}
             </List>
-        </DashboardPanel>
+        </div>
     );
 };

@@ -25,5 +25,22 @@ export const useTableStyles = makeStyles((theme: Theme) =>
             top: 20,
             width: 1,
         },
+        tableHeaderCell: {
+            flexDirection: 'row-reverse'
+        },
+        tableCellSize: {
+            width: '150px'
+        },
+        sortInactive: {
+            opacity: 0.15,
+            marginLeft: '-5px'
+        },
+        columnCell: {
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            maxWidth: '250px',
+            cursor: 'default'
+        }
     }),
 );

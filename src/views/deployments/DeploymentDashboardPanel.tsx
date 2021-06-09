@@ -21,7 +21,7 @@ export const DeploymentDashboardPanel: React.FC = () => {
             return;
         }
 
-        const unknownState = "unknown";
+        const unknownState = "Unknown";
         const trainingStates = ["Processing", "Ready", "Failed", "Deleting", unknownState];
 
         // rewtite this shit
@@ -59,6 +59,9 @@ export const DeploymentDashboardPanel: React.FC = () => {
                 }]
             },
             options: {
+                animation: {
+                    duration: 0
+                },
                 scales: {
                     yAxes: [{
                         ticks: {
@@ -77,7 +80,7 @@ export const DeploymentDashboardPanel: React.FC = () => {
             header={"Deployment"}
         >
             {/*Use ref instead of ID*/}
-            <canvas ref={chartRef} width="100%" height="100%"/>
+            <canvas ref={chartRef} width="240px" height="240px"/>
         </DashboardPanel>
     )
 };
