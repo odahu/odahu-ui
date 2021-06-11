@@ -11,8 +11,11 @@ export const useTableStyles = makeStyles((theme: Theme) =>
             width: '100%',
             marginBottom: theme.spacing(2),
         },
+        tableContainer: {
+            maxHeight: '65vh'
+        },
         table: {
-            minWidth: 750,
+            minWidth: 1400
         },
         visuallyHidden: {
             border: 0,
@@ -28,8 +31,11 @@ export const useTableStyles = makeStyles((theme: Theme) =>
         tableHeaderCell: {
             flexDirection: 'row-reverse'
         },
-        tableCellSize: {
-            width: '150px'
+        tableDateCell: {
+            width: '200px'
+        },
+        tableStateCell: {
+            width: '120px'
         },
         sortInactive: {
             opacity: 0.15,
@@ -39,7 +45,7 @@ export const useTableStyles = makeStyles((theme: Theme) =>
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
-            maxWidth: '250px',
+            maxWidth: '225px',
             cursor: 'default'
         }
     }),
