@@ -144,7 +144,7 @@ export function EnhancedTable<T>(props: EnhancedTableProps<T> | EnhancedReadonly
                         />
                     )
                 }
-                <TableContainer>
+                <TableContainer className={classes.tableContainer}>
                     <Table
                         className={classes.table}
                         aria-labelledby="tableTitle"

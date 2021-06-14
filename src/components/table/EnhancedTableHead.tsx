@@ -71,7 +71,10 @@ export const EnhancedTableHead: React.FC<EnhancedReadonlyTableProps | EnhancedTa
                         <TableCell
                             key={header}
                             align="left"
-                            className={`${classes.tableHeaderCell} ${(header === 'State' || header === 'Created at' || header === 'Updated at') && classes.tableCellSize }`}
+                            className={`
+                                ${classes.tableHeaderCell} 
+                                ${(header === 'Created at' || header === 'Updated at') && classes.tableDateCell }
+                                ${header === 'State' && classes.tableStateCell}`}
                         >
                             <TableSortLabel
                                 classes={{
