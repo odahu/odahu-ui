@@ -118,11 +118,11 @@ export interface EditableConnectionPageProps {
 
 export const EditableConnectionPage: React.FC<EditableConnectionPageProps> = ({connection, saveButtonClick}) => {
 
-    let specProps: any = Object.assign({}, connection.spec);
+    const specProps: any = Object.assign({}, connection.spec);
 
     const keys = ['keySecret', 'password', 'keyID'];
 
-    for (let prop in specProps) {
+    for (const prop in specProps) {
         if (keys.includes(prop)) {
             specProps[prop] = '';
         }
