@@ -59,6 +59,20 @@ const defaultFields = {
     )
 };
 
+const clearSecretFields = (connection: Connection) => {
+    const specProps: any = Object.assign({}, connection.spec);
+
+    const keys = ['keySecret', 'password', 'keyID'];
+
+    for (const prop in specProps) {
+        if (keys.includes(prop)) {
+            specProps[prop] = '';
+        }
+    }
+
+    return specProps;
+}
+
 const SpecElements: React.FC = () => {
     const formik = useFormikContext<Connection>();
 
@@ -118,16 +132,6 @@ export interface EditableConnectionPageProps {
 
 export const EditableConnectionPage: React.FC<EditableConnectionPageProps> = ({connection, saveButtonClick}) => {
 
-    const specProps: any = Object.assign({}, connection.spec);
-
-    const keys = ['keySecret', 'password', 'keyID'];
-
-    for (const prop in specProps) {
-        if (keys.includes(prop)) {
-            specProps[prop] = '';
-        }
-    }
-        
     return (
         <EditablePage
             {...defaultFields}
@@ -137,7 +141,7 @@ export const EditableConnectionPage: React.FC<EditableConnectionPageProps> = ({c
                 review: (connection: Connection) => <ConnectionView connection={connection} status={false}/>,
             }}
             title="Edit Connection"
-            entity={{...connection, spec: {...specProps}}}
+            entity={{...connection, spec: {...clearSecretFields(connection)}}}
             saveButtonClick={saveButtonClick}
         />
     );
@@ -193,7 +197,7 @@ export const NewCloneConnectionPage: React.FC = () => {
                             id: addSuffixToID(connection.id as string, '-clone'),
                             spec: Object.assign({
                                 type: ConnectionTypes.GIT
-                            }, connection.spec)
+                            }, clearSecretFields(connection))
                         }}
                     />
                 )

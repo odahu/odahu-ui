@@ -12,7 +12,7 @@ export const useTableStyles = makeStyles((theme: Theme) =>
             marginBottom: theme.spacing(2),
         },
         tableContainer: {
-            maxHeight: '65vh'
+            maxHeight: '68vh'
         },
         table: {
             minWidth: 1400
