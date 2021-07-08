@@ -6,14 +6,13 @@ Resource    ${PAGE_OBJECTS}/header.robot
 Resource    ${PAGE_OBJECTS}/sidebar.robot
 Resource    ${PAGE_OBJECTS}/connections.robot
 
-Variables   ../../stuff/load_variables_from_profiles.py    ${CLUSTER_PROFILE}
+Variables   ../../stuff/profile_loader.py    ${CLUSTER_PROFILE}
 
 *** Variables ***
 ${PAGE_OBJECTS}         ${CURDIR}/PO
 ${PAGE_OBJECTS_RES}     ${PAGE_OBJECTS}/PO_resources
 
 # SHOULD BE CUSTOMISABLE
-${BROWSER}          firefox
 ${COMMON.USER_INFO.USERNAME.TEXT}    anonymous
 ${COMMON.USER_INFO.EMAIL.TEXT}       anonymous@email.org
 ${COMMON.TESTING_ICON_CONN_ENTITY}   ${EDGE_URL}/connections/item/docker-ci/
