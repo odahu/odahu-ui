@@ -1,0 +1,97 @@
+"""
+Variables loader from json Cluster Profile
+"""
+
+import json
+import os
+import typing
+
+API_URL_PARAM_NAME = 'API_URL'
+AUTH_TOKEN_PARAM_NAME = 'AUTH_TOKEN'
+
+CLUSTER_PROFILE = 'CLUSTER_PROFILE'
+
+def get_variables(profile=None) -> typing.Dict[str, str]:
+    """
+    Gather and return all variables to robot
+
+    :param profile: path to cluster profile
+    :type profile: str
+    :return: dict[str, Any] -- values for robot
+    """
+
+    # load Cluster Profile
+    profile = profile or os.getenv(CLUSTER_PROFILE)
+
+    if not profile:
+        raise Exception('Can\'t get profile at path {}'.format(profile))
+    if not os.path.exists(profile):
+        raise Exception('Can\'t get profile - {} file not found'.format(profile))
+
+    with open(profile, 'r') as json_file:
+        data = json.load(json_file)
+        variables = {}
+
+        try:
+
+            git_connection = data['odahuflow_connections'][0]
+            gcs_connection = data['dns']
+            aws_connections = data.get('cloud').get('aws')
+
+            host_base_domain = data['dns']['domain']
+            variables = {
+                'HOST_BASE_DOMAIN': host_base_domain,
+                'CLUSTER_NAME': data.get('cluster_name'),
+                'CLUSTER_CONTEXT': data.get('cluster_context'),
+                'FEEDBACK_BUCKET': data.get('data_bucket'),
+                'EXAMPLES_VERSION': data.get('examples_version'),
+                'CLOUD_TYPE': data['cloud']['type'],
+                'EDGE_URL': os.getenv('EDGE_URL', f'https://{host_base_domain}'),
+                API_URL_PARAM_NAME: os.getenv(API_URL_PARAM_NAME, f'https://{host_base_domain}'),
+                'GRAFANA_URL': os.getenv('GRAFANA_URL', f'https://{host_base_domain}/grafana'),
+                'PROMETHEUS_URL': os.getenv('PROMETHEUS_URL', f'https://{host_base_domain}/prometheus'),
+                'ALERTMANAGER_URL': os.getenv('ALERTMANAGER_URL', f'https://{host_base_domain}/alertmanager'),
+                'JUPYTERLAB_URL': os.getenv('JUPITERLAB_URL', f'https://{host_base_domain}/jupyterlab'),
+                'MLFLOW_URL': os.getenv('MLFLOW_URL', f'https://{host_base_domain}/mlflow'),
+                'AIRFLOW_URL': os.getenv('AIRFLOW_URL', f'https://{host_base_domain}/airflow'),
+                'IS_GPU_ENABLED': 'training_gpu' in data['node_pools'],
+
+                'ISSUER': data.get('oauth_oidc_issuer_url'),
+
+                # for ODAHU WEB UI tests
+                'ODAHU_WEB_UI_USERNAME': data.get('test_user_email'),
+                'ODAHU_WEB_UI_PASSWORD': data.get('test_user_password'),
+                'ODAHU_WEB_UI_VERSION': data.get('odahu_ui_version'),
+
+                # Connections
+                # git
+                'ODAHU_UI_GIT_WEB_LINK': git_connection['spec']['webUILink'],
+                'ODAHU_UI_GIT_URI': git_connection['spec']['uri'],
+                'ODAHU_UI_GIT_REFERENCE': git_connection['spec']['reference'],
+                'ODAHU_UI_GIT_KEYSECRET': git_connection['spec']['keySecret'],
+
+                # gcs
+                'ODAHU_UI_GCS_PROJECT': gcs_connection['gcp_project_id'],
+                'ODAHU_UI_GCS_SA_SECRET': gcs_connection['gcp_credentials'],
+
+                # docker
+                'ODAHU_UI_DOCKER_REPO': data.get('docker_repo'),
+                'ODAHU_UI_DOCKER_USERNAME': data.get('docker_username'),
+                'ODAHU_UI_DOCKER_PASSWORD': data.get('docker_password'),
+            }
+            if aws_connections:
+                aws_variables = {
+                    # s3 and ecr
+                    'ODAHU_UI_AWS_REGION': aws_connections.get('region'),
+                    'ODAHU_UI_AWS_ACCESS_KEY_ID': aws_connections.get('credentials').get('AWS_ACCESS_KEY_ID'),
+                    'ODAHU_UI_AWS_ACCESS_KEY_SECRET': aws_connections.get('credentials').get('AWS_SECRET_ACCESS_KEY')
+                }
+                variables.update(aws_variables)
+        except Exception as err:
+            raise Exception("Can\'t get variable from cluster profile: {}".format(err)) from err
+
+    return variables
+
+
+if __name__ == "__main__":
+    get_variables(arg)
