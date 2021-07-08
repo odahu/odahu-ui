@@ -19,6 +19,14 @@ TS_MODEL_DIR=src/models/odahuflow
 TS_CATALOG_MODEL_DIR=src/models/service-catalog
 SWAGGER_CODEGEN_BIN=java -jar swagger-codegen-cli.jar
 
+ROBOT_FILES=**/*.robot
+ROBOT_THREADS=6
+ROBOT_OPTIONS=-e disable
+ROBOT_CONFIG=tests/odahu-web-ui/config
+
+SECRET_DIR := $(CURDIR)/.secrets
+CLUSTER_PROFILE := ${SECRET_DIR}/cluster_profile.json
+
 -include .env
 
 .EXPORT_ALL_VARIABLES:
@@ -93,6 +101,15 @@ generate-ts-client:
 ## unittests: Run unit tests
 unittests:
 	npm test
+
+## ui-robot: Run Web UI robot tests
+ui-robot:
+	pabot --argumentfile1 ${ROBOT_CONFIG}/chrome.txt \
+	      --argumentfile2 ${ROBOT_CONFIG}/firefox.txt \
+	      --verbose --processes ${ROBOT_THREADS} \
+	      -v CLUSTER_PROFILE:${CLUSTER_PROFILE} \
+	      --listener odahuflow.robot.process_reporter \
+	      --outputdir target tests/odahu-web-ui/*.robot
 
 ## install-vulnerabilities-checker: Install the vulnerabilities-checker
 install-vulnerabilities-checker:
