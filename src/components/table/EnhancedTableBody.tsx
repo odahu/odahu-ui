@@ -25,11 +25,20 @@ export interface EnhancedTableBodyProps<T> {
 }
 
 function descendingComparator<T, K>(a: any, b: any, orderBy: string | number) {
-    if (b[orderBy] < a[orderBy]) {
-        return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-        return 1;
+    if(new Date(b[orderBy]).toString() !== 'Invalid Date' && new Date(a[orderBy]).toString() !== 'Invalid Date') {
+        if (new Date(b[orderBy]) < new Date(a[orderBy])) {
+            return -1;
+        }
+        if (new Date(b[orderBy]) > new Date(a[orderBy])) {
+            return 1;
+        }
+    } else {
+        if (b[orderBy] < a[orderBy]) {
+            return -1;
+        }
+        if (b[orderBy] > a[orderBy]) {
+            return 1;
+        }
     }
     return 0;
 }
