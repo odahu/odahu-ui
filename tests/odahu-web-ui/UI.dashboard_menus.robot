@@ -3,7 +3,7 @@ ${RES_DIR}          ${CURDIR}/resources
 ${UI_VERSION}       ODAHU version: ${ODAHU_WEB_UI_VERSION}
 
 *** Settings ***
-Documentation   testing Dashboard page and Menus (Sidebar and ODAHU Components)
+Documentation   Testing Dashboard page and Menus (Sidebar and ODAHU Components)
 Resource        ${RES_DIR}/common.robot
 Suite Setup     Setup
 Suite Teardown  Teardown

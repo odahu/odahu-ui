@@ -108,7 +108,6 @@ ui-robot:
 	      --argumentfile2 ${ROBOT_CONFIG}/firefox.txt \
 	      --verbose --processes ${ROBOT_THREADS} \
 	      -v CLUSTER_PROFILE:${CLUSTER_PROFILE} \
-	      --listener odahuflow.robot.process_reporter \
 	      --outputdir target tests/odahu-web-ui/*.robot
 
 ## install-vulnerabilities-checker: Install the vulnerabilities-checker
