@@ -1,2 +1,2 @@
---variable  BROWSER:firefox
 --name      Mozilla Firefox Suites
+--variable  BROWSER:firefox

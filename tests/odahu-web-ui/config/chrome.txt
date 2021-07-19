@@ -1,2 +1,2 @@
---variable  BROWSER:chrome
 --name      Google Chrome Suites
+--variable  BROWSER:chrome
