@@ -7,28 +7,13 @@ Documentation   Testing Dashboard page and Menus (Sidebar and ODAHU Components)
 Resource        ${RES_DIR}/common.robot
 Suite Setup     Setup
 Suite Teardown  Teardown
-Test Setup      Test Setup
+Test Setup      run keywords
+...             Go to  ${DASHBOARD.URL}
+...             AND  Test Setup
 Test Teardown   Test Teardown
 Force Tags      web-ui  dashboard
 
 *** Test Cases ***
-#     --------- DASHBOARD -----------
-Check links to documention on "Dashboard" should open and lead to docs.odahu.org
-    [Template]  Open and Validate "Dashboard" links
-    ${DASHBOARD.QUICKSTART_LINK}    ${DOCS.QUICKSTART_LINK}
-    ${DASHBOARD.CONNECTIONS_LINK}   ${DOCS.CONNECTIONS_LINK}
-    ${DASHBOARD.TRAINING_LINK}      ${DOCS.TRAINING_LINK}
-    ${DASHBOARD.PACKAGING_LINK}     ${DOCS.PACKAGING_LINK}
-    ${DASHBOARD.DEPLOYMENT_LINK}    ${DOCS.DEPLOYMENT_LINK}
-
-Check "Dashboard" charts are visible
-    [Template]  Common.Validate that chart is visible
-    ${DASHBOARD.CHART.CONNECTION}
-    ${DASHBOARD.CHART.TRAINING}
-    ${DASHBOARD.CHART.PACKAGING}
-    ${DASHBOARD.CHART.DEPLOYMENT}
-
-
 #       --------- HEADER -----------
 Check "ODAHU Components" menu opens
     Open Menu with ODAHU Components
@@ -72,3 +57,20 @@ Check "Sidebar" links change color when user switch between them
     # switch to ODAHU page through entities
     Go to entity page and validate ODAHU page icons  ${COMMON.TESTING_ICON_CONN_ENTITY}  ${SIDEBAR.LINK.CONNECTIONS.ICON}
     Go to entity page and validate ODAHU page icons  ${COMMON.TESTING_ICON_TI_ENTITY}  ${SIDEBAR.LINK.TOOLCHAINS.ICON}
+
+
+#     --------- DASHBOARD -----------
+Check "Dashboard" charts are visible
+    [Template]  Common.Validate that chart is visible
+    ${DASHBOARD.CHART.CONNECTION}
+    ${DASHBOARD.CHART.TRAINING}
+    ${DASHBOARD.CHART.PACKAGING}
+    ${DASHBOARD.CHART.DEPLOYMENT}
+
+Check links to documention on "Dashboard" should open and lead to docs.odahu.org
+    [Template]  Open and Validate "Dashboard" links
+    ${DASHBOARD.QUICKSTART_LINK}    ${DOCS.QUICKSTART_LINK}
+    ${DASHBOARD.CONNECTIONS_LINK}   ${DOCS.CONNECTIONS_LINK}
+    ${DASHBOARD.TRAINING_LINK}      ${DOCS.TRAINING_LINK}
+    ${DASHBOARD.PACKAGING_LINK}     ${DOCS.PACKAGING_LINK}
+    ${DASHBOARD.DEPLOYMENT_LINK}    ${DOCS.DEPLOYMENT_LINK}

@@ -20,19 +20,19 @@ ${SIDEBAR.SIDEBAR.SHRINKED}         MuiPaper-root MuiDrawer-paper jss22 MuiDrawe
 ${SIDEBAR.DRAWER.LOCATOR}           xpath://*[@id="root"]/div/div[2]
 ${SIDEBAR.SIDEBAR.LOCATOR}          xpath://*[@id="root"]/div/div[2]/div
 
+# icons for links to ODAHU Web UI pages
+               # description path -> xpath://*[@id="root"]/div/div[2]/div/ul/a/div/div[2]/span
+${SIDEBAR.LINK.DASHBOARD.ICON}       xpath://*[@id="root"]/div/div[2]/div/ul/a[@href="/dashboard"]/div/div[1]
+${SIDEBAR.LINK.TRAININGS.ICON}       xpath://*[@id="root"]/div/div[2]/div/ul/a[@href="/trainings"]/div/div[1]
+${SIDEBAR.LINK.PACKAGINGS.ICON}      xpath://*[@id="root"]/div/div[2]/div/ul/a[@href="/packagings"]/div/div[1]
+${SIDEBAR.LINK.DEPLOYMENTS.ICON}     xpath://*[@id="root"]/div/div[2]/div/ul/a[@href="/deployments"]/div/div[1]
+${SIDEBAR.LINK.CONNECTIONS.ICON}     xpath://*[@id="root"]/div/div[2]/div/ul/a[@href="/connections"]/div/div[1]
+${SIDEBAR.LINK.TOOLCHAINS.ICON}      xpath://*[@id="root"]/div/div[2]/div/ul/a[@href="/toolchains"]/div/div[1]
+${SIDEBAR.LINK.PACKAGERS.ICON}       xpath://*[@id="root"]/div/div[2]/div/ul/a[@href="/packagers"]/div/div[1]
+
 # list of (icons) links to ODAHU Web UI pages
 @{SIDEBAR.LINKS_LIST}           ${SIDEBAR.LINK.DASHBOARD.ICON}  ${SIDEBAR.LINK.TRAININGS.ICON}  ${SIDEBAR.LINK.PACKAGINGS.ICON}  ${SIDEBAR.LINK.DEPLOYMENTS.ICON}
 ...                             ${SIDEBAR.LINK.CONNECTIONS.ICON}  ${SIDEBAR.LINK.TOOLCHAINS.ICON}  ${SIDEBAR.LINK.PACKAGERS.ICON}
-
-# icons for links to ODAHU Web UI pages
-               # description path -> xpath://*[@id="root"]/div/div[2]/div/ul/a[1]/div/div[2]/span
-${SIDEBAR.LINK.DASHBOARD.ICON}       xpath://*[@id="root"]/div/div[2]/div/ul/a[1]/div/div[1]
-${SIDEBAR.LINK.TRAININGS.ICON}       xpath://*[@id="root"]/div/div[2]/div/ul/a[2]/div/div[1]
-${SIDEBAR.LINK.PACKAGINGS.ICON}      xpath://*[@id="root"]/div/div[2]/div/ul/a[3]/div/div[1]
-${SIDEBAR.LINK.DEPLOYMENTS.ICON}     xpath://*[@id="root"]/div/div[2]/div/ul/a[4]/div/div[1]
-${SIDEBAR.LINK.CONNECTIONS.ICON}     xpath://*[@id="root"]/div/div[2]/div/ul/a[5]/div/div[1]
-${SIDEBAR.LINK.TOOLCHAINS.ICON}      xpath://*[@id="root"]/div/div[2]/div/ul/a[6]/div/div[1]
-${SIDEBAR.LINK.PACKAGERS.ICON}       xpath://*[@id="root"]/div/div[2]/div/ul/a[7]/div/div[1]
 
 *** Keywords ***
 Click "Sandwich Menu" button
