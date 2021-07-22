@@ -51,7 +51,7 @@ ${HEADER.BENTO_MENU.ARGO}               xpath:.//button/img[@src="/img/logo/argo
 ${HEADER.BENTO_MENU.JUPYTERHUB}         xpath:.//button/img[@src="/img/logo/jupyter.png"]/following-sibling::*[1]/self::div/p[text()="${HEADER.BENTO_MENU.JUPYTERHUB.TEXT}"]/../..
 ${HEADER.BENTO_MENU.AIRFLOW}            xpath:.//button/img[@src="/img/logo/airflow.png"]/following-sibling::*[1]/self::div/p[text()="${HEADER.BENTO_MENU.AIRFLOW.TEXT}"]/../..
 ${HEADER.BENTO_MENU.KIBANA}             xpath:.//button/img[@src="/img/logo/kibana.png"]/following-sibling::*[1]/self::div/p[text()="${HEADER.BENTO_MENU.KIBANA.TEXT}"]/../..
-${HEADER.BENTO_MENU.FEEDBACK_STORAGE}   xpath:.//button/img[@src="/img/logo/gcs.png"]/following-sibling::*[1]/self::div/p[text()="${HEADER.BENTO_MENU.FEEDBACK_STORAGE.TEXT}"]/../..
+${HEADER.BENTO_MENU.FEEDBACK_STORAGE}   xpath:.//button/img/following-sibling::*[1]/self::div/p[text()="${HEADER.BENTO_MENU.FEEDBACK_STORAGE.TEXT}"]/../..
 
 # Button locators
 ${HEADER.ODAHU_COMPONENTS.BENTO_BUTTON}  css:button[aria-label="account of current user"]
