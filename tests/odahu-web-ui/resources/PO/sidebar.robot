@@ -17,8 +17,8 @@ ${SIDEBAR.SIDEBAR.EXTENDED}         MuiPaper-root MuiDrawer-paper jss21 MuiDrawe
 ${SIDEBAR.DRAWER.SHRINKED}          MuiDrawer-root MuiDrawer-docked jss20 jss22
 ${SIDEBAR.SIDEBAR.SHRINKED}         MuiPaper-root MuiDrawer-paper jss22 MuiDrawer-paperAnchorLeft MuiDrawer-paperAnchorDockedLeft MuiPaper-elevation0
 
-${SIDEBAR.DRAWER.LOCATOR}           xpath://*[@id="root"]/div/div[2]
-${SIDEBAR.SIDEBAR.LOCATOR}          xpath://*[@id="root"]/div/div[2]/div
+${SIDEBAR.DRAWER.LOCATOR}           xpath://*[@id="root"]/div/div[contains(@class, "MuiDrawer-root")]
+${SIDEBAR.SIDEBAR.LOCATOR}          ${SIDEBAR.DRAWER.LOCATOR}/div[contains(@class, "MuiDrawer-paperAnchorLeft")]
 
 # icons for links to ODAHU Web UI pages
                # description path -> xpath://*[@id="root"]/div/div[2]/div/ul/a/div/div[2]/span

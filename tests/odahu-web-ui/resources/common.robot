@@ -76,20 +76,21 @@ Validate "User Info" button and text fields match
     Header.Open User info Tab
     Header.Validate "Username" and "Email"
 
+Click Documentation link
+    [Arguments]  ${link_locator}
+    mouse over  ${DASHBOARD.LINKS_DROPDOWN}
+    mouse over  ${DASHBOARD.LINKS_LIST}
+    click element  ${link_locator}
+
 Open and Validate "Dashboard" links
     [Arguments]  ${link_locator}  ${page_url}
     [Teardown]   run keywords
     ...          close window
     ...          AND  switch window  ${handle}
     Dashboard.Validate "Dashboard" page loaded
-    mouse over  ${DASHBOARD.LINKS_DROPDOWN}
-    mouse over  ${DASHBOARD.LINKS_LIST}
-    click element  ${link_locator}
-    # mouse down on link  ${link_locator}
-    # mouse up  ${link_locator}
-    sleep  3s
+    wait until keyword succeeds  30s  2s  Click Documentation link  ${link_locator}
     ${handle}   switch window  locator=NEW
-    location should be  ${page_url}
+    wait until location is  ${page_url}
 
 Open Menu with ODAHU Components
     Dashboard.Validate "Dashboard" page loaded
