@@ -24,17 +24,17 @@ const links: Link[] = [
         img: <SettingsInputComponentIcon/>,
     },
     {
-        name: 'Training',
+        name: 'Trainings',
         url: 'https://docs.odahu.org/ref_trainings.html',
         img: <FitnessCenterIcon/>,
     },
     {
-        name: 'Packaging',
+        name: 'Packagings',
         url: 'https://docs.odahu.org/ref_packagers.html',
         img: <WorkIcon/>,
     },
     {
-        name: 'Deployment',
+        name: 'Deployments',
         url: 'https://docs.odahu.org/ref_deployments.html',
         img: <CloudIcon/>,
     },
