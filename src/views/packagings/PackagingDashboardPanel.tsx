@@ -77,7 +77,7 @@ export const PackagingDashboardPanel: React.FC = () => {
     return (
         <DashboardPanel
             icon={<WorkIcon/>}
-            header={"Packaging"}
+            header={"Packagings"}
         >
             {/*Use ref instead of ID*/}
             <canvas ref={chartRef} width="240px" height="240px"/>

@@ -77,7 +77,7 @@ export const DeploymentDashboardPanel: React.FC = () => {
     return (
         <DashboardPanel
             icon={<CloudIcon/>}
-            header={"Deployment"}
+            header={"Deployments"}
         >
             {/*Use ref instead of ID*/}
             <canvas ref={chartRef} width="240px" height="240px"/>
