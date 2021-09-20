@@ -20,6 +20,9 @@ const useAlertStyles = makeStyles(() =>
             minWidth: '400px',
             maxWidth: '400px',
         },
+        marginBot: {
+            marginBottom: '0px'
+        },
     })
 );
 
@@ -69,7 +72,7 @@ export const Alert: React.FC = () => {
                     </IconButton>
                 }
             >
-                <AlertTitle>{title}</AlertTitle>
+                <AlertTitle className={content === '' ? classes.marginBot : ''}>{title}</AlertTitle>
                 {content}
             </LabAlert>
         </Snackbar>
