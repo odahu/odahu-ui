@@ -1,6 +1,6 @@
 import React from "react";
 import {LoadingPage} from "./LoadingPage";
-import {Box, List, ListItem, ListItemText, makeStyles} from "@material-ui/core";
+import {Box, CircularProgress, List, ListItem, ListItemText, makeStyles} from "@material-ui/core";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -13,9 +13,8 @@ import "swagger-ui-react/swagger-ui.css";
 import {getServices} from "../configureStore";
 import {DeployedModel} from "../models/service-catalog/DeployedModel";
 import {ModelDeployment} from "../models/odahuflow/ModelDeployment";
-import {showErrorAlert} from "../store/alert/actions";
+import {showErrorAlert, showInfoAlert} from "../store/alert/actions";
 import {useDispatch} from "react-redux";
-import {NotFoundPage} from "./NotFoundView";
 
 
 export interface PlayModelProps {
@@ -28,6 +27,9 @@ export const PlayModel: React.FC<PlayModelProps> = (props: PlayModelProps) => {
         root: {
             display: "block",
         },
+        loader: {
+            textAlign: "center"
+        }
     }));
     const classes = useStyles()
 
@@ -42,7 +44,7 @@ export const PlayModel: React.FC<PlayModelProps> = (props: PlayModelProps) => {
         modelService.getInfo(props.deployment?.id as string).then(value => {
             setModel(value)
         }).catch(err => {
-            dispatch(showErrorAlert("Unable to fetch model info", String(err)));
+            dispatch(showInfoAlert('Deployment is not ready yet', ''));
             setNotFound(true)
         }).finally(() => {
             setLoading(false)
@@ -53,7 +55,11 @@ export const PlayModel: React.FC<PlayModelProps> = (props: PlayModelProps) => {
         return <LoadingPage />
     }
     if (notFound) {
-        return <NotFoundPage/>
+        return (
+            <div className={classes.loader}>
+                <CircularProgress color="inherit" />
+            </div>
+        )
     }
 
     // Parse swagger spec
