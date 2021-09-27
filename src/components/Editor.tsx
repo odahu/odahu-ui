@@ -23,6 +23,10 @@ export const useEditorStyles = makeStyles(() =>
         },
         button: {
             margin: '5px'
+        },
+        warning: {
+            color: '#d14000', 
+            fontSize: '13px'
         }
     }),
 );
@@ -31,6 +35,7 @@ export interface ReadonlyEditorProps {
     readonly: true;
     entity: any;
     fileName: string;
+    warning?: boolean;
 }
 
 export interface EditorProps {
@@ -38,6 +43,7 @@ export interface EditorProps {
     entity: any;
     fileName: string;
     saveButtonClick: SaveButtonClick<any>;
+    warning?: boolean;
 }
 
 export const Editor: React.FC<EditorProps | ReadonlyEditorProps> = (props) => {
@@ -70,8 +76,14 @@ export const Editor: React.FC<EditorProps | ReadonlyEditorProps> = (props) => {
 
     return (
         <>
+            {props?.warning && 
+                <div className={classes.warning}> 
+                    WARNING: To submit the connection please retype the encrypted credentials (covered by "*****").
+                </div>
+            }
             <AceEditor
                 className={classes.editor}
+                style={{height: props?.warning ? '475px':'500px'}}
                 mode="yaml"
                 theme="github"
                 name="UNIQUE_ID_OF_DIV"
