@@ -78,7 +78,7 @@ export const Editor: React.FC<EditorProps | ReadonlyEditorProps> = (props) => {
         <>
             {props?.warning && 
                 <div className={classes.warning}> 
-                    WARNING: To submit the connection please retype the encrypted credentials (covered by "*****").
+                    WARNING: To submit the connection please retype the encrypted credentials (covered by {'*****'}).
                 </div>
             }
             <AceEditor
