@@ -52,6 +52,7 @@ export const ConnectionViewPage: React.FC = () => {
                 />,
                 <Editor
                     key="yaml"
+                    warning={true}
                     readonly={false}
                     entity={entity}
                     fileName={`${id}.connection.odahuflow.yaml`}
