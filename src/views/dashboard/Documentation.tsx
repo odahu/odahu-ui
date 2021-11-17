@@ -7,6 +7,7 @@ import CloudIcon from '@material-ui/icons/Cloud';
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
 
 interface Link {
+    id: string;
     name: string;
     url: string;
     img: React.ReactElement;
@@ -14,26 +15,31 @@ interface Link {
 
 const links: Link[] = [
     {
+        id: "quickStartLink",
         name: 'Quickstart',
         url: 'https://docs.odahu.org/tutorials_wine.html',
         img: <SchoolIcon/>,
     },
     {
+        id: "connectionsLink",
         name: 'Connections',
         url: 'https://docs.odahu.org/ref_connections.html',
         img: <SettingsInputComponentIcon/>,
     },
     {
+        id: "trainingsLink",
         name: 'Trainings',
         url: 'https://docs.odahu.org/ref_trainings.html',
         img: <FitnessCenterIcon/>,
     },
     {
+        id: "packagingsLink",
         name: 'Packagings',
         url: 'https://docs.odahu.org/ref_packagers.html',
         img: <WorkIcon/>,
     },
     {
+        id: "deploymentsLink",
         name: 'Deployments',
         url: 'https://docs.odahu.org/ref_deployments.html',
         img: <CloudIcon/>,

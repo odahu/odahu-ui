@@ -69,6 +69,7 @@ function SpecStep<T>(
             <div>
                 <div>
                     <Button
+                        id="editPageSpecificationBackBtn"
                         onClick={handleBack}
                         className={classes.button}
                         variant="outlined"
@@ -76,6 +77,7 @@ function SpecStep<T>(
                         Back
                     </Button>
                     <Button
+                        id="editPageSpecificationNextBtn"
                         variant="outlined"
                         onClick={() => {
                             setFieldOptions({isValidatorActivated: true});
@@ -119,6 +121,7 @@ function MetadataStep<T>(props: MetadataStepProps<T>) {
             <div>
                 <div>
                     <Button
+                        id="editPageMetadataNextBtn"
                         variant="outlined"
                         onClick={() => {
                             setFieldOptions({isValidatorActivated: true});
@@ -151,6 +154,7 @@ function ReviewStep<T>(props: ReviewStepProps<T>) {
             {props.fields}
             <div>
                 <Button
+                    id="editPageReviewBackBtn"
                     onClick={props.handleBack}
                     className={classes.button}
                     variant="outlined"
@@ -158,6 +162,7 @@ function ReviewStep<T>(props: ReviewStepProps<T>) {
                     Back
                 </Button>
                 <Button
+                    id="editPageReviewSubmitBtn"
                     variant="outlined"
                     type="submit"
                     className={classes.button}

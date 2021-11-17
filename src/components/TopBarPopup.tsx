@@ -54,6 +54,7 @@ export const TopBarPopup: React.FC<TopBarPopupProps> = ({image, children}) => {
     return (
         <div className={classes.root}>
             <IconButton
+                id="versionBtn"
                 aria-haspopup="true"
                 onClick={handleMenu}
                 color="inherit"

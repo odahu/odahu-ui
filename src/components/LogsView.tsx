@@ -106,6 +106,7 @@ export const LogsView: React.FC<LogsViewProps> = (
             />
             <div className={classes.buttonContainer}>
                 <Button
+                    id="downloadLogBtn"
                     variant="outlined"
                     className={classes.button}
                     onClick={onClickDownloadButton}

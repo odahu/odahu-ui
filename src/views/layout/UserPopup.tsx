@@ -39,6 +39,7 @@ export const UserPopup: React.FC = () => {
             </Typography>
             <Divider className={classes.separator}/>
             <Button
+                id="signOutBtn"
                 className={classes.separator}
                 variant="outlined"
                 onClick={onSignOutButtonClick}
