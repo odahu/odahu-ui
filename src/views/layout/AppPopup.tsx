@@ -76,6 +76,7 @@ export const AppPopup: React.FC = () => {
     return (
         <div className={classes.root}>
             <IconButton
+                id="accountOfCurrentUserBtn"
                 aria-label="account of current user"
                 aria-haspopup="true"
                 onClick={handleMenu}

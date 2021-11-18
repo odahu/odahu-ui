@@ -61,6 +61,7 @@ const SelectedTableToolbar: React.FC<SelectedTableToolbarProps> = (
             </Typography>
             {numSelected === 1 && (
                 <Button
+                    id="enhancedTableCloneBtn"
                     className={classes.button}
                     variant="outlined"
                     onClick={onNewCloneButtonClick}
@@ -73,6 +74,7 @@ const SelectedTableToolbar: React.FC<SelectedTableToolbarProps> = (
             {(extraButtons ?? [])
                 .map(v => {
                     return <Button
+                        id="enhancedTableExtraBtn"
                         className={classes.button}
                         variant="outlined"
                         onClick={v.onClick}
@@ -88,6 +90,7 @@ const SelectedTableToolbar: React.FC<SelectedTableToolbarProps> = (
                 })
             }
             <Button
+                id="enhancedTableDeleteBtn"
                 className={classes.button}
                 variant="outlined"
                 onClick={() => setConfirmOpen(true)}
@@ -135,6 +138,7 @@ const BaseTableToolbar: React.FC<BaseTableToolbarProps | BaseReadonlyTableToolba
             </Typography>
             {!props.readonly && (
                 <Button
+                    id="enhancedTableNewBtn"
                     className={classes.button}
                     variant="outlined"
                     onClick={props.onNewButtonClick}
@@ -145,6 +149,7 @@ const BaseTableToolbar: React.FC<BaseTableToolbarProps | BaseReadonlyTableToolba
                 </Button>
             )}
             <Button
+                id="enhancedTableRefreshBtn"
                 className={classes.button}
                 variant="outlined"
                 onClick={props.onRefreshButtonClick}

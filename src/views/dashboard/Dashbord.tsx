@@ -120,6 +120,7 @@ export const DashboardView: React.FC = () => {
                     ) : null}
                 </div>
                 <Button 
+                    id="dashboardRefreshBtn"
                     aria-label="refresh" 
                     className={classes.button}
                     variant="outlined" 

@@ -60,6 +60,7 @@ export const TopBar: React.FC<TopBarProps> = (
         >
             <Toolbar>
                 <IconButton
+                    id="openDrawerBtn"
                     color="inherit"
                     aria-label="open drawer"
                     onClick={onTopBarButtonClick}

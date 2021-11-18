@@ -72,13 +72,14 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface SideBarElement {
+    id: string;
     icon: React.ReactElement;
     heading: string;
     url: string;
 }
 
 const SideBarElement: React.FC<SideBarElement> = (
-    {heading, icon, url, children}
+    {heading, icon, url, children, id}
 ) => {
     const fieldClasses = useFieldsStyles();
     const classes = useStyles();
@@ -87,6 +88,7 @@ const SideBarElement: React.FC<SideBarElement> = (
 
     return (
         <Link
+            id = {id}
             key={heading}
             to={url}
             className={clsx(fieldClasses.cleanupLink, {
@@ -131,38 +133,45 @@ export const SideBar: React.FC<SidebarProps> = ({isOpened}) => {
             <div className={classes.toolbar}/>
             <List>
                 <SideBarElement
+                    id = 'sideDashboardBtn'
                     icon={<DashboardIcon/>}
                     heading='Dashboard'
                     url={DashboardURLPrefix}
                 />
                 <Divider/>
                 <SideBarElement
+                    id = 'sideTrainingsBtn'
                     icon={<FitnessCenterIcon/>}
                     heading='Trainings'
                     url={TrainingURLs.Table}
                 />
                 <SideBarElement
+                    id = 'sidePackagingsBtn'
                     icon={<WorkIcon/>}
                     heading='Packagings'
                     url={PackagingURLs.Table}
                 />
                 <SideBarElement
+                    id = 'sideDeploymentsBtn'
                     icon={<CloudIcon/>}
                     heading='Deployments'
                     url={DeploymentURLs.Table}
                 />
                 <Divider/>
                 <SideBarElement
+                    id = 'sideConnectionsBtn'
                     icon={<SettingsInputComponentIcon/>}
                     heading='Connections'
                     url={ConnectionURLs.Table}
                 />
                 <SideBarElement
+                    id = 'sideToolchainsBtn'
                     icon={<BuildIcon/>}
                     heading='Toolchains'
                     url={ToolchainURLs.Table}
                 />
                 <SideBarElement
+                    id = 'sidePackagersBnt'
                     icon={<AccountTreeIcon/>}
                     heading='Packagers'
                     url={PackagerURLs.Table}

@@ -34,12 +34,14 @@ export const ConfirmationDialog: React.FC<ConfirmDialogProps> = props => {
             </DialogContent>
             <DialogActions>
                 <Button
+                    id="dialogNoBtn"
                     color="default"
                     onClick={() => setOpen(false)}
                 >
                     No
                 </Button>
                 <Button
+                    id="dialogYesBtn"
                     color="secondary"
                     onClick={() => {
                         setOpen(false);

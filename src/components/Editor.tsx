@@ -94,6 +94,7 @@ export const Editor: React.FC<EditorProps | ReadonlyEditorProps> = (props) => {
             />
             <div className={classes.buttonContainer}>
                 <Button
+                    id="editorDownloadBtn"
                     variant="outlined"
                     className={classes.button}
                     onClick={onClickDownloadButton}
@@ -102,6 +103,7 @@ export const Editor: React.FC<EditorProps | ReadonlyEditorProps> = (props) => {
                 </Button>
                 {!props.readonly && (
                     <Button
+                        id="editorSubmitBtn"
                         variant="outlined"
                         className={classes.button}
                         onClick={onClickSaveButton}

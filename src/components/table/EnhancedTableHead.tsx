@@ -54,6 +54,7 @@ export const EnhancedTableHead: React.FC<EnhancedReadonlyTableProps | EnhancedTa
                     className={classes.tableHeaderCell}
                 >
                     <TableSortLabel
+                        id="sortBtn0"
                         active={orderBy === "id"}
                         direction={orderBy === "id" ? order : "asc"}
                         onClick={createSortHandler("id")}
@@ -77,6 +78,7 @@ export const EnhancedTableHead: React.FC<EnhancedReadonlyTableProps | EnhancedTa
                                 ${header === 'State' && classes.tableStateCell}`}
                         >
                             <TableSortLabel
+                                id={`sortBtn${index+1}`}
                                 classes={{
                                     icon: classes.sortInactive
                                 }}
