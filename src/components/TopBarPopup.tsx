@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export interface TopBarPopupProps {
-    id: number;
+    id: string;
     image: any;
 }
 
