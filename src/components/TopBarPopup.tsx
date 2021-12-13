@@ -30,10 +30,11 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export interface TopBarPopupProps {
+    id: any;
     image: any;
 }
 
-export const TopBarPopup: React.FC<TopBarPopupProps> = ({image, children}) => {
+export const TopBarPopup: React.FC<TopBarPopupProps> = ({image, children, id}) => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -54,7 +55,7 @@ export const TopBarPopup: React.FC<TopBarPopupProps> = ({image, children}) => {
     return (
         <div className={classes.root}>
             <IconButton
-                id="versionBtn"
+                id={id}
                 aria-haspopup="true"
                 onClick={handleMenu}
                 color="inherit"

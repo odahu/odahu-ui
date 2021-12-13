@@ -13,6 +13,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import {ArrayHelpers} from "formik";
 import {useFieldsStyles} from "./fields";
 import {createStyles, makeStyles} from "@material-ui/core/styles";
+import { normalizeId } from '../utils/normalizeId';
 
 export const useItemInputStyles = makeStyles(() =>
     createStyles({
@@ -102,7 +103,7 @@ export const InputParametersView: React.FC<InputParametersViewProps> = (
     const classes = useItemInputStyles();
     const fieldClasses = useFieldsStyles();
 
-    const uniqueStringForId = description && description.substring(0,3);
+    const uniqueStringForId = normalizeId(header);
 
     const addButtonOnClick = () => {
         const element = createNewElem();

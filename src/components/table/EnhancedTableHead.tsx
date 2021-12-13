@@ -5,6 +5,7 @@ import TableCell from "@material-ui/core/TableCell";
 import Checkbox from "@material-ui/core/Checkbox";
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import {Order, useTableStyles} from "./commons";
+import { normalizeId } from "../../utils/normalizeId";
 
 export interface EnhancedReadonlyTableProps {
     readonly: true;
@@ -54,7 +55,7 @@ export const EnhancedTableHead: React.FC<EnhancedReadonlyTableProps | EnhancedTa
                     className={classes.tableHeaderCell}
                 >
                     <TableSortLabel
-                        id="sortBtn0"
+                        id="Id-sortBtn"
                         active={orderBy === "id"}
                         direction={orderBy === "id" ? order : "asc"}
                         onClick={createSortHandler("id")}
@@ -68,29 +69,33 @@ export const EnhancedTableHead: React.FC<EnhancedReadonlyTableProps | EnhancedTa
                 </TableCell>
 
                 {
-                    props.headers.map((header, index) => ( 
-                        <TableCell
-                            key={header}
-                            align="left"
-                            className={`
-                                ${classes.tableHeaderCell} 
-                                ${(header === 'Created at' || header === 'Updated at') && classes.tableDateCell }
-                                ${header === 'State' && classes.tableStateCell}`}
-                        >
-                            <TableSortLabel
-                                id={`sortBtn${index+1}`}
-                                classes={{
-                                    icon: classes.sortInactive
-                                }}
-                                active={orderBy === index}
-                                direction={orderBy === index ? order : "asc"}
-                                onClick={createSortHandler(index)}
+                    props.headers.map((header, index) => {
+                        const btnId = normalizeId(header, 'sortBtn');
+                        
+                        return ( 
+                            <TableCell
+                                key={header}
+                                align="left"
+                                className={`
+                                    ${classes.tableHeaderCell} 
+                                    ${(header === 'Created at' || header === 'Updated at') && classes.tableDateCell }
+                                    ${header === 'State' && classes.tableStateCell}`}
                             >
-                                {header}
-
-                            </TableSortLabel>
-                        </TableCell>
-                    ))
+                                <TableSortLabel
+                                    id={btnId}
+                                    classes={{
+                                        icon: classes.sortInactive
+                                    }}
+                                    active={orderBy === index}
+                                    direction={orderBy === index ? order : "asc"}
+                                    onClick={createSortHandler(index)}
+                                >
+                                    {header}
+    
+                                </TableSortLabel>
+                            </TableCell>
+                        )
+                    })
                 }
             </TableRow>
         </TableHead>

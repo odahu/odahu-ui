@@ -11,6 +11,7 @@ export const VersionPopup: React.FC = () => {
 
     return (
         <TopBarPopup
+            id='versionBtn'
             image={<InfoIcon/>}
         >
             <Typography variant="body1" component="h6">
