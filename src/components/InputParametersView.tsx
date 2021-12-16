@@ -125,7 +125,7 @@ export const InputParametersView: React.FC<InputParametersViewProps> = (
                     {header}
                 </Typography>
                 <Button
-                    id={`AddBtn${uniqueStringForId}`}
+                    id={uniqueStringForId}
                     className={classes.topBarButton}
                     variant="outlined"
                     onClick={addButtonOnClick}
