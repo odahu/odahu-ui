@@ -80,7 +80,7 @@ export const PackagingDashboardPanel: React.FC = () => {
             header={"Packagings"}
         >
             {/*Use ref instead of ID*/}
-            <canvas id='Packagings-tab' ref={chartRef} width="240px" height="240px"/>
+            <canvas id='Packagings-graph' ref={chartRef} width="240px" height="240px"/>
         </DashboardPanel>
     )
 };
