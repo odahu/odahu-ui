@@ -12,7 +12,7 @@
 
 import * as models from './models';
 
-export interface ToolchainIntegrationSpec {
+export interface TrainingIntegrationSpec {
     /**
      * Additional environments for a training process
      */

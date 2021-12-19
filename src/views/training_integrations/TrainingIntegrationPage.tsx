@@ -1,18 +1,18 @@
 import React from 'react';
 import {useParams} from "react-router-dom";
 import {ViewPage} from "../../components/ViewPage";
-import {ToolchainView} from "./ToolchainView";
+import {TrainingIntegrationView} from "./TrainingIntegrationView";
 import {Editor} from "../../components/Editor";
 import {useFetchingEntity} from "../../components/EntitiyFetching";
-import {fetchToolchainRequest} from "../../store/toolchains/actions";
-import {ToolchainURLs} from "./urls";
+import {fetchTrainingIntegrationRequest} from "../../store/training_integrations/actions";
+import {TrainingIntegrationURLs} from "./urls";
 
 const tabHeaders = ["View", "YAML"];
 
-export const ToolchainPage: React.FC = () => {
+export const TrainingIntegrationPage: React.FC = () => {
     const {id} = useParams();
-    const {entity, loading, notFound} = useFetchingEntity(id as string, fetchToolchainRequest);
-    const baseUrl = `${ToolchainURLs.Page}/${id}`
+    const {entity, loading, notFound} = useFetchingEntity(id as string, fetchTrainingIntegrationRequest);
+    const baseUrl = `${TrainingIntegrationURLs.Page}/${id}`
 
     return (
         <ViewPage
@@ -21,16 +21,16 @@ export const ToolchainPage: React.FC = () => {
             tabHeaders={tabHeaders}
             baseUrl={baseUrl}
             tabValues={[
-                <ToolchainView
+                <TrainingIntegrationView
                     key="view"
-                    toolchain={entity}
+                    trainingIntegration={entity}
                     status={true}
                 />,
                 <Editor
                     key="yaml"
                     readonly={true}
                     entity={entity}
-                    fileName={`${id}.toolchain.odahuflow.yaml`}
+                    fileName={`${id}.training_integration.odahuflow.yaml`}
                 />
             ]}
         />

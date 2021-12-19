@@ -15,11 +15,11 @@ import {Alert} from "../../components/Alert";
 import {fetchAllDeploymentRequest} from "../../store/deployments/actions";
 import {NotImplemented, NotImplementedURL} from "../../components/NotImplementedPage";
 import {GlobalBackdrop} from "../../components/Backdrop";
-import {fetchAllToolchainRequest} from "../../store/toolchains/actions";
+import {fetchAllTrainingIntegrationRequest} from "../../store/training_integrations/actions";
 import {fetchAllTrainingRequest} from "../../store/trainings/actions";
 import {fetchAllPackagerRequest} from "../../store/packagers/actions";
 import {fetchAllPackagingRequest} from "../../store/packaging/actions";
-import {Toolchains} from "../toolchains/Toolchains";
+import {TrainingIntegrations} from "../training_integrations/TrainingIntegrations";
 import {Packagers} from "../packagers/Packagers";
 import {hideBackdrop, showBackdrop} from "../../store/backdrop/actions";
 import {showErrorAlert} from "../../store/alert/actions";
@@ -28,9 +28,10 @@ import {Deployments} from "../deployments/Deployment";
 import {TrainingURLs} from "../trainings/urls";
 import {ConnectionURLs} from "../connections/urls";
 import {PackagerURLs} from "../packagers/urls";
-import {ToolchainURLs} from "../toolchains/urls";
+import {TrainingIntegrationURLs} from "../training_integrations/urls";
 import {PackagingURLs} from "../packagings/urls";
 import {fetchUserInfoRequest} from "../../store/user/actions";
+import {TrainingIntegration} from "../../models/odahuflow/TrainingIntegration";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -71,7 +72,7 @@ export const MainLayout: React.FC = () => {
             dispatch(fetchConfigurationRequest()),
             dispatch(fetchUserInfoRequest()),
             dispatch(fetchAllDeploymentRequest()),
-            dispatch(fetchAllToolchainRequest()),
+            dispatch(fetchAllTrainingIntegrationRequest()),
             dispatch(fetchAllTrainingRequest()),
             dispatch(fetchAllPackagerRequest()),
             dispatch(fetchAllPackagingRequest()),
@@ -129,8 +130,8 @@ export const MainLayout: React.FC = () => {
                         <Route key={DeploymentURLs.Table} path={DeploymentURLs.Table}>
                             <Deployments/>
                         </Route>
-                        <Route key={ToolchainURLs.Table} path={ToolchainURLs.Table}>
-                            <Toolchains/>
+                        <Route key={TrainingIntegrationURLs.Table} path={TrainingIntegrationURLs.Table}>
+                            <TrainingIntegrations/>
                         </Route>
                         <Route key={PackagerURLs.Table} path={PackagerURLs.Table}>
                             <Packagers/>

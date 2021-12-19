@@ -12,26 +12,26 @@
 
 import * as models from './models';
 
-export interface ToolchainIntegration {
+export interface TrainingIntegration {
     /**
      * CreatedAt
      */
     createdAt?: string;
 
     /**
-     * Toolchain integration id
+     * Training integration id
      */
     id?: string;
 
     /**
-     * Toolchain integration specification
+     * Training integration specification
      */
-    spec?: models.ToolchainIntegrationSpec;
+    spec?: models.TrainingIntegrationSpec;
 
     /**
-     * Toolchain integration status
+     * Training integration status
      */
-    status?: models.ToolchainIntegrationStatus;
+    status?: models.TrainingIntegrationStatus;
 
     /**
      * UpdatedAt

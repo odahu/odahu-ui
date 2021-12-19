@@ -8,7 +8,7 @@ import {ConnectionState} from "../../store/connections/types";
 import {TrainingView} from "./TrainingView";
 import {ModelTraining} from "../../models/odahuflow/ModelTraining";
 import {createTrainingRequest, fetchAllTrainingRequest, fetchTrainingRequest} from "../../store/trainings/actions";
-import {ToolchainState} from "../../store/toolchains/types";
+import {TrainingIntegrationState} from "../../store/training_integrations/types";
 import {TrainingMetaSchema, TrainingSchema} from "./editable/schemas";
 import {MetadataElements} from "./editable/MetadataElements";
 import {HyperParameter, SpecElements} from "./editable/SpecElements";
@@ -23,7 +23,7 @@ import {useHistory} from "react-router-dom";
 function defaultTrainingSpec(mts?: ModelTrainingSpec): ModelTrainingSpec {
     return merge({
         entrypoint: '',
-        toolchain: '',
+        trainingIntegration: '',
         data: [],
         envs: [],
         model: {name: '', version: ''},
@@ -128,8 +128,8 @@ export const EditableTrainingPage: React.FC<EditableTrainingPageProps> = ({train
 };
 
 export const NewTrainingPage: React.FC = () => {
-    const toolchainState = useSelector<ApplicationState, ToolchainState>(state => state.toolchains);
-    const toolchainIDs = Object.values(toolchainState.data).map(toolchain => toolchain.id);
+    const trainingIntegrationState = useSelector<ApplicationState, TrainingIntegrationState>(state => state.trainingIntegrations);
+    const trainingIntegrationIDs = Object.values(trainingIntegrationState.data).map(trainingIntegration => trainingIntegration.id);
 
     const connectionsState = useSelector<ApplicationState, ConnectionState>(state => state.connections);
     const vcsConnectionID = Object.values(connectionsState.data)
@@ -157,7 +157,7 @@ export const NewTrainingPage: React.FC = () => {
             entity={{
                 id: '',
                 spec: defaultTrainingSpec({
-                    toolchain: extractZeroElement(toolchainIDs, ''),
+                    trainingIntegration: extractZeroElement(trainingIntegrationIDs, ''),
                     algorithmSource: {
                         vcs: {
                             connection: extractZeroElement(vcsConnectionID, '')

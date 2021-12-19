@@ -13,8 +13,8 @@ import {ModelTrainingState} from "./trainings/types";
 import {trainingReducer} from "./trainings/reducer";
 import {backdropReducer} from "./backdrop/reducer";
 import {BackdropState} from "./backdrop/types";
-import {ToolchainState} from "./toolchains/types";
-import {toolchainReducer} from "./toolchains/reducer";
+import {TrainingIntegrationState} from "./training_integrations/types";
+import {trainingIntegrationReducer} from "./training_integrations/reducer";
 import {PackagerState} from "./packagers/types";
 import {packagerReducer} from "./packagers/reducer";
 import {ModelPackagingState} from "./packaging/types";
@@ -30,7 +30,7 @@ export interface ApplicationState {
     deployments: ModelDeploymentState;
     configuration: ConfigurationState;
     trainings: ModelTrainingState;
-    toolchains: ToolchainState;
+    trainingIntegrations: TrainingIntegrationState;
     packagers: PackagerState;
     packagings: ModelPackagingState;
     user: UserState;
@@ -47,7 +47,7 @@ export const createRootReducer = combineReducers({
     deployments: deploymentReducer,
     configuration: configurationReducer,
     trainings: trainingReducer,
-    toolchains: toolchainReducer,
+    trainingIntegrations: trainingIntegrationReducer,
     packagers: packagerReducer,
     packagings: packagingReducer,
     user: userReducer,

@@ -1,7 +1,7 @@
 import React from "react";
 import {useSelector} from "react-redux";
 import {ApplicationState} from "../../../store";
-import {ToolchainState} from "../../../store/toolchains/types";
+import {TrainingIntegrationState} from "../../../store/training_integrations/types";
 import {ConnectionState} from "../../../store/connections/types";
 import {ConnectionTypes} from "../../connections/types";
 import {OdahuTextField} from "../../../components/OdahuTextField";
@@ -15,8 +15,8 @@ export interface MetadataElementsProps {
 export const MetadataElements: React.FC<MetadataElementsProps> = ({readonlyID = false}) => {
     const classes = useFieldsStyles();
 
-    const toolchainState = useSelector<ApplicationState, ToolchainState>(state => state.toolchains);
-    const toolchainIDs = Object.values(toolchainState.data).map(toolchain => toolchain.id);
+    const trainingIntegrationState = useSelector<ApplicationState, TrainingIntegrationState>(state => state.trainingIntegrations);
+    const trainingIntegrationIDs = Object.values(trainingIntegrationState.data).map(trainingIntegration => trainingIntegration.id);
 
     const connectionsState = useSelector<ApplicationState, ConnectionState>(state => state.connections);
     const connectionIDs = Object.values(connectionsState.data)
@@ -48,9 +48,9 @@ export const MetadataElements: React.FC<MetadataElementsProps> = ({readonlyID = 
             />
             <FormikOdahuSelect
                 className={classes.editorField}
-                name="spec.toolchain"
-                label="Toolchain"
-                options={toolchainIDs}
+                name="spec.trainingIntegration"
+                label="Training Integration"
+                options={trainingIntegrationIDs}
             />
             <FormikOdahuSelect
                 className={classes.editorField}

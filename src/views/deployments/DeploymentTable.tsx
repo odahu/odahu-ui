@@ -17,7 +17,7 @@ const headers = ['Image pull connection ID', 'Image', 'Replicas', 'State', 'Crea
 const extractRow = (md: ModelDeployment) => [
     (
         <RouterLink
-            key="toolchain"
+            key="trainingIntegration"
             to={join(ConnectionURLs.Page, md.spec?.imagePullConnID ?? '')}
         >
             {md.spec?.imagePullConnID}

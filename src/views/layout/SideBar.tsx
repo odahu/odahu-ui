@@ -21,7 +21,7 @@ import {DeploymentURLs} from "../deployments/urls";
 import {TrainingURLs} from "../trainings/urls";
 import {ConnectionURLs} from "../connections/urls";
 import {PackagerURLs} from "../packagers/urls";
-import {ToolchainURLs} from "../toolchains/urls";
+import {TrainingIntegrationURLs} from "../training_integrations/urls";
 import {PackagingURLs} from "../packagings/urls";
 
 const drawerWidth = 250;
@@ -165,10 +165,10 @@ export const SideBar: React.FC<SidebarProps> = ({isOpened}) => {
                     url={ConnectionURLs.Table}
                 />
                 <SideBarElement
-                    id = 'sideToolchainsBtn'
+                    id = 'sideTrainingIntegrationsBtn'
                     icon={<BuildIcon/>}
-                    heading='Toolchains'
-                    url={ToolchainURLs.Table}
+                    heading='Training Integrations'
+                    url={TrainingIntegrationURLs.Table}
                 />
                 <SideBarElement
                     id = 'sidePackagersBnt'
