@@ -26,7 +26,7 @@ export const DashboardPanel: React.FC<DashboardPanelProps> = ({icon, header, chi
                         {icon}
                     </Avatar>
                 }
-                title={<span className={classes.header}>{header}</span>}
+                title={<span id={`${header}-title`} className={classes.header}>{header}</span>}
             />
             <Divider/>
             <CardContent>
