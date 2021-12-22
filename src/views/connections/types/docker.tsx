@@ -7,20 +7,25 @@ import {ConnectionSpecPlugin, ConnectionTypes} from "./index";
 import {OdahuTextField} from "../../../components/OdahuTextField";
 import {useFieldsStyles} from "../../../components/fields";
 import {hidingSequence} from "../../../utils/sensitive";
+import {FormikOdahuAutocomplete} from "../../../components/OdahuAutocomplete";
 
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
     return [
         {name: "Username", elem: conn.spec?.username},
-        {name: "Password", elem: hidingSequence}
+        {name: "Password", elem: hidingSequence},
+        {name: "Vital", elem: conn.spec?.vital? "true": "false"}
     ];
 }
 
 export const Schema = {
     uri: Yup.string().trim().required('URI is a required field'),
     username: Yup.string().trim().required('Username is a required field'),
-    password: Yup.string().trim().required('Password is a required field')
+    password: Yup.string().trim().required('Password is a required field'),
+    vital: Yup.string().trim(),
 };
+
+const IS_VITAL = ["true", "false"]
 
 export const EditableFields: React.FC = () => {
     const classes = useFieldsStyles();
@@ -44,6 +49,13 @@ export const EditableFields: React.FC = () => {
                 name="spec.password"
                 label="Password"
                 description="Base64-encoded Docker registry password"
+            />
+            <FormikOdahuAutocomplete
+                className={classes.editorField}
+                name="spec.vital"
+                label="Vital"
+                options={IS_VITAL}
+                description='Is connection vital'
             />
         </>
     )

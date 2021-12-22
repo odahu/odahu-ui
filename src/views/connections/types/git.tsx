@@ -13,7 +13,8 @@ import {hidingSequence} from "../../../utils/sensitive";
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
     return [
         {name: "Reference", elem: conn.spec?.reference},
-        {name: "SSH private key", elem: hidingSequence}
+        {name: "SSH private key", elem: hidingSequence},
+        {name: "Vital", elem: conn.spec?.vital? "true": "false"}
     ];
 }
 
@@ -21,9 +22,11 @@ export const Schema = {
     uri: Yup.string().trim().required('GIT URL is a required field'),
     keySecret: Yup.string().trim().required('SSH private key is a required field'),
     reference: Yup.string().trim(),
+    vital: Yup.string().trim(),
 };
 
 const MOST_POPULAR_GIT_BRANCHES = ["master", "develop"];
+const IS_VITAL = ["true", "false"]
 export const EditableFields: React.FC = () => {
     const classes = useFieldsStyles();
 
@@ -47,6 +50,13 @@ export const EditableFields: React.FC = () => {
                 name="spec.keySecret"
                 label="SSH private key"
                 description='base64 encoded SSH private key'
+            />
+            <FormikOdahuAutocomplete
+                className={classes.editorField}
+                name="spec.vital"
+                label="Vital"
+                options={IS_VITAL}
+                description='Is connection vital'
             />
         </>
     )

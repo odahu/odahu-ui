@@ -7,11 +7,13 @@ import {ConnectionSpecPlugin, ConnectionTypes} from "./index";
 import {OdahuTextField} from "../../../components/OdahuTextField";
 import {useFieldsStyles} from "../../../components/fields";
 import {hidingSequence} from "../../../utils/sensitive";
+import {FormikOdahuAutocomplete} from "../../../components/OdahuAutocomplete";
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
     return [
         {name: "Project", elem: conn.spec?.region},
-        {name: "Service Account Key", elem: hidingSequence}
+        {name: "Service Account Key", elem: hidingSequence},
+        {name: "Vital", elem: conn.spec?.vital? "true": "false"}
     ];
 }
 
@@ -19,7 +21,10 @@ export const Schema = {
     uri: Yup.string().trim().required('URI is a required field'),
     region: Yup.string().trim().required('Project is a required field'),
     keySecret: Yup.string().trim().required('Service account key is a required field'),
+    vital: Yup.string().trim(),
 };
+
+const IS_VITAL = ["true", "false"]
 
 
 export const EditableFields: React.FC = () => {
@@ -44,6 +49,13 @@ export const EditableFields: React.FC = () => {
                 name="spec.keySecret"
                 label="Service account secret"
                 description='Base64-encoded Service Account key in json format'
+            />
+            <FormikOdahuAutocomplete
+                className={classes.editorField}
+                name="spec.vital"
+                label="Vital"
+                options={IS_VITAL}
+                description='Is connection vital'
             />
         </>
     )
