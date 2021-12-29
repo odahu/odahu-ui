@@ -12,5 +12,9 @@
 
 import * as models from './models';
 
-export interface FeedbackModelFeedbackResponse {
+export interface ModelMeta {
+    name?: string;
+
+    version?: string;
+
 }

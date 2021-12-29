@@ -34,9 +34,9 @@ export interface InferenceServiceSpec {
     image?: string;
 
     /**
-     * ModelSource defines location of ML model files
+     * ModelRegistry defines location of ML model files
      */
-    modelSource?: models.ConnectionReference;
+    modelRegistry?: models.ModelSource;
 
     /**
      * Node selector for specifying a node pool
