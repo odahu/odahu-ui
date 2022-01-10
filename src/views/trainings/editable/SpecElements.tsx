@@ -7,7 +7,7 @@ import {ConnectionTypes} from "../../connections/types";
 import {Divider, Paper, Typography} from "@material-ui/core";
 import {FormikOdahuSelect} from "../../../components/OdahuSelect";
 import {OdahuTextField} from "../../../components/OdahuTextField";
-import {FieldArray, getIn, setIn, useFormikContext} from "formik";
+import {FieldArray, getIn, useFormikContext} from "formik";
 import {ModelTraining} from "../../../models/odahuflow/ModelTraining";
 import {InputParametersView, ItemInputParametersView} from "../../../components/InputParametersView";
 import {ResourcesSpecElements} from "../../../components/ResourceSpecElements";

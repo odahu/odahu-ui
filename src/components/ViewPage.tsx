@@ -68,6 +68,7 @@ export const ViewPage: React.FC<ViewPageProps> = (props) => {
                     {
                         props.tabHeaders.map(header => (
                             <Tab
+                                id={`${header}-tab`}
                                 key={header}
                                 label={header}
                                 value={`${baseUrl}/${header}`}

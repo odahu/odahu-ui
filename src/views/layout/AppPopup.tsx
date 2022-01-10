@@ -17,6 +17,7 @@ import {ApplicationState} from "../../store";
 import {ConfigurationState} from "../../store/configuration/types";
 import {ExternalUrl} from "../../models/odahuflow/ExternalUrl";
 import clsx from "clsx";
+import { normalizeId } from "../../utils/normalizeId";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -76,7 +77,7 @@ export const AppPopup: React.FC = () => {
     return (
         <div className={classes.root}>
             <IconButton
-                id="accountOfCurrentUserBtn"
+                id="odahuComponentsBtn"
                 aria-label="account of current user"
                 aria-haspopup="true"
                 onClick={handleMenu}
@@ -107,29 +108,33 @@ export const AppPopup: React.FC = () => {
                 </div>
                 <Grid container spacing={2} style={{width: "300px", margin: "10px", marginRight: '0px'}}>
                     {configurationState.data.common?.externalUrls
-                        ?.map((externalUrl, i) => (
-                            <Grid key={i} lg={4} xs={4} item>
-                                <Card style={{boxShadow: 'none'}}
-                                      onClick={() => {
-                                          onExternalUrlClick(externalUrl)
-                                      }}>
-                                    <CardActionArea style={{textAlign: 'center'}}>
-                                        <CardMedia
-                                            style={{maxWidth: "60%", display: 'inline-block', minHeight: '50px'}}
-                                            component="img"
-                                            image={externalUrl.imageUrl ? externalUrl.imageUrl : defaultLogo}
-                                        />
-                                        <div>
-                                            <Typography
-                                                style={{width: '100%', wordWrap: 'break-word', fontSize: '12px'}}
-                                            >
-                                                {externalUrl.name}
-                                            </Typography>
-                                        </div>
-                                    </CardActionArea>
-                                </Card>
-                            </Grid>
-                        ))}
+                        ?.map((externalUrl, i) => {
+                            const id = normalizeId(externalUrl.name);
+
+                            return (
+                                <Grid key={i} lg={4} xs={4} item>
+                                    <Card style={{boxShadow: 'none'}}
+                                          onClick={() => {
+                                              onExternalUrlClick(externalUrl)
+                                          }}>
+                                        <CardActionArea id={id} style={{textAlign: 'center'}}>
+                                            <CardMedia
+                                                style={{maxWidth: "60%", display: 'inline-block', minHeight: '50px'}}
+                                                component="img"
+                                                image={externalUrl.imageUrl ? externalUrl.imageUrl : defaultLogo}
+                                            />
+                                            <div>
+                                                <Typography
+                                                    style={{width: '100%', wordWrap: 'break-word', fontSize: '12px'}}
+                                                >
+                                                    {externalUrl.name}
+                                                </Typography>
+                                            </div>
+                                        </CardActionArea>
+                                    </Card>
+                                </Grid>
+                            )
+                        })}
                 </Grid>
             </Popover>
         </div>

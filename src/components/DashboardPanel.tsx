@@ -19,14 +19,14 @@ export const DashboardPanel: React.FC<DashboardPanelProps> = ({icon, header, chi
     const classes = useDashboardPanelStyles();
 
     return (
-        <Card>
+        <Card id={`${header}-graph-container`} >
             <CardHeader
                 avatar={
                     <Avatar variant="square" style={{color: 'black', backgroundColor: 'white'}}>
                         {icon}
                     </Avatar>
                 }
-                title={<span className={classes.header}>{header}</span>}
+                title={<span id={`${header}-title`} className={classes.header}>{header}</span>}
             />
             <Divider/>
             <CardContent>

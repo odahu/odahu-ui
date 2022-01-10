@@ -81,7 +81,7 @@ export const ConnectionDashboardPanel: React.FC = () => {
             header={"Connections"}
         >
             {/*Use ref instead of ID*/}
-            <canvas ref={chartRef} width="240px" height="240px"/>
+            <canvas id='Connections-graph' ref={chartRef} width="240px" height="240px"/>
         </DashboardPanel>
     )
 };

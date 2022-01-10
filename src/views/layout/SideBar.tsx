@@ -171,7 +171,7 @@ export const SideBar: React.FC<SidebarProps> = ({isOpened}) => {
                     url={ToolchainURLs.Table}
                 />
                 <SideBarElement
-                    id = 'sidePackagersBnt'
+                    id = 'sidePackagersBtn'
                     icon={<AccountTreeIcon/>}
                     heading='Packagers'
                     url={PackagerURLs.Table}

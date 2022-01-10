@@ -29,6 +29,7 @@ export const UserPopup: React.FC = () => {
 
     return (
         <TopBarPopup
+            id="currentUserBtn"
             image={<AccountCircleIcon/>}
         >
             <Typography variant="h6" component="h4">
