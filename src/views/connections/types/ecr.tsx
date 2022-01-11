@@ -7,7 +7,7 @@ import {ConnectionSpecPlugin, ConnectionTypes} from "./index";
 import {OdahuTextField} from "../../../components/OdahuTextField";
 import {useFieldsStyles} from "../../../components/fields";
 import {hidingSequence} from "../../../utils/sensitive";
-import {FormikOdahuAutocomplete} from "../../../components/OdahuAutocomplete";
+import { ConnectionCheckbox } from "../../../components/ConnectionCheckbox";
 
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
@@ -26,8 +26,6 @@ export const Schema = {
     region: Yup.string().trim(),
     vital: Yup.string().trim(),
 };
-
-const IS_VITAL = ["true", "false"]
 
 export const EditableFields: React.FC = () => {
     const classes = useFieldsStyles();
@@ -57,13 +55,11 @@ export const EditableFields: React.FC = () => {
                 label="Access Key Secret"
                 description='Base64-encoded secret access key (for example, "d0phbHJYVXRuRkVNSS9LN01ERU5HL2JQeFJmaUNZRVhBTVBMRUtFWQ==").'
             />
-            <FormikOdahuAutocomplete
-                className={classes.editorField}
+            <ConnectionCheckbox
                 name="spec.vital"
-                label="Vital"
-                options={IS_VITAL}
-                description='Is connection vital'
-            />
+                label={'Vital:'}
+                description={'Is connection vital'}
+            ></ConnectionCheckbox>
         </>
     )
 };

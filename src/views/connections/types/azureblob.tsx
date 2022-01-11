@@ -7,7 +7,7 @@ import {OdahuTextField} from "../../../components/OdahuTextField";
 import {useFieldsStyles} from "../../../components/fields";
 import {hidingSequence} from "../../../utils/sensitive";
 import {Connection} from "../../../models/odahuflow/Connection";
-import {FormikOdahuAutocomplete} from "../../../components/OdahuAutocomplete";
+import { ConnectionCheckbox } from "../../../components/ConnectionCheckbox";
 
 
 function extractViewParameters(conn: Connection): Array<ViewParam> {
@@ -22,8 +22,6 @@ const Schema = {
     keySecret: Yup.string().trim().required('Shared Access Token is a required field'),
     vital: Yup.string().trim(),
 };
-
-const IS_VITAL = ["true", "false"]
 
 const EditableFields: React.FC = () => {
     const classes = useFieldsStyles();
@@ -43,13 +41,11 @@ const EditableFields: React.FC = () => {
                 description='The Shared Access Signatures key has the following format:
                 "<primary_blob_endpoint>/<sas_token>" and must be base64-encoded.'
             />
-            <FormikOdahuAutocomplete
-                className={classes.editorField}
+            <ConnectionCheckbox
                 name="spec.vital"
-                label="Vital"
-                options={IS_VITAL}
-                description='Is connection vital'
-            />
+                label={'Vital:'}
+                description={'Is connection vital'}
+            ></ConnectionCheckbox>
         </>
     )
 };
