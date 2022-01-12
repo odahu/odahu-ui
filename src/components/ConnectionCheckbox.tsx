@@ -1,6 +1,6 @@
-import React from "react"
+import React from "react";
 import { Checkbox, createStyles, makeStyles } from "@material-ui/core"
-import { useFormikContext } from "formik";
+import { getIn, useFormikContext } from "formik";
 
 export interface ConnectionCheckboxProps {
     name: string;
@@ -44,12 +44,14 @@ const useLogsConnectionCheckboxStyles = makeStyles(() =>
 export const ConnectionCheckbox: React.FC<ConnectionCheckboxProps> = ({name, label, description}) => {
     const classes = useLogsConnectionCheckboxStyles();
     const formik = useFormikContext();
+    const value = getIn(formik.values, name);
     
     return (
     <div className={classes.root}>
         <label className={classes.paragraph}>
             <span className={classes.title}>{label}</span>
             <Checkbox
+                checked={value}
                 onChange={(event, value) => {
                     formik.setFieldValue(name, value);
                 }}
