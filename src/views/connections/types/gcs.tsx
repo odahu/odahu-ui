@@ -7,7 +7,7 @@ import {ConnectionSpecPlugin, ConnectionTypes} from "./index";
 import {OdahuTextField} from "../../../components/OdahuTextField";
 import {useFieldsStyles} from "../../../components/fields";
 import {hidingSequence} from "../../../utils/sensitive";
-import { ConnectionCheckbox } from "../../../components/ConnectionCheckbox";
+import { OdahuCheckbox } from "../../../components/ConnectionCheckbox";
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
     return [
@@ -21,7 +21,7 @@ export const Schema = {
     uri: Yup.string().trim().required('URI is a required field'),
     region: Yup.string().trim().required('Project is a required field'),
     keySecret: Yup.string().trim().required('Service account key is a required field'),
-    vital: Yup.string().trim(),
+    vital: Yup.boolean(),
 };
 
 export const EditableFields: React.FC = () => {
@@ -47,11 +47,11 @@ export const EditableFields: React.FC = () => {
                 label="Service account secret"
                 description='Base64-encoded Service Account key in json format'
             />
-            <ConnectionCheckbox
+            <OdahuCheckbox
                 name="spec.vital"
                 label={'Vital:'}
                 description={'Is connection vital'}
-            ></ConnectionCheckbox>
+            ></OdahuCheckbox>
         </>
     )
 };

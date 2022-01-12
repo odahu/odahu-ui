@@ -2,13 +2,13 @@ import React from "react";
 import { Checkbox, createStyles, makeStyles } from "@material-ui/core"
 import { getIn, useFormikContext } from "formik";
 
-export interface ConnectionCheckboxProps {
+export interface OdahuCheckboxProps {
     name: string;
     label: string;
     description: string;
 }
 
-const useLogsConnectionCheckboxStyles = makeStyles(() =>
+const useOdahuCheckboxStyles = makeStyles(() =>
     createStyles({
         root: {
             position: 'relative',
@@ -41,8 +41,8 @@ const useLogsConnectionCheckboxStyles = makeStyles(() =>
     }),
 );
 
-export const ConnectionCheckbox: React.FC<ConnectionCheckboxProps> = ({name, label, description}) => {
-    const classes = useLogsConnectionCheckboxStyles();
+export const OdahuCheckbox: React.FC<OdahuCheckboxProps> = ({name, label, description}) => {
+    const classes = useOdahuCheckboxStyles();
     const formik = useFormikContext();
     const value = getIn(formik.values, name);
     

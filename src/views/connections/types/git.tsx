@@ -8,7 +8,7 @@ import {OdahuTextField} from "../../../components/OdahuTextField";
 import {FormikOdahuAutocomplete} from "../../../components/OdahuAutocomplete";
 import {useFieldsStyles} from "../../../components/fields";
 import {hidingSequence} from "../../../utils/sensitive";
-import { ConnectionCheckbox } from "../../../components/ConnectionCheckbox";
+import { OdahuCheckbox } from "../../../components/ConnectionCheckbox";
 
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
@@ -23,7 +23,7 @@ export const Schema = {
     uri: Yup.string().trim().required('GIT URL is a required field'),
     keySecret: Yup.string().trim().required('SSH private key is a required field'),
     reference: Yup.string().trim(),
-    vital: Yup.string().trim(),
+    vital: Yup.boolean(),
 };
 
 const MOST_POPULAR_GIT_BRANCHES = ["master", "develop"];
@@ -51,11 +51,11 @@ export const EditableFields: React.FC = () => {
                 label="SSH private key"
                 description='base64 encoded SSH private key'
             />
-            <ConnectionCheckbox
+            <OdahuCheckbox
                 name="spec.vital"
                 label={'Vital:'}
                 description={'Is connection vital'}
-            ></ConnectionCheckbox>
+            ></OdahuCheckbox>
         </>
     )
 };
