@@ -7,7 +7,7 @@ import {ConnectionSpecPlugin, ConnectionTypes} from "./index";
 import {OdahuTextField} from "../../../components/OdahuTextField";
 import {useFieldsStyles} from "../../../components/fields";
 import {hidingSequence} from "../../../utils/sensitive";
-import { OdahuCheckbox } from "../../../components/ConnectionCheckbox";
+import { OdahuCheckbox } from "../../../components/OdahuCheckbox";
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
     return [

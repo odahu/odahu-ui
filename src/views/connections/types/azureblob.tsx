@@ -7,7 +7,7 @@ import {OdahuTextField} from "../../../components/OdahuTextField";
 import {useFieldsStyles} from "../../../components/fields";
 import {hidingSequence} from "../../../utils/sensitive";
 import {Connection} from "../../../models/odahuflow/Connection";
-import { OdahuCheckbox } from "../../../components/ConnectionCheckbox";
+import { OdahuCheckbox } from "../../../components/OdahuCheckbox";
 
 
 function extractViewParameters(conn: Connection): Array<ViewParam> {
