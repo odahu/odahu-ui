@@ -13,7 +13,7 @@ export function extractViewParameters(conn: Connection): Array<ViewParam> {
     return [
         {name: "Project", elem: conn.spec?.region},
         {name: "Service Account Key", elem: hidingSequence},
-        {name: "Vital", elem: conn.spec?.vital? "true": "false"}
+        {name: "Vital", elem: conn.spec?.vital? true: false}
     ];
 }
 

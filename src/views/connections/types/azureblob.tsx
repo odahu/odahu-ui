@@ -13,7 +13,7 @@ import { OdahuCheckbox } from "../../../components/OdahuCheckbox";
 function extractViewParameters(conn: Connection): Array<ViewParam> {
     return [
         {name: "Shared Access Signature URL", elem: hidingSequence},
-        {name: "Vital", elem: conn.spec?.vital? "true": "false"}
+        {name: "Vital", elem: conn.spec?.vital? true: false}
     ];
 }
 

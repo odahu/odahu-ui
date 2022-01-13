@@ -14,7 +14,7 @@ export function extractViewParameters(conn: Connection): Array<ViewParam> {
     return [
         {name: "Username", elem: conn.spec?.username},
         {name: "Password", elem: hidingSequence},
-        {name: "Vital", elem: conn.spec?.vital? "true": "false"}
+        {name: "Vital", elem: conn.spec?.vital? true: false}
     ];
 }
 
