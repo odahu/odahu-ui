@@ -15,7 +15,7 @@ export function extractViewParameters(conn: Connection): Array<ViewParam> {
     return [
         {name: "Reference", elem: conn.spec?.reference},
         {name: "SSH private key", elem: hidingSequence},
-        {name: "Vital", elem: conn.spec?.vital? true: false}
+        {name: "Vital", elem: conn.spec?.vital? "true": "false"}
     ];
 }
 

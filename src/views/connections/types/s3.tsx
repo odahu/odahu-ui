@@ -16,7 +16,7 @@ export function extractViewParameters(conn: Connection): Array<ViewParam> {
         {name: "Region", elem: conn.spec?.region},
         {name: "Access Key ID", elem: hidingSequence},
         {name: "Access Key Secret", elem: hidingSequence},
-        {name: "Vital", elem: conn.spec?.vital? true: false}
+        {name: "Vital", elem: conn.spec?.vital? "true": "false"}
     ];
 }
 
