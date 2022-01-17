@@ -69,6 +69,11 @@ export interface ConnectionSpec {
     username?: string;
 
     /**
+     * Is connection vital
+     */
+    vital?: boolean;
+
+    /**
      * Custom web UI link
      */
     webUILink?: string;

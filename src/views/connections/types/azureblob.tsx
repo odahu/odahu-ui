@@ -6,17 +6,21 @@ import {ConnectionSpecPlugin, ConnectionTypes} from "./index";
 import {OdahuTextField} from "../../../components/OdahuTextField";
 import {useFieldsStyles} from "../../../components/fields";
 import {hidingSequence} from "../../../utils/sensitive";
+import {Connection} from "../../../models/odahuflow/Connection";
+import { OdahuCheckbox } from "../../../components/OdahuCheckbox";
 
 
-function extractViewParameters(): Array<ViewParam> {
+function extractViewParameters(conn: Connection): Array<ViewParam> {
     return [
-        {name: "Shared Access Signature URL", elem: hidingSequence}
+        {name: "Shared Access Signature URL", elem: hidingSequence},
+        {name: "Vital", elem: conn.spec?.vital? "true": "false"}
     ];
 }
 
 const Schema = {
     uri: Yup.string().trim().required('Shared Access Signature URL is a required field'),
     keySecret: Yup.string().trim().required('Shared Access Token is a required field'),
+    vital: Yup.boolean(),
 };
 
 const EditableFields: React.FC = () => {
@@ -37,6 +41,11 @@ const EditableFields: React.FC = () => {
                 description='The Shared Access Signatures key has the following format:
                 "<primary_blob_endpoint>/<sas_token>" and must be base64-encoded.'
             />
+            <OdahuCheckbox
+                name="spec.vital"
+                label={'Vital:'}
+                description={'Is connection vital'}
+            ></OdahuCheckbox>
         </>
     )
 };
