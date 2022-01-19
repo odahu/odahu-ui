@@ -7,15 +7,13 @@ import {ConnectionSpecPlugin, ConnectionTypes} from "./index";
 import {OdahuTextField} from "../../../components/OdahuTextField";
 import {useFieldsStyles} from "../../../components/fields";
 import {hidingSequence} from "../../../utils/sensitive";
-import { OdahuCheckbox } from "../../../components/OdahuCheckbox";
 
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
     return [
         {name: "Region", elem: conn.spec?.region},
         {name: "Access Key ID", elem: hidingSequence},
-        {name: "Access Key Secret", elem: hidingSequence},
-        {name: "Vital", elem: conn.spec?.vital? "true": "false"}
+        {name: "Access Key Secret", elem: hidingSequence}
     ];
 }
 
@@ -24,7 +22,6 @@ export const Schema = {
     keySecret: Yup.string().trim().required('Access Key Secret is a required field'),
     keyID: Yup.string().trim().required('Access Key ID is a required field'),
     region: Yup.string().trim(),
-    vital: Yup.boolean(),
 };
 
 export const EditableFields: React.FC = () => {
@@ -55,11 +52,6 @@ export const EditableFields: React.FC = () => {
                 label="Access Key Secret"
                 description='Base64-encoded secret access key (for example, "d0phbHJYVXRuRkVNSS9LN01ERU5HL2JQeFJmaUNZRVhBTVBMRUtFWQ==").'
             />
-            <OdahuCheckbox
-                name="spec.vital"
-                label={'Vital:'}
-                description={'Is connection vital'}
-            ></OdahuCheckbox>
         </>
     )
 };
