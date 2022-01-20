@@ -8,6 +8,7 @@ import {Connection} from "../../models/odahuflow/Connection";
 import {ExternalLink} from "../../components/ExternalLink";
 import {ConnectionURLs} from "./urls";
 import {humanDate} from "../../utils/date";
+import { showErrorAlert } from '../../store/alert/actions';
 
 const ConnectionEnhancedTable = (props: EnhancedTableProps<Connection>) => <EnhancedTable {...props}/>;
 
@@ -38,6 +39,9 @@ export const ConnectionTable: React.FC = () => {
             selectedIDs.map(connID => dispatch(deleteConnectionRequest(connID)))
         ).then(() => {
             dispatch(fetchAllConnectionRequest())
+        })
+        .catch(err => {
+            dispatch(showErrorAlert("Error", String(err)));
         });
     };
 
