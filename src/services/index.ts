@@ -4,7 +4,7 @@ import {ModelDeployment} from "../models/odahuflow/ModelDeployment";
 import {ModelPackaging} from "../models/odahuflow/ModelPackaging";
 import {PackagingIntegration} from "../models/odahuflow/PackagingIntegration";
 import {ModelTraining} from "../models/odahuflow/ModelTraining";
-import {ToolchainIntegration} from "../models/odahuflow/ToolchainIntegration";
+import {TrainingIntegration} from "../models/odahuflow/TrainingIntegration";
 import {UserService} from "./user";
 import {ModelService} from "./models";
 
@@ -141,7 +141,7 @@ export interface Services {
     packagingService: LoggingService<ModelPackaging>;
     packagerService: Service<PackagingIntegration>;
     trainingService: LoggingService<ModelTraining>;
-    toolchainService: Service<ToolchainIntegration>;
+    trainingIntegrationService: Service<TrainingIntegration>;
     userService: UserService;
     modelService: ModelService;
 }

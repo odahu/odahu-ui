@@ -149,7 +149,7 @@ export function EnhancedTableBody<T>(props: EnhancedTableBodyProps<T>): React.Re
                                             </Tooltip>
                                         ) : ''} {elem}
                                     </TableCell>
-                                ) : props.tableTitle === 'Toolchains' || props.tableTitle === 'Packagers' ? 
+                                ) : props.tableTitle === 'Training Integrations' || props.tableTitle === 'Packagers' ?
                                 (
                                     <TableCell className={classes.columnCell} key={index} align="left">
                                         {index === 0 ? 

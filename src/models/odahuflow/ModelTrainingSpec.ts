@@ -56,7 +56,7 @@ export interface ModelTrainingSpec {
     nodeSelector?: { [key: string]: string; };
 
     /**
-     * Name of Connection to storage where training output artifact will be stored. Permitted connection types are defined by specific toolchain
+     * Name of Connection to storage where training output artifact will be stored. Permitted connection types are defined by specific training integration
      */
     outputConnection?: string;
 
@@ -66,9 +66,9 @@ export interface ModelTrainingSpec {
     resources?: models.ResourceRequirements;
 
     /**
-     * IntegrationName of toolchain
+     * IntegrationName of trainer
      */
-    toolchain?: string;
+    trainingIntegration?: string;
 
     /**
      * Directory with model scripts/files in a git repository

@@ -36,7 +36,7 @@ export const TrainingView: React.FC<TrainingViewProps> = ({training, status}) =>
         {name: "ID", elem: training.id},
         {name: "Model name", elem: training.spec?.model?.name},
         {name: "Model version", elem: training.spec?.model?.version},
-        {name: "Toolchain", elem: training.spec?.toolchain},
+        {name: "Training Integration", elem: training.spec?.trainingIntegration},
         {name: 'Created at', elem: humanDate(training.createdAt)},
         {name: 'Updated at', elem: humanDate(training.updatedAt)},
     ];

@@ -9,21 +9,21 @@ import {Link as RouterLink, Redirect} from "react-router-dom";
 import {TrainingURLs} from "./urls";
 import {join} from "path";
 import {ConnectionURLs} from "../connections/urls";
-import {ToolchainURLs} from "../toolchains/urls";
+import {TrainingIntegrationURLs} from "../training_integrations/urls";
 import {humanDate} from "../../utils/date";
 import {PackagingURLs} from "../packagings/urls";
 import WorkIcon from '@material-ui/icons/Work';
 
 const TrainingEnhancedTable = (props: EnhancedTableProps<ModelTraining>) => <EnhancedTable {...props}/>;
 
-const headers = ['Toolchain', 'Model Name', 'Model Version', 'Algorithm Source Connection', 'State', 'Created at', 'Updated at'];
+const headers = ['Training Integration', 'Model Name', 'Model Version', 'Algorithm Source Connection', 'State', 'Created at', 'Updated at'];
 const extractRow = (mt: ModelTraining) => [
     (
         <RouterLink
-            key="toolchain"
-            to={join(ToolchainURLs.Page, mt.spec?.toolchain ?? '')}
+            key="trainingIntegration"
+            to={join(TrainingIntegrationURLs.Page, mt.spec?.trainingIntegration ?? '')}
         >
-            {mt.spec?.toolchain}
+            {mt.spec?.trainingIntegration}
         </RouterLink>
     ),
     mt.spec?.model?.name,
@@ -41,7 +41,7 @@ const extractRow = (mt: ModelTraining) => [
     humanDate(mt.updatedAt)
 ];
 const extractRowValues = (mt: ModelTraining) => [
-    mt.spec?.toolchain, mt.spec?.model?.name, mt.spec?.model?.version,
+    mt.spec?.trainingIntegration, mt.spec?.model?.name, mt.spec?.model?.version,
     mt.spec?.algorithmSource?.vcs?.connection ?? mt.spec?.algorithmSource?.objectStorage?.connection,
     mt.status?.state, humanDate(mt.createdAt), humanDate(mt.updatedAt)
 ];

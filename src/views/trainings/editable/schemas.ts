@@ -6,7 +6,7 @@ export const TrainingMetaSchema = Yup.object().shape({
     id: IDSchema,
     spec: Yup.object().shape({
         image: Yup.string().trim(),
-        toolchain: Yup.string().trim().required('Toolchain is a required field'),
+        trainingIntegration: Yup.string().trim().required('Training Integration is a required field'),
         model: Yup.object().shape({
             name: Yup.string().trim().required('Model name is a required field')
                 .test('name', "Model name is not valid", isValidLabel),
@@ -37,7 +37,7 @@ export const TrainingSchema = Yup.object().shape({
                 path: Yup.string().trim()
             })
         }),
-        toolchain: Yup.string().trim().required('Toolchain is a required field'),
+        trainingIntegration: Yup.string().trim().required('Training Integration is a required field'),
         envs: Yup.array().of(
             Yup.object().shape({
                 name: Yup.string().trim().required('Name is a required field'),

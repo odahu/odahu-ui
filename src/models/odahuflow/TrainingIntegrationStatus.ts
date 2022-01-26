@@ -12,5 +12,5 @@
 
 import * as models from './models';
 
-export interface ToolchainIntegrationStatus {
+export interface TrainingIntegrationStatus {
 }

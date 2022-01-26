@@ -61,11 +61,11 @@ export interface ModelTrainingConfig {
      */
     tolerations?: string;
 
-    toolchainIntegrationNamespace?: string;
+    trainingIntegrationNamespace?: string;
 
     /**
-     * Storage backend for toolchain integrations. Available options:   * kubernetes   * postgres
+     * Storage backend for training integrations. Available options:   * kubernetes   * postgres
      */
-    toolchainIntegrationRepositoryType?: string;
+    trainingIntegrationRepositoryType?: string;
 
 }

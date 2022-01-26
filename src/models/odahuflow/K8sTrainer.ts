@@ -34,8 +34,8 @@ export interface K8sTrainer {
     outputConn?: models.Connection;
 
     /**
-     * Toolchain integration
+     * Training integration
      */
-    toolchainIntegration?: models.ToolchainIntegration;
+    trainingIntegration?: models.TrainingIntegration;
 
 }

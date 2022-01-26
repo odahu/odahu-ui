@@ -9,7 +9,7 @@ import {DeploymentService} from "./services/deployments";
 import {PackagingService} from "./services/packaging";
 import {PackagerIntegrationService} from "./services/packager";
 import {TrainingService} from "./services/trainings";
-import {TrainingToolchainService} from "./services/toolchain";
+import {TrainingIntegrationService} from "./services/training_integration";
 import {UserService} from "./services/user";
 import {ModelService} from "./services/models";
 
@@ -27,7 +27,7 @@ export function getServices(): Services {
         packagingService: new PackagingService(),
         packagerService: new PackagerIntegrationService(),
         trainingService: new TrainingService(),
-        toolchainService: new TrainingToolchainService(),
+        trainingIntegrationService: new TrainingIntegrationService(),
         modelService: new ModelService()
     }
     return services
