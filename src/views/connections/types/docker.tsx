@@ -7,19 +7,22 @@ import {ConnectionSpecPlugin, ConnectionTypes} from "./index";
 import {OdahuTextField} from "../../../components/OdahuTextField";
 import {useFieldsStyles} from "../../../components/fields";
 import {hidingSequence} from "../../../utils/sensitive";
+import { OdahuCheckbox } from "../../../components/OdahuCheckbox";
 
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
     return [
         {name: "Username", elem: conn.spec?.username},
-        {name: "Password", elem: hidingSequence}
+        {name: "Password", elem: hidingSequence},
+        {name: "Vital", elem: conn.spec?.vital? "true": "false"}
     ];
 }
 
 export const Schema = {
     uri: Yup.string().trim().required('URI is a required field'),
     username: Yup.string().trim().required('Username is a required field'),
-    password: Yup.string().trim().required('Password is a required field')
+    password: Yup.string().trim().required('Password is a required field'),
+    vital: Yup.boolean(),
 };
 
 export const EditableFields: React.FC = () => {
@@ -45,6 +48,11 @@ export const EditableFields: React.FC = () => {
                 label="Password"
                 description="Base64-encoded Docker registry password"
             />
+            <OdahuCheckbox
+                name="spec.vital"
+                label={'Vital:'}
+                description={'Is connection vital'}
+            ></OdahuCheckbox>
         </>
     )
 };
