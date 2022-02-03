@@ -8,6 +8,8 @@ import {OdahuTextField} from "../../../components/OdahuTextField";
 import {FormikOdahuAutocomplete} from "../../../components/OdahuAutocomplete";
 import {useFieldsStyles} from "../../../components/fields";
 import {hidingSequence} from "../../../utils/sensitive";
+import { MuiThemeProvider } from "@material-ui/core";
+import { asterisksStyle } from "../../common_styles/asterisks-theme";
 import { OdahuCheckbox } from "../../../components/OdahuCheckbox";
 
 
@@ -32,30 +34,34 @@ export const EditableFields: React.FC = () => {
 
     return (
         <>
-            <OdahuTextField
-                className={classes.editorField}
-                name="spec.uri"
-                label="Git SSH URL"
-                description='GIT SSH URL, for example git@github.com:odahu/odahu-examples.git'
-            />
-            <FormikOdahuAutocomplete
-                className={classes.editorField}
-                name="spec.reference"
-                label="Reference"
-                options={MOST_POPULAR_GIT_BRANCHES}
-                description='a branch, tag, or commit'
-            />
-            <FormikSecretTextField
-                className={classes.editorField}
-                name="spec.keySecret"
-                label="SSH private key"
-                description='base64 encoded SSH private key'
-            />
-            <OdahuCheckbox
-                name="spec.vital"
-                label={'Vital:'}
-                description={'Is connection vital'}
-            ></OdahuCheckbox>
+            <MuiThemeProvider theme={asterisksStyle}>
+                <OdahuTextField
+                    className={classes.editorField}
+                    name="spec.uri"
+                    label="Git SSH URL"
+                    description='GIT SSH URL, for example git@github.com:odahu/odahu-examples.git'
+                    required
+                />
+                <FormikOdahuAutocomplete
+                    className={classes.editorField}
+                    name="spec.reference"
+                    label="Reference"
+                    options={MOST_POPULAR_GIT_BRANCHES}
+                    description='a branch, tag, or commit'
+                />
+                <FormikSecretTextField
+                    className={classes.editorField}
+                    name="spec.keySecret"
+                    label="SSH private key"
+                    description='base64 encoded SSH private key'
+                    required
+                />
+                <OdahuCheckbox
+                    name="spec.vital"
+                    label={'Vital:'}
+                    description={'Is connection vital'}
+                ></OdahuCheckbox>
+            </MuiThemeProvider>
         </>
     )
 };

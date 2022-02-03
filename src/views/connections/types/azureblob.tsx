@@ -8,6 +8,8 @@ import {useFieldsStyles} from "../../../components/fields";
 import {hidingSequence} from "../../../utils/sensitive";
 import {Connection} from "../../../models/odahuflow/Connection";
 import { OdahuCheckbox } from "../../../components/OdahuCheckbox";
+import { MuiThemeProvider } from "@material-ui/core";
+import { asterisksStyle } from "../../common_styles/asterisks-theme";
 
 
 function extractViewParameters(conn: Connection): Array<ViewParam> {
@@ -28,24 +30,28 @@ const EditableFields: React.FC = () => {
 
     return (
         <>
-            <OdahuTextField
-                className={classes.editorField}
-                name="spec.uri"
-                label="URI"
-                description="Azure storage compatible URI, for example <bucket-name>/dir1/dir2/"
-            />
-            <FormikSecretTextField
-                className={classes.editorField}
-                name='spec.keySecret'
-                label="SAS Token"
-                description='The Shared Access Signatures key has the following format:
-                "<primary_blob_endpoint>/<sas_token>" and must be base64-encoded.'
-            />
-            <OdahuCheckbox
-                name="spec.vital"
-                label={'Vital:'}
-                description={'Is connection vital'}
-            ></OdahuCheckbox>
+            <MuiThemeProvider theme={asterisksStyle}>
+                <OdahuTextField
+                    className={classes.editorField}
+                    name="spec.uri"
+                    label="URI"
+                    description="Azure storage compatible URI, for example <bucket-name>/dir1/dir2/"
+                    required
+                />
+                <FormikSecretTextField
+                    className={classes.editorField}
+                    name='spec.keySecret'
+                    label="SAS Token"
+                    description='The Shared Access Signatures key has the following format:
+                    "<primary_blob_endpoint>/<sas_token>" and must be base64-encoded.'
+                    required
+                />
+                <OdahuCheckbox
+                    name="spec.vital"
+                    label={'Vital:'}
+                    description={'Is connection vital'}
+                ></OdahuCheckbox>
+            </MuiThemeProvider>
         </>
     )
 };

@@ -8,6 +8,8 @@ import {OdahuTextField} from "../../../components/OdahuTextField";
 import {useFieldsStyles} from "../../../components/fields";
 import {hidingSequence} from "../../../utils/sensitive";
 import { OdahuCheckbox } from "../../../components/OdahuCheckbox";
+import { MuiThemeProvider } from "@material-ui/core";
+import { asterisksStyle } from "../../common_styles/asterisks-theme";
 
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
@@ -32,34 +34,39 @@ export const EditableFields: React.FC = () => {
 
     return (
         <>
-            <OdahuTextField
-                className={classes.editorField}
-                name="spec.uri"
-                label="URI"
-                description='The url must have the following format, aws_account_id.dkr.ecr.`region`.amazonaws.com/some-prefix'
-            />
-            <OdahuTextField
-                className={classes.editorField}
-                name="spec.region"
-                label="Region"
-            />
-            <FormikSecretTextField
-                className={classes.editorField}
-                name="spec.keyID"
-                label="Access Key ID"
-                description='Base64-encoded access key ID (for example, "QUtJQUlPU0ZPRE5ON0VYQU1QTEU=").'
-            />
-            <FormikSecretTextField
-                className={classes.editorField}
-                name="spec.keySecret"
-                label="Access Key Secret"
-                description='Base64-encoded secret access key (for example, "d0phbHJYVXRuRkVNSS9LN01ERU5HL2JQeFJmaUNZRVhBTVBMRUtFWQ==").'
-            />
-            <OdahuCheckbox
-                name="spec.vital"
-                label={'Vital:'}
-                description={'Is connection vital'}
-            ></OdahuCheckbox>
+            <MuiThemeProvider theme={asterisksStyle}>
+                <OdahuTextField
+                    className={classes.editorField}
+                    name="spec.uri"
+                    label="URI"
+                    description='The url must have the following format, aws_account_id.dkr.ecr.`region`.amazonaws.com/some-prefix'
+                    required
+                />
+                <OdahuTextField
+                    className={classes.editorField}
+                    name="spec.region"
+                    label="Region"
+                />
+                <FormikSecretTextField
+                    className={classes.editorField}
+                    name="spec.keyID"
+                    label="Access Key ID"
+                    description='Base64-encoded access key ID (for example, "QUtJQUlPU0ZPRE5ON0VYQU1QTEU=").'
+                    required
+                />
+                <FormikSecretTextField
+                    className={classes.editorField}
+                    name="spec.keySecret"
+                    label="Access Key Secret"
+                    description='Base64-encoded secret access key (for example, "d0phbHJYVXRuRkVNSS9LN01ERU5HL2JQeFJmaUNZRVhBTVBMRUtFWQ==").'
+                    required
+                />
+                <OdahuCheckbox
+                    name="spec.vital"
+                    label={'Vital:'}
+                    description={'Is connection vital'}
+                ></OdahuCheckbox>
+            </MuiThemeProvider>
         </>
     )
 };

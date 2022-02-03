@@ -7,6 +7,8 @@ import {ConnectionTypes} from "../../connections/types";
 import {OdahuTextField} from "../../../components/OdahuTextField";
 import {FormikOdahuSelect} from "../../../components/OdahuSelect";
 import {useFieldsStyles} from "../../../components/fields";
+import { MuiThemeProvider } from "@material-ui/core";
+import { asterisksStyle } from "../../common_styles/asterisks-theme";
 
 export interface MetadataElementsProps {
     readonlyID?: boolean;
@@ -27,27 +29,32 @@ export const MetadataElements: React.FC<MetadataElementsProps> = ({readonlyID = 
 
     return (
         <>
-            <OdahuTextField
-                className={classes.editorField}
-                disabled={readonlyID}
-                name="id"
-                label='ID'
-                description='Unique value among all packagings'
-            />
-            <FormikOdahuSelect
-                className={classes.editorField}
-                name="spec.outputConnection"
-                label="Output Connection ID"
-                options={connectionIDs}
-                description='Bucket where the Trained Model Binary is stored'
-            />
-            <FormikOdahuSelect
-                className={classes.editorField}
-                name="spec.integrationName"
-                label="Integration"
-                options={packagerIDs}
-                description='Type of a packager'
-            />
+            <MuiThemeProvider theme={asterisksStyle}>
+                <OdahuTextField
+                    className={classes.editorField}
+                    disabled={readonlyID}
+                    name="id"
+                    label='ID'
+                    description='Unique value among all packagings'
+                    required
+                />
+                <FormikOdahuSelect
+                    className={classes.editorField}
+                    name="spec.outputConnection"
+                    label="Output Connection ID"
+                    options={connectionIDs}
+                    description='Bucket where the Trained Model Binary is stored'
+                    required
+                />
+                <FormikOdahuSelect
+                    className={classes.editorField}
+                    name="spec.integrationName"
+                    label="Integration"
+                    options={packagerIDs}
+                    description='Type of a packager'
+                    required
+                />
+            </MuiThemeProvider>
         </>
     )
 };

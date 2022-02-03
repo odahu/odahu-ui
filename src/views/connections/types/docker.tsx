@@ -8,6 +8,8 @@ import {OdahuTextField} from "../../../components/OdahuTextField";
 import {useFieldsStyles} from "../../../components/fields";
 import {hidingSequence} from "../../../utils/sensitive";
 import { OdahuCheckbox } from "../../../components/OdahuCheckbox";
+import { MuiThemeProvider } from "@material-ui/core";
+import { asterisksStyle } from "../../common_styles/asterisks-theme";
 
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
@@ -30,29 +32,34 @@ export const EditableFields: React.FC = () => {
 
     return (
         <>
-            <OdahuTextField
-                className={classes.editorField}
-                name="spec.uri"
-                label="URI"
-                description="Docker registry host, for example: gcr.io/project/odahuflow"
-            />
-            <OdahuTextField
-                className={classes.editorField}
-                name="spec.username"
-                label="Username"
-                description='Docker registry username'
-            />
-            <FormikSecretTextField
-                className={classes.editorField}
-                name="spec.password"
-                label="Password"
-                description="Base64-encoded Docker registry password"
-            />
-            <OdahuCheckbox
-                name="spec.vital"
-                label={'Vital:'}
-                description={'Is connection vital'}
-            ></OdahuCheckbox>
+            <MuiThemeProvider theme={asterisksStyle}>
+                <OdahuTextField
+                    className={classes.editorField}
+                    name="spec.uri"
+                    label="URI"
+                    description="Docker registry host, for example: gcr.io/project/odahuflow"
+                    required
+                />
+                <OdahuTextField
+                    className={classes.editorField}
+                    name="spec.username"
+                    label="Username"
+                    description='Docker registry username'
+                    required
+                />
+                <FormikSecretTextField
+                    className={classes.editorField}
+                    name="spec.password"
+                    label="Password"
+                    description="Base64-encoded Docker registry password"
+                    required
+                />
+                <OdahuCheckbox
+                    name="spec.vital"
+                    label={'Vital:'}
+                    description={'Is connection vital'}
+                ></OdahuCheckbox>
+            </MuiThemeProvider>
         </>
     )
 };

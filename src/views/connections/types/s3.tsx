@@ -9,6 +9,8 @@ import {FormikOdahuAutocomplete} from "../../../components/OdahuAutocomplete";
 import {useFieldsStyles} from "../../../components/fields";
 import {hidingSequence} from "../../../utils/sensitive";
 import { OdahuCheckbox } from "../../../components/OdahuCheckbox";
+import { MuiThemeProvider } from "@material-ui/core";
+import { asterisksStyle } from "../../common_styles/asterisks-theme";
 
 
 export function extractViewParameters(conn: Connection): Array<ViewParam> {
@@ -55,35 +57,41 @@ export const EditableFields: React.FC = () => {
 
     return (
         <>
-            <OdahuTextField
-                className={classes.editorField}
-                name="spec.uri"
-                label="URI"
-                description='S3 compatible URI, for example s3://<bucket-name>/dir1/dir2/'
-            />
-            <FormikOdahuAutocomplete
-                className={classes.editorField}
-                name="spec.region"
-                label="Region"
-                options={ALL_AWS_REGIONS}
-            />
-            <FormikSecretTextField
-                className={classes.editorField}
-                name="spec.keyID"
-                label="Access Key ID"
-                description='Base64-encoded access key ID (for example, "QUtJQUlPU0ZPRE5ON0VYQU1QTEU=").'
-            />
-            <FormikSecretTextField
-                className={classes.editorField}
-                name="spec.keySecret"
-                label="Access Key Secret"
-                description='Base64-encoded secret access key (for example, "d0phbHJYVXRuRkVNSS9LN01ERU5HL2JQeFJmaUNZRVhBTVBMRUtFWQ==").'
-            />
-            <OdahuCheckbox
-                name="spec.vital"
-                label={'Vital:'}
-                description={'Is connection vital'}
-            ></OdahuCheckbox>
+            <MuiThemeProvider theme={asterisksStyle}>
+                <OdahuTextField
+                    className={classes.editorField}
+                    name="spec.uri"
+                    label="URI"
+                    description='S3 compatible URI, for example s3://<bucket-name>/dir1/dir2/'
+                    required
+                />
+                <FormikOdahuAutocomplete
+                    className={classes.editorField}
+                    name="spec.region"
+                    label="Region"
+                    options={ALL_AWS_REGIONS}
+                    required
+                />
+                <FormikSecretTextField
+                    className={classes.editorField}
+                    name="spec.keyID"
+                    label="Access Key ID"
+                    description='Base64-encoded access key ID (for example, "QUtJQUlPU0ZPRE5ON0VYQU1QTEU=").'
+                    required
+                />
+                <FormikSecretTextField
+                    className={classes.editorField}
+                    name="spec.keySecret"
+                    label="Access Key Secret"
+                    description='Base64-encoded secret access key (for example, "d0phbHJYVXRuRkVNSS9LN01ERU5HL2JQeFJmaUNZRVhBTVBMRUtFWQ==").'
+                    required
+                />
+                <OdahuCheckbox
+                    name="spec.vital"
+                    label={'Vital:'}
+                    description={'Is connection vital'}
+                ></OdahuCheckbox>
+            </MuiThemeProvider>
         </>
     )
 };

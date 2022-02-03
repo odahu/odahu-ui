@@ -48,12 +48,14 @@ export const OdahuSelect: React.FC<OdahuSelectProps> = (
         helperText,
         options,
         className,
+        required
     }
 ) => {
     const classes = useFieldsStyles();
 
     return (
         <FormControl
+            required={required}
             className={className ?? classes.fields}
             error={error}
         >

@@ -11,7 +11,8 @@ import {FieldArray, getIn, useFormikContext} from "formik";
 import {ModelTraining} from "../../../models/odahuflow/ModelTraining";
 import {InputParametersView, ItemInputParametersView} from "../../../components/InputParametersView";
 import {ResourcesSpecElements} from "../../../components/ResourceSpecElements";
-import {createStyles, makeStyles} from "@material-ui/core/styles";
+import {createStyles, makeStyles, MuiThemeProvider} from "@material-ui/core/styles";
+import { asterisksStyle } from "../../common_styles/asterisks-theme";
 
 export const useTrainingClasses = makeStyles(() =>
     createStyles({
@@ -116,6 +117,7 @@ const AlgorithmSourceSpecElements: React.FC = () => {
                     defaultValue={algorithmSourceType}
                     description='A type of connection for algorithm source'
                     onChange={AlgorithmSourceTypeChange}
+                    required={true}
                 />
                 {algorithmSourceType === vcsType && (
                     <FormikOdahuSelect
@@ -129,6 +131,7 @@ const AlgorithmSourceSpecElements: React.FC = () => {
                             formik.setFieldTouched("spec.algorithmSource.vcs.connection", true, false);
                             formik.setFieldValue('spec.algorithmSource.vcs.reference', '');
                         }}
+                        required={true}
                     />
                 )}
                 {algorithmSourceType === vcsType && (
@@ -150,6 +153,7 @@ const AlgorithmSourceSpecElements: React.FC = () => {
                             formik.setFieldTouched("spec.algorithmSource.objectStorage.connection", true, false);
                             formik.setFieldValue('spec.algorithmSource.objectStorage.path', '');
                         }}
+                        required={true}
                     />
                 )}
                 {algorithmSourceType === objectStorageType && (
@@ -157,6 +161,7 @@ const AlgorithmSourceSpecElements: React.FC = () => {
                         name="spec.algorithmSource.objectStorage.path"
                         label='Path'
                         description='remote path in the bucket'
+                        required={true}
                     />
                 )}
                 <OdahuTextField
@@ -199,21 +204,25 @@ const DataSection: React.FC = () => {
                     header="Data section"
                 >
                     {formik.values.spec?.data?.map((data, index) => (
-                            <ItemInputParametersView arrayHelpers={arrayHelpers} index={index}>
-                                <OdahuTextField
-                                    name={`spec.data.${index}.localPath`}
-                                    label='Target Path'
-                                />
-                                <OdahuTextField
-                                    name={`spec.data.${index}.remotePath`}
-                                    label='Source Path'
-                                />
-                                <FormikOdahuSelect
-                                    name={`spec.data.${index}.connection`}
-                                    label="Connection ID"
-                                    options={connectionIDs}
-                                />
-                            </ItemInputParametersView>
+                            <MuiThemeProvider theme={asterisksStyle}>
+                                <ItemInputParametersView arrayHelpers={arrayHelpers} index={index}>
+                                    <OdahuTextField
+                                        name={`spec.data.${index}.localPath`}
+                                        label='Target Path'
+                                        required
+                                    />
+                                    <OdahuTextField
+                                        name={`spec.data.${index}.remotePath`}
+                                        label='Source Path'
+                                    />
+                                    <FormikOdahuSelect
+                                        name={`spec.data.${index}.connection`}
+                                        label="Connection ID"
+                                        options={connectionIDs}
+                                        required
+                                    />
+                                </ItemInputParametersView>
+                            </MuiThemeProvider>    
                         )
                     )}
                 </InputParametersView>
@@ -244,16 +253,20 @@ const HyperParametersSection: React.FC = () => {
                     header="Hyper Parameters"
                 >
                     {formik.values.spec?.hyperParameters?.map((target: HyperParameter, index: number) => (
-                            <ItemInputParametersView arrayHelpers={arrayHelpers} index={index}>
-                                <OdahuTextField
-                                    name={`spec.hyperParameters[${index}].name`}
-                                    label="Name"
-                                />
-                                <OdahuTextField
-                                    name={`spec.hyperParameters[${index}].value`}
-                                    label="Value"
-                                />
-                            </ItemInputParametersView>
+                            <MuiThemeProvider theme={asterisksStyle}>
+                                <ItemInputParametersView arrayHelpers={arrayHelpers} index={index}>
+                                    <OdahuTextField
+                                        name={`spec.hyperParameters[${index}].name`}
+                                        label="Name"
+                                        required
+                                    />
+                                    <OdahuTextField
+                                        name={`spec.hyperParameters[${index}].value`}
+                                        label="Value"
+                                        required
+                                    />
+                                </ItemInputParametersView>
+                            </MuiThemeProvider>
                         )
                     )}
                 </InputParametersView>
@@ -280,16 +293,20 @@ const EnvironmentVariablesSection: React.FC = () => {
                     }}
                 >
                     {formik.values.spec?.envs?.map((env, index) => (
-                            <ItemInputParametersView arrayHelpers={arrayHelpers} index={index}>
-                                <OdahuTextField
-                                    name={`spec.envs.${index}.name`}
-                                    label='Name'
-                                />
-                                <OdahuTextField
-                                    name={`spec.envs.${index}.value`}
-                                    label='Value'
-                                />
-                            </ItemInputParametersView>
+                            <MuiThemeProvider theme={asterisksStyle}>
+                                <ItemInputParametersView arrayHelpers={arrayHelpers} index={index}>
+                                    <OdahuTextField
+                                        name={`spec.envs.${index}.name`}
+                                        label='Name'
+                                        required
+                                    />
+                                    <OdahuTextField
+                                        name={`spec.envs.${index}.value`}
+                                        label='Value'
+                                        required
+                                    />
+                                </ItemInputParametersView>
+                            </MuiThemeProvider>
                         )
                     )}
                 </InputParametersView>
@@ -303,17 +320,20 @@ export const SpecElements: React.FC = () => {
 
     return (
         <>
-            <OdahuTextField
-                className={classes.editorField}
-                name="spec.entrypoint"
-                label='Entrypoint'
-                description='Mlflow MLProject file can contains the list of entrypoints. You must choose one of these.'
-            />
-            <EnvironmentVariablesSection/>
-            <AlgorithmSourceSpecElements/>
-            <HyperParametersSection/>
-            <DataSection/>
-            <ResourcesSpecElements gpu/>
+            <MuiThemeProvider theme={asterisksStyle}>
+                <OdahuTextField
+                    className={classes.editorField}
+                    name="spec.entrypoint"
+                    label='Entrypoint'
+                    description='Mlflow MLProject file can contains the list of entrypoints. You must choose one of these.'
+                    required
+                />
+                <EnvironmentVariablesSection/>
+                <AlgorithmSourceSpecElements/>
+                <HyperParametersSection/>
+                <DataSection/>
+                <ResourcesSpecElements gpu/>
+            </MuiThemeProvider>
         </>
     )
 };

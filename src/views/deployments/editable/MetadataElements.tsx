@@ -6,6 +6,8 @@ import {ConnectionTypes} from "../../connections/types";
 import {OdahuTextField} from "../../../components/OdahuTextField";
 import {FormikOdahuSelect} from "../../../components/OdahuSelect";
 import {useFieldsStyles} from "../../../components/fields";
+import {MuiThemeProvider } from "@material-ui/core";
+import {asterisksStyle} from '../../common_styles/asterisks-theme'
 
 export interface MetadataElementsProps {
     readonlyID?: boolean;
@@ -21,12 +23,14 @@ export const MetadataElements: React.FC<MetadataElementsProps> = ({readonlyID = 
 
     return (
         <>
+          <MuiThemeProvider theme={asterisksStyle}>
             <OdahuTextField
                 className={classes.editorField}
                 disabled={readonlyID}
                 name="id"
                 label='ID'
                 description="Unique value among all deployments"
+                required
             />
             <FormikOdahuSelect
                 className={classes.editorField}
@@ -34,7 +38,9 @@ export const MetadataElements: React.FC<MetadataElementsProps> = ({readonlyID = 
                 name="spec.imagePullConnID"
                 options={dockerConnectionIDs}
                 description="Connection that describes access to the model Docker registry"
+                required
             />
+          </MuiThemeProvider>
         </>
     )
 };
