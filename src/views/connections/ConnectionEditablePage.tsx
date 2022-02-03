@@ -20,6 +20,8 @@ import {ConnectionURLs} from "./urls";
 import {FetchingEntity} from "../../components/EntitiyFetching";
 import {addSuffixToID} from "../../utils/enities";
 import {useHistory} from "react-router-dom";
+import { MuiThemeProvider } from '@material-ui/core';
+import { asterisksStyle } from '../common_styles/asterisks-theme';
 
 const allConnectionTypes = Object.values(ConnectionTypes);
 
@@ -89,33 +91,37 @@ const MetadataElements: React.FC<MetadataElementsPros> = ({readonlyID}) => {
 
     return (
         <>
-            <OdahuTextField
-                className={classes.editorField}
-                disabled={readonlyID}
-                name="id"
-                label='ID'
-                description="Unique value among all connections"
-            />
-            <FormikOdahuSelect
-                className={classes.editorField}
-                name='spec.type'
-                label="Type"
-                options={allConnectionTypes}
-            />
-            <OdahuTextField
-                className={classes.editorField}
-                name='spec.webUILink'
-                label="WEB UI Link"
-                description='Link to the web resource. For example, git repo or a gcp bucket'
-            />
-            <OdahuTextField
-                className={classes.editorField}
-                name='spec.description'
-                label="Description"
-                multiline
-                rows="2"
-                variant="outlined"
-            />
+            <MuiThemeProvider theme={asterisksStyle}>
+                <OdahuTextField
+                    className={classes.editorField}
+                    disabled={readonlyID}
+                    name="id"
+                    label='ID'
+                    description="Unique value among all connections"
+                    required
+                />
+                <FormikOdahuSelect
+                    className={classes.editorField}
+                    name='spec.type'
+                    label="Type"
+                    options={allConnectionTypes}
+                    required
+                />
+                <OdahuTextField
+                    className={classes.editorField}
+                    name='spec.webUILink'
+                    label="WEB UI Link"
+                    description='Link to the web resource. For example, git repo or a gcp bucket'
+                />
+                <OdahuTextField
+                    className={classes.editorField}
+                    name='spec.description'
+                    label="Description"
+                    multiline
+                    rows="2"
+                    variant="outlined"
+                />
+            </MuiThemeProvider>
         </>
     )
 };

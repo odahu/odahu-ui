@@ -12,6 +12,8 @@ import {ModelTrainingState} from "../../../store/trainings/types";
 import {FormikOdahuAutocomplete} from "../../../components/OdahuAutocomplete";
 import {ResourcesSpecElements} from "../../../components/ResourceSpecElements";
 import {useFieldsStyles} from "../../../components/fields";
+import { MuiThemeProvider } from "@material-ui/core";
+import { asterisksStyle } from "../../common_styles/asterisks-theme";
 
 const Targets: React.FC = () => {
     const classes = useFieldsStyles();
@@ -44,18 +46,22 @@ const Targets: React.FC = () => {
                     header="Targets"
                 >
                     {formik.values.spec?.targets?.map((target, index) => (
-                            <ItemInputParametersView arrayHelpers={arrayHelpers} index={index}>
-                                <FormikOdahuSelect
-                                    name={`spec.targets[${index}].name`}
-                                    label="Name"
-                                    options={targetNames}
-                                />
-                                <FormikOdahuSelect
-                                    name={`spec.targets[${index}].connectionName`}
-                                    label="Connection ID"
-                                    options={connectionIDs}
-                                />
-                            </ItemInputParametersView>
+                            <MuiThemeProvider theme={asterisksStyle}>
+                                <ItemInputParametersView arrayHelpers={arrayHelpers} index={index}>
+                                    <FormikOdahuSelect
+                                        name={`spec.targets[${index}].name`}
+                                        label="Name"
+                                        options={targetNames}
+                                        required
+                                    />
+                                    <FormikOdahuSelect
+                                        name={`spec.targets[${index}].connectionName`}
+                                        label="Connection ID"
+                                        options={connectionIDs}
+                                        required
+                                    />
+                                </ItemInputParametersView>
+                            </MuiThemeProvider>
                         )
                     )}
                 </InputParametersView>
@@ -97,17 +103,21 @@ const Arguments: React.FC = () => {
                     description='Parameterizing of a packaging process'
                 >
                     {formik.values.spec?.arguments?.map((target: Argument, index: number) => (
-                            <ItemInputParametersView arrayHelpers={arrayHelpers} index={index}>
-                                <FormikOdahuSelect
-                                    name={`spec.arguments[${index}].name`}
-                                    label="Name"
-                                    options={argumentNames}
-                                />
-                                <OdahuTextField
-                                    name={`spec.arguments[${index}].value`}
-                                    label="Value"
-                                />
-                            </ItemInputParametersView>
+                            <MuiThemeProvider theme={asterisksStyle}>
+                                <ItemInputParametersView arrayHelpers={arrayHelpers} index={index}>
+                                    <FormikOdahuSelect
+                                        name={`spec.arguments[${index}].name`}
+                                        label="Name"
+                                        options={argumentNames}
+                                        required
+                                    />
+                                    <OdahuTextField
+                                        name={`spec.arguments[${index}].value`}
+                                        label="Value"
+                                        required
+                                    />
+                                </ItemInputParametersView>
+                            </MuiThemeProvider>
                         )
                     )}
                 </InputParametersView>
@@ -126,16 +136,19 @@ export const SpecElements: React.FC = () => {
 
     return (
         <>
-            <FormikOdahuAutocomplete
-                className={classes.editorField}
-                name="spec.artifactName"
-                label='Artifact'
-                options={trainingArtifacts}
-                description='Output training artifact name'
-            />
-            <Targets/>
-            <Arguments/>
-            <ResourcesSpecElements gpu={false}/>
+            <MuiThemeProvider theme={asterisksStyle}>
+                <FormikOdahuAutocomplete
+                    className={classes.editorField}
+                    name="spec.artifactName"
+                    label='Artifact'
+                    options={trainingArtifacts}
+                    description='Output training artifact name'
+                    required
+                />
+                <Targets/>
+                <Arguments/>
+                <ResourcesSpecElements gpu={false}/>
+            </MuiThemeProvider>
         </>
     )
 };
