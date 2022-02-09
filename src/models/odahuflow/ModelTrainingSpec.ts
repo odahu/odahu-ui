@@ -26,6 +26,11 @@ export interface ModelTrainingSpec {
     data?: Array<models.DataBindingDir>;
 
     /**
+     * Param used to skip data validation
+     */
+    dataNotRequired?: boolean;
+
+    /**
      * Model training file. It can be python\\bash script or jupiter notebook
      */
     entrypoint?: string;

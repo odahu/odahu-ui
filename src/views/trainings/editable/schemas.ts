@@ -44,6 +44,7 @@ export const TrainingSchema = Yup.object().shape({
                 value: Yup.string().trim().required('Value is a required field'),
             })
         ),
+        dataNotRequired: Yup.boolean(),
         data: Yup.array().of(
             Yup.object().shape({
                 connection: Yup.string().trim().required('Connection ID is a required field'),
