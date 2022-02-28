@@ -69,7 +69,7 @@ export interface ConnectionSpec {
     username?: string;
 
     /**
-     * Is connection vital
+     * Is connection vital (vital connection cannot be deleted)
      */
     vital?: boolean;
 

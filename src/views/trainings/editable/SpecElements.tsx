@@ -13,6 +13,7 @@ import {InputParametersView, ItemInputParametersView} from "../../../components/
 import {ResourcesSpecElements} from "../../../components/ResourceSpecElements";
 import {createStyles, makeStyles, MuiThemeProvider} from "@material-ui/core/styles";
 import { asterisksStyle } from "../../common_styles/asterisks-theme";
+import { OdahuCheckbox } from "../../../components/OdahuCheckbox";
 
 export const useTrainingClasses = makeStyles(() =>
     createStyles({
@@ -331,6 +332,11 @@ export const SpecElements: React.FC = () => {
                 <EnvironmentVariablesSection/>
                 <AlgorithmSourceSpecElements/>
                 <HyperParametersSection/>
+                <OdahuCheckbox
+                    name="spec.dataNotRequired"
+                    label={'Data not required:'}
+                    description={'Is data source required for training'}
+                />
                 <DataSection/>
                 <ResourcesSpecElements gpu/>
             </MuiThemeProvider>
